@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Download, Share } from 'lucide-react';
 
 
+import { useCms } from '@/components/CmsContext';
+
 // --- MOCK CMS DATA ---
 type DarshanImage = {
   id: string;
@@ -31,6 +33,27 @@ const MOCK_DATA: DarshanImage[] = [
 export default function DailyDarshanPage() {
   const [columns, setColumns] = useState<DarshanImage[][]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const { pageContent, fetchPageContent } = useCms();
+
+  useEffect(() => {
+    fetchPageContent('daily-darshan');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageContent]);
+
+  const cmsDarshanGallery = pageContent['daily-darshan']?.gallery;
+
+  const darshanData = React.useMemo(() => {
+    if (cmsDarshanGallery && cmsDarshanGallery.length > 0) {
+      return cmsDarshanGallery.map((url: string, i: number) => ({
+        id: `cms-${i}`,
+        url,
+        date: new Date().toISOString().split('T')[0],
+        title: i === 0 ? 'Latest Daily Darshan' : 'Daily Darshan',
+        height: 500 + (i % 3) * 100
+      }));
+    }
+    return MOCK_DATA;
+  }, [cmsDarshanGallery]);
 
   // Distribute images into columns based on screen width
   useEffect(() => {
@@ -42,7 +65,7 @@ export default function DailyDarshanPage() {
 
       const newCols: DarshanImage[][] = Array.from({ length: colCount }, () => []);
       
-      MOCK_DATA.forEach((img, i) => {
+      darshanData.forEach((img: DarshanImage, i: number) => {
         newCols[i % colCount].push(img);
       });
 
@@ -52,71 +75,69 @@ export default function DailyDarshanPage() {
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [darshanData]);
 
   // Keyboard navigation for lightbox
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (selectedIndex === null) return;
     if (e.key === 'ArrowRight') {
-      setSelectedIndex(prev => (prev !== null && prev < MOCK_DATA.length - 1 ? prev + 1 : prev));
-    }
-    if (e.key === 'ArrowLeft') {
+      setSelectedIndex(prev => (prev !== null && prev < darshanData.length - 1 ? prev + 1 : prev));
+    } else if (e.key === 'ArrowLeft') {
       setSelectedIndex(prev => (prev !== null && prev > 0 ? prev - 1 : prev));
-    }
-    if (e.key === 'Escape') {
+    } else if (e.key === 'Escape') {
       setSelectedIndex(null);
     }
-  }, [selectedIndex]);
+  }, [selectedIndex, darshanData]);
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleKeyDown]);
+    if (selectedIndex !== null) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    } else {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedIndex, handleKeyDown]);
 
   const openLightbox = (id: string) => {
-    // Find index in the original MOCK_DATA array
-    const idx = MOCK_DATA.findIndex(img => img.id === id);
-    if (idx !== -1) setSelectedIndex(idx);
-  };
-
-  const handleDownload = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (selectedIndex === null) return;
-    const url = MOCK_DATA[selectedIndex].url;
-    try {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = `darshan-${MOCK_DATA[selectedIndex].date}.jpg`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
-    } catch (err) {
-      console.error('Error downloading image', err);
-      window.open(url, '_blank');
+    // Find index in the original darshanData array
+    const idx = darshanData.findIndex((img: any) => img.id === id);
+    if (idx !== -1) {
+      setSelectedIndex(idx);
     }
   };
 
-  const handleShare = async (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleDownload = () => {
     if (selectedIndex === null) return;
-    const url = window.location.origin + MOCK_DATA[selectedIndex].url;
+    const url = darshanData[selectedIndex].url;
+    // Create an invisible anchor to trigger download
+    const link = document.createElement('a');
+    link.href = url;
+    // We try to suggest a filename, though cross-origin images might ignore it unless it's same-origin
+    link.download = `darshan-${darshanData[selectedIndex].date}.jpg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleShare = async () => {
+    if (selectedIndex === null) return;
     if (navigator.share) {
       try {
+        const url = window.location.origin + darshanData[selectedIndex].url;
         await navigator.share({
-          title: MOCK_DATA[selectedIndex].title,
+          title: 'Daily Darshan - Hare Krishna Mandir',
           text: 'Check out this divine Darshan!',
-          url: url
+          url: url,
         });
       } catch (err) {
-        console.error('Share failed', err);
+        console.error('Error sharing', err);
       }
     } else {
-      navigator.clipboard.writeText(url);
-      alert('Link copied to clipboard!');
+      alert("Sharing is not supported on this browser.");
     }
   };
 
@@ -284,9 +305,9 @@ export default function DailyDarshanPage() {
             <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-50 bg-gradient-to-b from-black/60 to-transparent pointer-events-none">
               <div className="flex flex-col pointer-events-auto">
                 <span className="text-sm font-semibold opacity-90">
-                  {new Date(MOCK_DATA[selectedIndex].date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+                  {new Date(darshanData[selectedIndex].date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
                 </span>
-                <span className="text-xs opacity-60">{MOCK_DATA[selectedIndex].title}</span>
+                <span className="text-xs opacity-60">{darshanData[selectedIndex].title}</span>
               </div>
               <button 
                 onClick={(e) => { e.stopPropagation(); setSelectedIndex(null); }}
@@ -312,9 +333,9 @@ export default function DailyDarshanPage() {
 
               {/* The Image */}
               <motion.img
-                key={MOCK_DATA[selectedIndex].id}
-                src={MOCK_DATA[selectedIndex].url}
-                alt={MOCK_DATA[selectedIndex].title}
+                key={darshanData[selectedIndex].id}
+                src={darshanData[selectedIndex].url}
+                alt={darshanData[selectedIndex].title}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3 }}
@@ -325,9 +346,9 @@ export default function DailyDarshanPage() {
               {/* Right Navigation */}
               <div 
                 className="absolute right-0 top-0 bottom-0 w-1/4 z-10 cursor-pointer flex items-center justify-end pr-4 group"
-                onClick={() => setSelectedIndex(prev => prev !== null && prev < MOCK_DATA.length - 1 ? prev + 1 : prev)}
+                onClick={() => setSelectedIndex(prev => prev !== null && prev < darshanData.length - 1 ? prev + 1 : prev)}
               >
-                {selectedIndex < MOCK_DATA.length - 1 && (
+                {selectedIndex < darshanData.length - 1 && (
                   <div className="p-3 rounded-full bg-black/40 text-white opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm">
                     <ChevronRight className="w-8 h-8" />
                   </div>

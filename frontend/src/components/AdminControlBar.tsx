@@ -11,6 +11,7 @@ export default function AdminControlBar() {
   const pathname = usePathname();
 
   if (!role || !token) return null;
+  if (pathname === '/') return null;
 
   // Extract page ID from URL (e.g. '/' -> 'home')
   const getPageId = () => {

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Script from "next/script";
-import axios from "axios";
+import axios from "@/lib/axios";
 import RespectedContributors from "@/components/RespectedContributors";
 
 export default function EkadashiSevaPage() {
@@ -74,7 +74,7 @@ export default function EkadashiSevaPage() {
     const finalAmount = totalAmount;
 
     try {
-      const orderRes = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/payments/create-order`, {
+      const orderRes = await axios.post(`/api/payments/create-order`, {
         amount: finalAmount,
         currency: "INR",
         receipt: `receipt_ekadashi_${Date.now()}`
@@ -89,7 +89,7 @@ export default function EkadashiSevaPage() {
         order_id: orderRes.data.id,
         handler: async function (response: any) {
           try {
-            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/payments/verify-payment`, {
+            await axios.post(`/api/payments/verify-payment`, {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,

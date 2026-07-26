@@ -2,8 +2,9 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import ReelPlayer, { Reel } from '@/components/ReelPlayer';
+import { useCms } from '@/components/CmsContext';
 
-// Mock CMS Data (Can be replaced with an API call later)
+// Fallback Mock CMS Data
 const MOCK_REELS: Reel[] = [
   {
     id: "reel-1",
@@ -28,6 +29,28 @@ const MOCK_REELS: Reel[] = [
 export default function ReelsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const { pageContent, fetchPageContent, isLoading } = useCms();
+  const [reelsData, setReelsData] = useState<Reel[]>(MOCK_REELS);
+
+  useEffect(() => {
+    fetchPageContent('reels');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchPageContent]);
+
+  const cmsReels = pageContent['reels']?.reels;
+
+  useEffect(() => {
+    if (cmsReels && Array.isArray(cmsReels) && cmsReels.some((r: any) => r.url)) {
+      setReelsData(cmsReels.filter((r: any) => !!r.url).map((r: any, idx: number) => ({
+        id: `cms-reel-${idx}`,
+        videoUrl: r.url,
+        likes: Math.floor(Math.random() * 2000) + 500, // Simulation of likes since they are not in the new CMS
+        caption: r.caption
+      })));
+    } else {
+      setReelsData(MOCK_REELS);
+    }
+  }, [cmsReels]);
 
   // Setup Intersection Observer to detect which reel is currently visible
   useEffect(() => {
@@ -53,7 +76,7 @@ export default function ReelsPage() {
     elements?.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, []);
+  }, [fetchPageContent]);
 
   // Hide Chatling Chatbot and floating widgets when on Reels page
   useEffect(() => {
@@ -148,7 +171,7 @@ export default function ReelsPage() {
           </div>
         </div>
         {/* Render the reels */}
-        {MOCK_REELS.map((reel, index) => (
+        {reelsData.map((reel, index) => (
           <div 
             key={reel.id} 
             data-index={index}
@@ -166,7 +189,7 @@ export default function ReelsPage() {
                 const elements = containerRef.current?.querySelectorAll('.reel-container');
                 elements?.[index - 1]?.scrollIntoView({ behavior: 'smooth' });
               }}
-              hasNext={index < MOCK_REELS.length - 1}
+              hasNext={index < reelsData.length - 1}
               hasPrev={index > 0}
             />
           </div>

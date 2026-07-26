@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import axios from "axios";
+import axios from "@/lib/axios";
 
 /* ── Scroll-triggered reveal ──────────────────────────── */
 function Reveal({
@@ -142,7 +142,7 @@ export default function VolunteerPage() {
     setErrorMsg("");
     setIsLoading(true);
     try {
-      const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000";
+      const backendUrl = "";
       await axios.post(`${backendUrl}/api/cms/leads`, {
         name, email, phone,
         interestType: "volunteer_registration",

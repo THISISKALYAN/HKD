@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import axios from "axios";
+import axios from "@/lib/axios";
 import Link from "next/link";
 import { ChevronLeft, Check, ShieldCheck, Heart } from "lucide-react";
 
@@ -392,7 +392,7 @@ export default function FestivalDetail({ slug }: { slug: string }) {
     setLoading(true);
 
     try {
-      const orderRes = await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001"}/api/payments/create-order`, {
+      const orderRes = await axios.post(`/api/payments/create-order`, {
         amount: totalAmount,
         currency: "INR",
         receipt: `receipt_${festival.slug}_${Date.now()}`,
@@ -407,7 +407,7 @@ export default function FestivalDetail({ slug }: { slug: string }) {
         order_id: orderRes.data.id,
         handler: async function (response: any) {
           try {
-            await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001"}/api/payments/verify-payment`, {
+            await axios.post(`/api/payments/verify-payment`, {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,

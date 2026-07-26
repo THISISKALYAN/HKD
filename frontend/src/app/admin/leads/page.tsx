@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useCms } from '@/components/CmsContext';
 import { Loader2 } from 'lucide-react';
-import axios from 'axios';
+import axios from '@/lib/axios';
 
 type Lead = {
   id: string;
@@ -53,7 +53,7 @@ export default function LeadsDashboard() {
   if (loading) {
     return (
       <div className="flex h-[60vh] items-center justify-center">
-        <Loader2 className="w-10 h-10 animate-spin text-[#d4af37]" />
+        <Loader2 className="w-10 h-10 animate-spin text-[#004B2C]" />
       </div>
     );
   }
@@ -67,15 +67,17 @@ export default function LeadsDashboard() {
   }
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-gray-900 mb-2">Inquiries & Leads</h1>
-      <p className="text-gray-500 mb-8">View and manage all contact requests and volunteer signups.</p>
+    <div className="px-4 sm:px-6 max-w-[1600px] mx-auto pb-20 font-sans">
+      <div className="mb-8">
+        <h1 className="text-2xl font-black text-gray-900 tracking-tight mb-1">Inquiries & Leads</h1>
+        <p className="text-sm font-medium text-gray-500">View and manage all contact requests and volunteer signups.</p>
+      </div>
       
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-[24px] shadow-sm border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-gray-50 border-b border-gray-200 text-sm font-semibold text-gray-600 uppercase tracking-wider">
+              <tr className="bg-white border-b border-gray-100 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                 <th className="px-6 py-4">Name</th>
                 <th className="px-6 py-4">Contact Info</th>
                 <th className="px-6 py-4">Interest / Target</th>
@@ -85,25 +87,25 @@ export default function LeadsDashboard() {
             </thead>
             <tbody className="divide-y divide-gray-100">
               {leads.map((lead) => (
-                <tr key={lead.id} className="hover:bg-gray-50 transition-colors">
+                <tr key={lead.id} className="hover:bg-gray-50 transition-colors group">
                   <td className="px-6 py-4">
-                    <div className="font-semibold text-gray-900">{lead.name}</div>
+                    <div className="font-bold text-sm text-gray-900">{lead.name}</div>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="text-gray-700">{lead.email}</div>
-                    <div className="text-gray-500 text-sm">{lead.phone}</div>
+                    <div className="text-sm font-medium text-gray-900">{lead.email}</div>
+                    <div className="text-gray-500 font-medium text-xs mt-0.5">{lead.phone}</div>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-md font-medium mb-1">
+                    <span className="inline-block bg-gray-100 text-gray-700 text-[10px] px-2.5 py-1 rounded-[8px] font-bold uppercase tracking-wider mb-1.5 border border-gray-200">
                       {lead.interestType}
                     </span>
                     <br />
-                    <span className="text-gray-500 text-sm">{lead.targetId}</span>
+                    <span className="text-gray-500 font-medium text-xs">{lead.targetId}</span>
                   </td>
-                  <td className="px-6 py-4 text-gray-500 text-sm whitespace-nowrap">
+                  <td className="px-6 py-4 text-gray-500 font-medium text-xs whitespace-nowrap">
                     {formatDate(lead.createdAt)}
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-600 max-w-xs truncate" title={lead.message}>
+                  <td className="px-6 py-4 text-xs font-medium text-gray-600 max-w-xs truncate" title={lead.message}>
                     {lead.message || '-'}
                   </td>
                 </tr>

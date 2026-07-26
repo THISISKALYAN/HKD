@@ -9,7 +9,7 @@ import {
   Compass, Zap, Filter
 } from "lucide-react";
 import Link from "next/link";
-import axios from "axios";
+import axios from "@/lib/axios";
 import FolkNavbar from "@/components/FolkNavbar";
 
 /* ── Animated counter widget ────────────────────────────────── */
@@ -288,7 +288,7 @@ export default function SelfEmpowermentWorkshopsPage() {
     if (!name || !email || !phone) return;
     setSending(true);
     try {
-      const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000";
+      const backendUrl = "";
       await axios.post(`${backendUrl}/api/cms/leads`, {
         name,
         email,

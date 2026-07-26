@@ -4,11 +4,12 @@ import dynamic from "next/dynamic";
 import Script from "next/script";
 
 import { CmsProvider } from "@/components/CmsContext";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import NextTopLoader from 'nextjs-toploader';
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-const AdminControlBar = dynamic(() => import("@/components/AdminControlBar"), { ssr: false });
+
 const SocialFloatWidget = dynamic(() => import("@/components/SocialFloatWidget"), { ssr: false });
 const FloatingReelsWidget = dynamic(() => import("@/components/FloatingReelsWidget"), { ssr: false });
 
@@ -29,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
@@ -49,7 +50,8 @@ export default function RootLayout({
           speed={200}
           shadow="0 0 10px #d4af37,0 0 5px #d4af37"
         />
-        <CmsProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <CmsProvider>
           {/* Header Navigation */}
           <Navbar />
           
@@ -64,10 +66,11 @@ export default function RootLayout({
           {/* Floated Support Overlays */}
           <script dangerouslySetInnerHTML={{ __html: `window.chtlConfig = { chatbotId: "2451993731" };` }} />
           <script async data-id="2451993731" id="chtl-script" type="text/javascript" src="https://chatling.ai/js/embed.js" />
-          <AdminControlBar />
+
           <SocialFloatWidget />
           <FloatingReelsWidget />
         </CmsProvider>
+        </ThemeProvider>
       </body>
 
     </html>

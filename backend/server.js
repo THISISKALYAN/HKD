@@ -4,6 +4,17 @@ const helmet = require('helmet');
 const compression = require('compression');
 const hpp = require('hpp');
 const dotenv = require('dotenv');
+const fs = require('fs');
+const path = require('path');
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('[FATAL] Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('[FATAL] Uncaught Exception:', err);
+  process.exit(1);
+});
 
 dotenv.config();
 
@@ -17,6 +28,15 @@ const {
 const { initRedis } = require('./services/cache');
 
 const app = express();
+
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+}
+
+// Serve uploads statically
+app.use('/uploads', express.static(uploadsDir));
 
 // HTTPS enforcement in production (behind Cloudflare/nginx)
 app.use(enforceHttps);
@@ -63,15 +83,20 @@ app.use(hpp());
 const allowedOrigins = [
   process.env.FRONTEND_URL || 'http://localhost:3000',
   'http://localhost:3001',
+  'http://localhost:3002',
+  'http://localhost:3003',
   'http://127.0.0.1:3000',
   'http://127.0.0.1:3001',
+  'http://127.0.0.1:3002',
+  'http://127.0.0.1:3003',
   'https://hkmdehradun.org',
   'https://www.hkmdehradun.org',
 ].filter(Boolean);
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    const isDev = process.env.NODE_ENV !== 'production';
+    if (!origin || isDev || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -113,9 +138,13 @@ app.use((req, res, next) => {
 // API Routes
 const paymentRoutes = require('./routes/payments');
 const cmsRoutes = require('./routes/cms');
+const cmsUsersRoutes = require('./routes/cms-users');
+const cmsLogsRoutes = require('./routes/cms-logs');
 
 app.use('/api/payments', paymentRoutes);
 app.use('/api/cms', cmsRoutes);
+app.use('/api/cms/users', cmsUsersRoutes);
+app.use('/api/cms/logs', cmsLogsRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

@@ -72,7 +72,7 @@ const NAV_COLS = [
 export function Footer() {
   const pathname = usePathname();
 
-  if (pathname && pathname.startsWith('/reels')) {
+  if (pathname && (pathname.startsWith('/reels') || pathname.startsWith('/admin') || pathname.startsWith('/login'))) {
     return null;
   }
 

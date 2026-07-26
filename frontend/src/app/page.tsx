@@ -70,7 +70,7 @@ const defaultBlogs = [
 
 export default function Home() {
 
-  const { fetchPageContent, isLoading, editMode } = useCms();
+  const { pageContent, fetchPageContent, isLoading, editMode } = useCms();
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -83,6 +83,14 @@ export default function Home() {
   const [selectedBlog, setSelectedBlog] = useState<any>(null);
 
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);  // Fetch latest ashram blog posts for "Latest Updates"
+
+  const heroImagesData = pageContent['home']?.heroImages;
+  const currentHeroSlides = (heroImagesData && heroImagesData.length > 0) ? heroImagesData : heroSlides;
+
+  useEffect(() => {
+    fetchPageContent('home');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchPageContent]);
 
   useEffect(() => {
 
@@ -164,7 +172,7 @@ export default function Home() {
 
     fetchPageContent('home');
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchPageContent]);
 
 
 
@@ -172,21 +180,23 @@ export default function Home() {
 
   useEffect(() => {
 
-    const timer = setInterval(() => {
+    const slideTimer = setInterval(() => {
 
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+      if (currentHeroSlides.length > 1) {
+        setCurrentSlide((prev) => (prev + 1) % currentHeroSlides.length);
+      }
 
-    }, 8000); // Slower auto-scrolling (8 seconds)
+    }, 5000);
 
-    return () => clearInterval(timer);
+    return () => clearInterval(slideTimer);
 
-  }, []);
+  }, [currentHeroSlides.length]);
 
 
 
   const prevSlide = () => {
 
-    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+    setCurrentSlide((prev) => (prev - 1 + currentHeroSlides.length) % currentHeroSlides.length);
 
   };
 
@@ -194,7 +204,7 @@ export default function Home() {
 
   const nextSlide = () => {
 
-    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    setCurrentSlide((prev) => (prev + 1) % currentHeroSlides.length);
 
   };
 
@@ -222,37 +232,21 @@ export default function Home() {
 
     <div className="relative overflow-hidden">
 
-
-
       {/* 1. HERO SLIDER SECTION (Vivanta-inspired 3-slide peeking layout) */}
       <section className="relative w-full aspect-[4/3] md:aspect-[21/9] lg:aspect-[16/9] overflow-hidden bg-[#0a0a0a] z-0 flex items-center">
 
-
-
         {/* Slides Container */}
-
         <div className="relative w-full h-full">
-
-          {heroSlides.map((slide, idx) => (
-
+          {currentHeroSlides.map((slide: string, idx: number) => (
             <div
-
               key={idx}
-
               onClick={() => {
-
                 if (idx !== currentSlide) {
-
                   setCurrentSlide(idx);
-
                 }
-
               }}
-
               className={`absolute top-0 h-full w-full rounded transition-all duration-700 ease-out shadow-2xl overflow-hidden flex items-center justify-center ${getSlidePositionClass(idx)}`}
-
             >
-
               {/* Blurred Background to fill space */}
               <div
                 className="absolute inset-0 bg-cover bg-center opacity-40 blur-3xl pointer-events-none scale-110"
@@ -265,65 +259,36 @@ export default function Home() {
                 className="absolute inset-0 w-full h-full object-cover md:object-contain pointer-events-none z-10"
               />
 
-
+              {/* Text Overlay for Hero (Removed) */}
 
               {/* Inset White Outline Border (Reference Image Match) */}
-
               <div className="absolute inset-4 sm:inset-6 border border-white/20 pointer-events-none z-30" />
 
-
-
               {/* Dark overlay gradient for beautiful text readability */}
-
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 pointer-events-none z-10" />
-
             </div>
-
           ))}
-
         </div>
 
-
-
         {/* Liquid Glass Navigation Left Arrow */}
-
         <button
-
           onClick={prevSlide}
-
-          className="absolute left-6 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center rounded-full w-12 h-12 bg-white/75 hover:bg-white text-gray-800 hover:scale-110 shadow-lg active:scale-95 transition-all duration-300"
-
+          className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center rounded-full w-10 h-10 sm:w-12 sm:h-12 bg-white/75 hover:bg-white text-gray-800 hover:scale-110 shadow-lg active:scale-95 transition-all duration-300"
           title="Previous Slide"
-
         >
-
           <ChevronLeft className="w-5 h-5 text-gray-700" />
-
         </button>
-
-
 
         {/* Liquid Glass Navigation Right Arrow */}
-
         <button
-
           onClick={nextSlide}
-
-          className="absolute right-6 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center rounded-full w-12 h-12 bg-white/75 hover:bg-white text-gray-800 hover:scale-110 shadow-lg active:scale-95 transition-all duration-300"
-
+          className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center rounded-full w-10 h-10 sm:w-12 sm:h-12 bg-white/75 hover:bg-white text-gray-800 hover:scale-110 shadow-lg active:scale-95 transition-all duration-300"
           title="Next Slide"
-
         >
-
           <ChevronRight className="w-5 h-5 text-gray-700" />
-
         </button>
 
-
-
       </section>
-
-
 
       {/* 1.5 MINIMALIST SCROLLING BANNER */}
       <div className="relative w-full py-3 bg-[#0a0a0a] border-b border-white/10 overflow-hidden z-30">
@@ -361,7 +326,7 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-[1200px] mx-auto">
             {/* Left: Circular Video Preview */}
-            <div className="flex justify-center items-center order-2 lg:order-1 relative min-h-[400px] sm:min-h-[500px]">
+            <div className="flex justify-center items-center order-2 lg:order-1 relative min-h-[320px] sm:min-h-[500px]">
               {/* MagicRings WebGL Background */}
               <div
                 className="absolute pointer-events-none"
@@ -732,7 +697,7 @@ export default function Home() {
                 category: "FESTIVAL",
                 description: "Amalaki Ekadashi, also known as Amala Ekadashi...",
                 fullContent: `# Amalaki Ekadashi\n\nAmalaki Ekadashi, also known as Amala Ekadashi, is observed in the month of Phalguna and is glorified in the Brahmanda Purana. Sage Vasishtha told King Mandhata that observing this Ekadashi destroys sins, grants prosperity, and leads to liberation.\n\nIn the kingdom of Vaidisha, King Chitraratha and his citizens faithfully observed Amalaki Ekadashi by worshipping Lord Vishnu and the sacred Amalaki (Amla) tree. A hunter, who lived by killing animals, unknowingly participated by staying awake all night, hearing the Lord's glories, and fasting.\n\nBy the merit of this observance, the hunter was reborn as the righteous King Vasuratha. Later, when enemies attempted to kill him, Lord Vishnu protected him through a divine manifestation. Realizing the Lord's mercy, he devoted his life to devotional service.\n\nBenefit: Anyone who sincerely observes Amalaki Ekadashi attains Lord Vishnu's blessings, freedom from sins, and ultimately His eternal abode.`,
-                image: "/aa.webp?v=1",
+                image: "/amala.jpeg",
               },
               {
                 id: 2,

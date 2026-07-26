@@ -26,7 +26,7 @@ import {
   Layers,
   Bookmark
 } from "lucide-react";
-import axios from "axios";
+import axios from "@/lib/axios";
 
 const TRANSFORMATION_AREAS = [
   { title: "Time Management", icon: Clock, desc: "Organize priorities, eliminate procrastination, and master your daily schedules." },
@@ -139,7 +139,7 @@ export default function LifeCoachPage() {
     setError("");
 
     try {
-      const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000";
+      const backendUrl = "";
       await axios.post(`${backendUrl}/api/cms/leads`, {
         name: formData.name,
         email: formData.email,

@@ -27,6 +27,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.slidesharecdn.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'recovered.sfo3.cdn.digitaloceanspaces.com',
+      },
     ],
   },
   experimental: {
@@ -62,6 +70,14 @@ const nextConfig = {
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=2592000' },
         ],
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://127.0.0.1:5000/api/:path*',
       },
     ];
   },

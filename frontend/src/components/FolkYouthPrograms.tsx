@@ -19,17 +19,23 @@ export default function FolkYouthPrograms() {
   }, [isPaused, totalSlides]);
 
   return (
-    <section className="py-16 sm:py-24 bg-[#fbf6f0] select-none">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
+    <section className="py-16 sm:py-24 bg-[#fbf6f0] relative overflow-hidden select-none">
+      {/* Animated Background Blobs for Liquid Glass Effect */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-300/30 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-pulse" style={{ animationDuration: '8s' }}></div>
+      <div className="absolute top-20 right-1/4 w-[400px] h-[400px] bg-amber-300/30 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-pulse" style={{ animationDuration: '10s', animationDelay: '2s' }}></div>
+      <div className="absolute -bottom-32 left-1/3 w-[600px] h-[600px] bg-cyan-300/20 rounded-full mix-blend-multiply filter blur-[100px] opacity-70 animate-pulse" style={{ animationDuration: '12s', animationDelay: '4s' }}></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-[42px] font-extrabold text-[#0a3d73] tracking-tight uppercase mb-4">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12 relative">
+          <h2 className="text-3xl sm:text-4xl md:text-[42px] font-extrabold text-[#0a3d73] tracking-tight uppercase mb-4 drop-shadow-sm">
             Youth Programs
           </h2>
-          <div className="w-24 h-1 bg-[#cca75b] mx-auto rounded-full" />
+          <div className="w-24 h-1 bg-gradient-to-r from-[#cca75b] to-[#e6c875] mx-auto rounded-full shadow-sm" />
         </div>
 
-        <div className="relative rounded-[32px] sm:rounded-[40px] bg-gradient-to-br from-[#DFF0F8] via-[#E2F2FA] to-[#D5EBF6] border border-[#BCE1F1] shadow-2xl overflow-hidden">
+        {/* Liquid Glass Wrapper */}
+        <div className="relative rounded-[32px] sm:rounded-[40px] bg-white/40 backdrop-blur-2xl border border-white/60 shadow-[0_8px_32px_0_rgba(10,61,115,0.08)] overflow-hidden">
           
           {/* Horizontal Sliding Track */}
           <div
@@ -77,21 +83,21 @@ export default function FolkYouthPrograms() {
                 <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed mb-6">
                   Unlock your highest potential through practical Vedic wisdom, meditation techniques, and mind control from the Bhagavad Gita. Specially designed for young professionals and students.
                 </p>
-                <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-semibold text-gray-800 mb-6">
-                  <span className="flex items-center gap-1.5 bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
-                    <span className="text-amber-500">★</span> 4.9 Rated
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm font-bold text-gray-800 mb-8">
+                  <span className="flex items-center gap-1.5 bg-white/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
+                    <span className="text-amber-500 text-lg leading-none -mt-0.5">★</span> 4.9 Rated
                   </span>
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
+                  <span className="bg-white/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
                     Every Sunday
                   </span>
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
+                  <span className="bg-white/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
                     Free Entry & Feast
                   </span>
                 </div>
                 <div>
                   <Link
                     href="/youth"
-                    className="inline-flex items-center gap-2 rounded-full border border-gray-400/80 bg-white hover:bg-gray-50 text-gray-900 font-bold px-6 py-2.5 text-sm shadow-sm transition-all"
+                    className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-[#0a3d73] to-[#125ba3] hover:from-[#082f59] hover:to-[#0a3d73] text-white font-bold px-8 py-3.5 text-sm shadow-lg shadow-blue-900/20 transition-all hover:scale-[1.02] active:scale-95"
                   >
                     See details <ArrowRight className="w-4 h-4" />
                   </Link>
@@ -138,21 +144,21 @@ export default function FolkYouthPrograms() {
                 <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed mb-6">
                   Immerse yourself every Sunday from 4 PM onwards: Vedic Workshop, Standout Leadership Talk, Soulful Musical Harmony, and a Sanctified Dinner Prasadam Feast.
                 </p>
-                <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-semibold text-gray-800 mb-6">
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm font-bold text-gray-800 mb-8">
+                  <span className="bg-white/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
                     4:00 PM to 8:00 PM
                   </span>
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
+                  <span className="bg-white/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
                     4 Tracks Included
                   </span>
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
+                  <span className="bg-white/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
                     Free Dinner
                   </span>
                 </div>
                 <div>
                   <Link
                     href="/youth"
-                    className="inline-flex items-center gap-2 rounded-full border border-gray-400/80 bg-white hover:bg-gray-50 text-gray-900 font-bold px-6 py-2.5 text-sm shadow-sm transition-all"
+                    className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-[#0a3d73] to-[#125ba3] hover:from-[#082f59] hover:to-[#0a3d73] text-white font-bold px-8 py-3.5 text-sm shadow-lg shadow-blue-900/20 transition-all hover:scale-[1.02] active:scale-95"
                   >
                     See details <ArrowRight className="w-4 h-4" />
                   </Link>
@@ -186,21 +192,21 @@ export default function FolkYouthPrograms() {
                 <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed mb-6">
                   Step away from stress and anxiety. Build genuine friendships, join weekend spiritual retreats, and grow in an atmosphere of devotion, joy, and conscious living.
                 </p>
-                <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-semibold text-gray-800 mb-6">
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm font-bold text-gray-800 mb-8">
+                  <span className="bg-white/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
                     1000+ Youth Members
                   </span>
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
+                  <span className="bg-white/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
                     Weekly Sessions
                   </span>
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
+                  <span className="bg-white/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
                     Life Coaching
                   </span>
                 </div>
                 <div>
                   <Link
                     href="/youth"
-                    className="inline-flex items-center gap-2 rounded-full border border-gray-400/80 bg-white hover:bg-gray-50 text-gray-900 font-bold px-6 py-2.5 text-sm shadow-sm transition-all"
+                    className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-[#0a3d73] to-[#125ba3] hover:from-[#082f59] hover:to-[#0a3d73] text-white font-bold px-8 py-3.5 text-sm shadow-lg shadow-blue-900/20 transition-all hover:scale-[1.02] active:scale-95"
                   >
                     See details <ArrowRight className="w-4 h-4" />
                   </Link>

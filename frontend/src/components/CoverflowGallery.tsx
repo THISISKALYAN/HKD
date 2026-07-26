@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { useCms } from '@/components/CmsContext';
 
-const galleryItems = Array.from({ length: 29 }, (_, i) => ({
+const DEFAULT_GALLERY = Array.from({ length: 29 }, (_, i) => ({
   id: i + 1,
   src: `/Photo from Vishwas Murthy(${i + 1}).jpg`,
   title: 'Hare Krishna Dehradun',
@@ -12,21 +13,37 @@ const galleryItems = Array.from({ length: 29 }, (_, i) => ({
   pos: 'object-center'
 }));
 
-const TOTAL = galleryItems.length;
-
-function getOffset(index: number, current: number) {
-  let off = ((index - current) % TOTAL + TOTAL) % TOTAL;
-  if (off > Math.floor(TOTAL / 2)) off -= TOTAL;
+function getOffset(index: number, current: number, total: number) {
+  let off = ((index - current) % total + total) % total;
+  if (off > Math.floor(total / 2)) off -= total;
   return off;
 }
 
 export default function CoverflowGallery() {
+  const { pageContent } = useCms();
+  
+  const galleryItems = useMemo(() => {
+    const cmsGallery = pageContent.home?.templeGallery;
+    if (cmsGallery && cmsGallery.length > 0) {
+      return cmsGallery.map((url: string, idx: number) => ({
+        id: idx + 1,
+        src: url,
+        title: 'Hare Krishna Dehradun',
+        subtitle: `Event Highlights ${idx + 1}`,
+        pos: 'object-center'
+      }));
+    }
+    return DEFAULT_GALLERY;
+  }, [pageContent.home?.templeGallery]);
+
+  const TOTAL = galleryItems.length;
+
   const [current, setCurrent]           = useState(0);
   const [isPaused, setIsPaused]         = useState(false);
   const [lightbox, setLightbox]         = useState<string | null>(null);
 
-  const prev = useCallback(() => setCurrent(p => (p - 1 + TOTAL) % TOTAL), []);
-  const next = useCallback(() => setCurrent(p => (p + 1) % TOTAL),          []);
+  const prev = useCallback(() => setCurrent(p => (p - 1 + TOTAL) % TOTAL), [TOTAL]);
+  const next = useCallback(() => setCurrent(p => (p + 1) % TOTAL), [TOTAL]);
 
   // Auto-scroll every 3.5 s
   useEffect(() => {
@@ -51,15 +68,15 @@ export default function CoverflowGallery() {
             <span className="uppercase tracking-[0.2em] font-bold text-xs sm:text-sm">Glimpses</span>
             <div className="h-px w-10 bg-current"></div>
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#3b2b2f] tracking-tight text-center">
+          <h2 className="text-4xl md:text-5xl lg:text-[56px] font-section-heading font-medium leading-[1.1] text-[#3b2b2f] tracking-tight text-center drop-shadow-sm">
             Temple <span className="text-[#d4af37]">Gallery</span>
           </h2>
         </div>
 
         {/* ── Coverflow track ────────────────────── */}
         <div className="relative h-[220px] sm:h-[280px] md:h-[360px] lg:h-[420px] flex items-center justify-center">
-          {galleryItems.map((item, idx) => {
-            const off    = getOffset(idx, current);
+          {galleryItems.map((item: any, idx: number) => {
+            const off    = getOffset(idx, current, TOTAL);
             const absOff = Math.abs(off);
 
             // Only render center + immediate neighbours + one more each side

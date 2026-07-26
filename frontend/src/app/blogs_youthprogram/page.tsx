@@ -44,7 +44,7 @@ const YOUTH_BLOG_DATA = [
       avatar: "AS"
     },
     excerpt: "Discover how ancient Vedic psychology provides actionable, scientific tools to detach from exam outcome anxiety and master emotional equilibrium amidst competitive stress.",
-    image: "/workshops/lifecoach/coaching-hero-v2.jpg",
+    image: "https://recovered.sfo3.cdn.digitaloceanspaces.com/media/15844/Anxiety-disorders-(1).jpg?v=1722503273",
     content: `When Arjuna stood on the battlefield of Kurukshetra right before the ultimate test of his life, overwhelmed by grief, confusion, and anxiety, he experienced what modern clinical psychology defines as acute emotional and cognitive burnout. His limbs trembled, his bow slipped from his hand, and his mind was reeling.
 
 Lord Krishna's response in the Bhagavad-gita serves as the world's most comprehensive psychological manual for resilience, mental poise, and emotional mastery.

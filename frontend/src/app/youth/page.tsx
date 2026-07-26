@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Menu, X, ChevronLeft, ChevronRight, Pause, Play, BookOpen, Mic, Music, Utensils, Sparkles, User, Mail, Phone, Calendar, CheckCircle2, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
-import axios from 'axios';
+import axios from '@/lib/axios';
 import FolkNavbar from '@/components/FolkNavbar';
 
 const Reveal = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
@@ -142,7 +142,7 @@ export default function YouthFOLKPage() {
     setSending(true);
     const finalTargetId = program === 'Workshop' ? `Workshop: ${workshopType}` : program;
     try {
-      const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000';
+      const backendUrl = "";
       await axios.post(`${backendUrl}/api/cms/leads`, {
         name, email, phone,
         interestType: 'folk_registration',

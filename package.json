@@ -1,6 +1,16 @@
 {
+  "name": "hkd-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run install:all && concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install"
+  },
   "dependencies": {
     "animejs": "^4.4.1",
+    "concurrently": "^8.2.2",
     "framer-motion": "^12.40.0"
   }
 }
