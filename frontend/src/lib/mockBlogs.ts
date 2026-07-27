@@ -131,7 +131,7 @@ You can celebrate significant life occasions—such as birthdays, wedding annive
     authorName: "HKM Admin",
     createdAt: "May 14, 2026",
     excerpt: "Cows hold a sacred place in Vedic tradition and are dear to Lord Krishna. Explore our Gaushala initiatives providing lifelong shelter and medical care.",
-    coverImage: "https://hkmdehradun.org/live-site/assets/12/gau-seva-banner.png",
+    coverImage: "https://iskconmumbaipull-21250.kxcdn.com/web/image/2314-6e6f1f25/gau3.webp",
     published: true,
     content: `GAU SEVA: SACRED COW PROTECTION INITIATIVE
 

@@ -113,7 +113,7 @@ Join us in this noble cause. Your contribution, no matter how small, ensures tha
     authorName: "HKM Admin",
     createdAt: "May 05, 2026",
     excerpt: "Cows are sacred and very dear to Lord Krishna. Discover how we protect and provide lifelong care to cows at our Gaushala.",
-    coverImage: "https://hkmdehradun.org/live-site/assets/12/gau-seva.png",
+    coverImage: "https://iskconmumbaipull-21250.kxcdn.com/web/image/2314-6e6f1f25/gau3.webp",
     published: true,
     content: `GAU SEVA: THE SPIRITUAL SIGNIFICANCE OF SERVING MOTHER COW
 
