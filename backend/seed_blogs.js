@@ -173,7 +173,7 @@ By applying these timeless principles, we can navigate the challenges of modern 
     authorName: "HKM Admin",
     createdAt: "August 20, 2026",
     excerpt: "Join the most ecstatic celebration of the year marking the appearance of Lord Sri Krishna, featuring grand kirtans and midnight feasts.",
-    coverImage: "https://hkmdehradun.org/live-site/assets/12/janmashtami.png",
+    coverImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSifUgNN81-ateX-Kjn4ZH2AoRBO53EoKFEiSypT-LTBzbg5fBSe-KFBhk&s=10",
     published: true,
     content: `SRI KRISHNA JANMASTHAMI: CELEBRATING THE SUPREME APPEARANCE
 

@@ -206,7 +206,7 @@ Hare Krishna Movement Dehradun conducts specialized youth workshops under the FO
     authorName: "HKM Admin",
     createdAt: "August 20, 2026",
     excerpt: "Immerse in the grandest celebration of the year with midnight Aarti, continuous Kirtans, 108 bhoga offerings, and joyful cultural performances.",
-    coverImage: "https://hkmdehradun.org/live-site/assets/12/gau-seva-banner.png",
+    coverImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSifUgNN81-ateX-Kjn4ZH2AoRBO53EoKFEiSypT-LTBzbg5fBSe-KFBhk&s=10",
     published: true,
     content: `SRI KRISHNA JANMASTHAMI: CELEBRATING THE SUPREME APPEARANCE
 

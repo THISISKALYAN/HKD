@@ -120,7 +120,7 @@ export default function AdminDashboard() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
         <div>
           <h1 className="text-2xl font-black text-gray-900 tracking-tight">Dashboard Overview</h1>
-          <p className="text-base font-medium text-gray-500 mt-1">Welcome back, {user?.name}</p>
+          <p className="text-base font-medium text-gray-500 mt-1">Hare Krishna, {user?.name}</p>
         </div>
         
         <div className="flex flex-wrap items-center gap-3">
