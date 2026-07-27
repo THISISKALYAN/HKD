@@ -17,7 +17,7 @@ async function run() {
     console.log('Blog found in database');
     const doc = snapshot.docs[0];
     await doc.ref.update({
-      coverImage: '/gita.webp'
+      coverImage: 'https://bestmindbh.com/wp-content/uploads/tms-for-anxiety.webp'
     });
     console.log('Blog image updated successfully in database.');
   }

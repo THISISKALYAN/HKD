@@ -166,7 +166,7 @@ You can become an active part of this noble mission by adopting a cow, sponsorin
     authorName: "HKM Admin",
     createdAt: "July 12, 2026",
     excerpt: "How ancient Vedic psychology provides actionable, scientific tools to detach from exam and career anxiety and master emotional equilibrium.",
-    coverImage: "/gita.webp",
+    coverImage: "https://bestmindbh.com/wp-content/uploads/tms-for-anxiety.webp",
     published: true,
     content: `OVERCOMING ANXIETY AND BURNOUT: LESSONS FROM BHAGAVAD-GITA FOR YOUTH
 
