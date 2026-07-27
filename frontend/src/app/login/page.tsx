@@ -118,7 +118,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white shadow-sm hover:bg-gray-800 transition-all rounded-[14px] px-6 py-3.5 text-[15px] font-bold disabled:opacity-70"
+              className="w-full flex items-center justify-center py-3.5 px-4 border border-transparent rounded-[14px] shadow-sm text-[15px] font-bold text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-all disabled:opacity-70 mt-6"
             >
               {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
               Sign In to Dashboard
@@ -146,7 +146,7 @@ export default function LoginPage() {
               <button 
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white shadow-sm hover:bg-gray-800 transition-all rounded-[14px] px-6 py-3.5 text-[15px] font-bold disabled:opacity-70"
+                className="w-full flex items-center justify-center py-3.5 px-4 border border-transparent rounded-[14px] shadow-sm text-[15px] font-bold text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-all disabled:opacity-70 mt-6"
               >
                 {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
                 Verify & Sign In
