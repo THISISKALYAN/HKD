@@ -69,6 +69,7 @@ const MODULES = [
      setMfaSecret(res.data.secret);
      setMfaSetupStep('setup');
    } catch (err: any) {
+     console.error('MFA setup frontend error:', err);
      setMfaMsg({ text: 'Failed to initiate MFA setup.', type: 'error' });
    } finally {
      setIsMfaLoading(false);
