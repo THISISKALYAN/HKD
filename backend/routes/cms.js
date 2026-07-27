@@ -33,7 +33,7 @@ router.post('/auth/login', authLimiter, async (req, res) => {
     // If user doesn't exist in Firestore, check if they are the default admin
     if (usersSnapshot.empty) {
       const defaultAdminEmail = process.env.ADMIN_EMAIL || 'admin@hkd.org';
-      const defaultAdminPass = process.env.ADMIN_PASSWORD || 'Krishna108';
+      const defaultAdminPass = process.env.ADMIN_PASSWORD || 'harekrishna@001';
       
       if (email === defaultAdminEmail && password === defaultAdminPass) {
         // Bootstrap: Create the default admin in Firestore permanently
