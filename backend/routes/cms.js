@@ -170,7 +170,7 @@ router.post('/auth/mfa/verify', authLimiter, async (req, res) => {
 /**
  * POST /api/cms/auth/mfa/setup
  */
-router.post('/auth/mfa/setup', authenticateCms, async (req, res) => {
+router.post('/auth/mfa/setup', authenticateCms(), async (req, res) => {
   try {
     const secret = authenticator.generateSecret();
     const otpauth = authenticator.keyuri(req.user.email, 'HKD CMS', secret);
@@ -189,7 +189,7 @@ router.post('/auth/mfa/setup', authenticateCms, async (req, res) => {
 /**
  * POST /api/cms/auth/mfa/enable
  */
-router.post('/auth/mfa/enable', authenticateCms, async (req, res) => {
+router.post('/auth/mfa/enable', authenticateCms(), async (req, res) => {
   const { code } = req.body;
   try {
     const userDoc = await db.collection('users').doc(req.user.uid).get();
