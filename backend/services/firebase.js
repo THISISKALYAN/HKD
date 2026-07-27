@@ -29,7 +29,7 @@ try {
 } catch (error) {
   console.error(`[FATAL ERROR] Firebase Initialization Failed: ${error.message}`);
   console.error('Please ensure FIREBASE_SERVICE_ACCOUNT_KEY is set correctly in your backend .env file.');
-  process.exit(1); // Force exit if database connection fails
+  // Do not force exit so the health check can still pass and other endpoints can return 500 cleanly
 }
 
 module.exports = {
