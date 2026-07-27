@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
-  const { login } = useCms();
+  const { login, verifyMfa } = useCms();
   const router = useRouter();
   
   const [email, setEmail] = useState('');
@@ -14,6 +14,11 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  // MFA states
+  const [mfaStep, setMfaStep] = useState(false);
+  const [mfaCode, setMfaCode] = useState('');
+  const [tempToken, setTempToken] = useState('');
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,10 +33,33 @@ export default function LoginPage() {
     setIsLoading(false);
 
     if (result.success) {
-      // Redirect back home with administration session initialized
-      router.push('/admin');
+      if (result.mfaRequired) {
+        setTempToken(result.tempToken || '');
+        setMfaStep(true);
+      } else {
+        router.push('/admin');
+      }
     } else {
       setErrorMsg(result.error || 'Invalid administrative email address or password.');
+    }
+  };
+
+  const handleMfaVerify = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!mfaCode) {
+      setErrorMsg('Please enter your MFA code.');
+      return;
+    }
+    setErrorMsg('');
+    setIsLoading(true);
+
+    const result = await verifyMfa(tempToken, mfaCode);
+    setIsLoading(false);
+
+    if (result.success) {
+      router.push('/admin');
+    } else {
+      setErrorMsg(result.error || 'Invalid MFA code.');
     }
   };
 
@@ -55,8 +83,9 @@ export default function LoginPage() {
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
+        {!mfaStep ? (
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
             <input
               type="email"
               required
@@ -92,11 +121,46 @@ export default function LoginPage() {
                 disabled={isLoading}
                 className="primary-button flex items-center justify-center gap-2"
               >
-                {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'AUTHENTICATION'}
+                {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
+                Sign In to Dashboard
               </button>
             </div>
+          </div>
+        </form>
+        ) : (
+          <form onSubmit={handleMfaVerify} className="space-y-4">
+            <p className="text-[14px] text-gray-600 mb-4">
+              Please enter the 6-digit code from your Authenticator app.
+            </p>
+            <div>
+              <input
+                type="text"
+                placeholder="000000"
+                value={mfaCode}
+                onChange={(e) => setMfaCode(e.target.value)}
+                maxLength={6}
+                className="w-full px-4 py-3.5 bg-white border border-gray-200 rounded-[14px] text-[15px] focus:outline-none focus:ring-2 focus:ring-[#FF4655]/20 focus:border-[#FF4655] transition-all placeholder:text-gray-400 text-center tracking-widest font-mono text-lg"
+                required
+              />
+            </div>
+            
+            <div className="pt-2">
+              <div className="button-borders w-full">
+                <button 
+                  type="submit"
+                  disabled={isLoading}
+                  className="primary-button flex items-center justify-center gap-2"
+                >
+                  {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
+                  Verify & Sign In
+                </button>
+              </div>
+            </div>
+          </form>
+        )}
 
-            <style>{`
+        {/* Global Styles for Button */}
+        <style jsx global>{`
               .primary-button {
                font-family: 'Ropa Sans', sans-serif;
                color: white;
@@ -179,10 +243,7 @@ export default function LoginPage() {
                border-top: 0px;
                z-index: 0;
               }
-            `}</style>
-          </div>
-        </form>
-
+             `}</style>
       </div>
     </div>
   );

@@ -11,6 +11,8 @@ const { sendInquiryConfirmation } = require('../services/email');
 const cache = require('../services/cache');
 const { authLimiter } = require('../middleware/security');
 const { JWT_SECRET, hashPassword, authenticateCms } = require('../middleware/cmsAuth');
+const { authenticator } = require('otplib');
+const QRCode = require('qrcode');
 
 /**
  * POST /api/cms/auth/login
@@ -62,7 +64,11 @@ router.post('/auth/login', authLimiter, async (req, res) => {
           ip: req.ip
         });
 
-        return res.json({ token, user: { email, role: 'superadmin', name: 'Admin', permissions: [] } });
+        if (defaultAdminEmail === 'admin@hkd.org') {
+          // If you want to force MFA on default admin, you can set it here later
+        }
+
+        return res.json({ token, user: { email, role: 'superadmin', name: 'Admin', permissions: [], mfaEnabled: false } });
       }
       return res.status(401).json({ error: 'Invalid email address or password.' });
     }
@@ -76,6 +82,15 @@ router.post('/auth/login', authLimiter, async (req, res) => {
 
     if (userData.password !== hashPassword(password)) {
       return res.status(401).json({ error: 'Invalid email address or password.' });
+    }
+
+    if (userData.mfaEnabled) {
+      const tempToken = jwt.sign(
+        { uid, isMfaTemp: true },
+        JWT_SECRET,
+        { expiresIn: '5m' }
+      );
+      return res.json({ mfaRequired: true, tempToken });
     }
 
     const token = jwt.sign(
@@ -96,11 +111,108 @@ router.post('/auth/login', authLimiter, async (req, res) => {
 
     res.json({
       token,
-      user: { email: userData.email, role: userData.role, name: userData.name, permissions: userData.permissions || [] },
+      user: { email: userData.email, role: userData.role, name: userData.name, permissions: userData.permissions || [], mfaEnabled: userData.mfaEnabled || false },
     });
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Internal server error during login.' });
+  }
+});
+
+/**
+ * POST /api/cms/auth/mfa/verify
+ */
+router.post('/auth/mfa/verify', authLimiter, async (req, res) => {
+  const { tempToken, code } = req.body;
+  if (!tempToken || !code) return res.status(400).json({ error: 'Token and code required.' });
+
+  try {
+    const decoded = jwt.verify(tempToken, JWT_SECRET);
+    if (!decoded.isMfaTemp || !decoded.uid) {
+      return res.status(401).json({ error: 'Invalid token type.' });
+    }
+
+    const userDoc = await db.collection('users').doc(decoded.uid).get();
+    if (!userDoc.exists) return res.status(404).json({ error: 'User not found.' });
+
+    const userData = userDoc.data();
+    if (!userData.mfaEnabled || !userData.mfaSecret) {
+      return res.status(400).json({ error: 'MFA is not enabled for this user.' });
+    }
+
+    const isValid = authenticator.verify({ token: code, secret: userData.mfaSecret });
+    if (!isValid) return res.status(401).json({ error: 'Invalid MFA code.' });
+
+    const token = jwt.sign(
+      { email: userData.email, role: userData.role, name: userData.name, uid: decoded.uid, permissions: userData.permissions || [] },
+      JWT_SECRET,
+      { expiresIn: '8h' }
+    );
+
+    await db.collection('logs').add({
+      userName: userData.name,
+      userRole: userData.role,
+      action: 'Login (MFA)',
+      module: 'Auth',
+      createdAt: new Date(),
+      ip: req.ip
+    });
+
+    res.json({
+      token,
+      user: { email: userData.email, role: userData.role, name: userData.name, permissions: userData.permissions || [], mfaEnabled: userData.mfaEnabled || false },
+    });
+  } catch (err) {
+    res.status(401).json({ error: 'Invalid or expired temporary token.' });
+  }
+});
+
+/**
+ * POST /api/cms/auth/mfa/setup
+ */
+router.post('/auth/mfa/setup', authenticateCms, async (req, res) => {
+  try {
+    const secret = authenticator.generateSecret();
+    const otpauth = authenticator.keyuri(req.user.email, 'HKD CMS', secret);
+    const qrCodeUrl = await QRCode.toDataURL(otpauth);
+    
+    await db.collection('users').doc(req.user.uid).update({
+      tempMfaSecret: secret
+    });
+
+    res.json({ qrCodeUrl, secret });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to setup MFA.' });
+  }
+});
+
+/**
+ * POST /api/cms/auth/mfa/enable
+ */
+router.post('/auth/mfa/enable', authenticateCms, async (req, res) => {
+  const { code } = req.body;
+  try {
+    const userDoc = await db.collection('users').doc(req.user.uid).get();
+    const userData = userDoc.data();
+    
+    if (!userData.tempMfaSecret) {
+      return res.status(400).json({ error: 'MFA setup not initiated.' });
+    }
+
+    const isValid = authenticator.verify({ token: code, secret: userData.tempMfaSecret });
+    if (!isValid) {
+      return res.status(400).json({ error: 'Invalid MFA code.' });
+    }
+
+    await db.collection('users').doc(req.user.uid).update({
+      mfaSecret: userData.tempMfaSecret,
+      mfaEnabled: true,
+      tempMfaSecret: null
+    });
+
+    res.json({ success: true, message: 'MFA enabled successfully.' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to enable MFA.' });
   }
 });
 

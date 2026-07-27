@@ -8,10 +8,11 @@ interface CmsContextType {
   setEditMode: (mode: boolean) => void;
   role: 'superadmin' | 'admin' | 'staff' | null;
   setRole: (role: 'superadmin' | 'admin' | 'staff' | null) => void;
-  user: { name?: string; email?: string; role: string; permissions?: string[] } | null;
+  user: { name?: string; email?: string; role: string; permissions?: string[]; mfaEnabled?: boolean } | null;
   setUser: (user: any) => void;
   token: string | null;
-  login: (email: string, password: string) => Promise<{success: boolean; error?: string}>;
+  login: (email: string, password: string) => Promise<{success: boolean; mfaRequired?: boolean; tempToken?: string; error?: string}>;
+  verifyMfa: (tempToken: string, code: string) => Promise<{success: boolean; error?: string}>;
   logout: () => void;
   pageContent: Record<string, any>;
   fetchPageContent: (pageId: string) => Promise<void>;
@@ -33,7 +34,7 @@ export const useCms = () => {
 export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [editMode, setEditMode] = useState(false);
   const [role, setRole] = useState<'superadmin' | 'admin' | 'staff' | null>(null);
-  const [user, setUser] = useState<{ name?: string; email?: string; role: string; permissions?: string[] } | null>(null);
+  const [user, setUser] = useState<{ name?: string; email?: string; role: string; permissions?: string[]; mfaEnabled?: boolean } | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [pageContent, setPageContent] = useState<Record<string, any>>({});
   const [isLoading, setIsLoading] = useState(false);
@@ -67,12 +68,17 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setIsHydrated(true);
   }, []);
 
-  const login = async (email: string, password: string): Promise<{success: boolean; error?: string}> => {
+  const login = async (email: string, password: string): Promise<{success: boolean; mfaRequired?: boolean; tempToken?: string; error?: string}> => {
     try {
       const response = await apiClient.post(`/api/cms/auth/login`, {
         email,
         password
       });
+
+      if (response.data.mfaRequired) {
+        return { success: true, mfaRequired: true, tempToken: response.data.tempToken };
+      }
+
       const { token: jwtToken, user } = response.data;
       
       setToken(jwtToken);
@@ -84,6 +90,31 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return { success: true };
     } catch (error: any) {
       console.error("Sign-in failed:", error);
+      if (error.response?.data?.error) {
+        return { success: false, error: error.response.data.error };
+      }
+      return { success: false, error: "Network error: Unable to connect to backend server." };
+    }
+  };
+
+  const verifyMfa = async (tempToken: string, code: string): Promise<{success: boolean; error?: string}> => {
+    try {
+      const response = await apiClient.post(`/api/cms/auth/mfa/verify`, {
+        tempToken,
+        code
+      });
+
+      const { token: jwtToken, user } = response.data;
+      
+      setToken(jwtToken);
+      setRole(user.role);
+      setUser(user);
+      localStorage.setItem('hkd_admin_token', jwtToken);
+      localStorage.setItem('hkd_admin_role', user.role);
+      localStorage.setItem('hkd_admin_user', JSON.stringify(user));
+      return { success: true };
+    } catch (error: any) {
+      console.error("MFA verification failed:", error);
       if (error.response?.data?.error) {
         return { success: false, error: error.response.data.error };
       }
@@ -175,6 +206,7 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setUser,
       token,
       login,
+      verifyMfa,
       logout,
       pageContent,
       fetchPageContent,

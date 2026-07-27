@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useCms } from '@/components/CmsContext';
-import { Loader2, Plus, Edit, Trash2, Shield, User, Lock, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Loader2, Plus, Edit, Trash2, Shield, User, Lock, CheckCircle2, AlertCircle, QrCode, Smartphone } from 'lucide-react';
 import axios from '@/lib/axios';
 
 type Staff = {
@@ -24,8 +24,8 @@ const MODULES = [
  { id: 'blogs', label: 'Blogs' },
 ];
 
-export default function SettingsPage() {
- const { token, user, role } = useCms();
+ export default function SettingsPage() {
+  const { token, user, role, setUser } = useCms();
  const [activeTab, setActiveTab] = useState<'profile' | 'staff'>('profile');
  
  // Profile State
@@ -53,7 +53,48 @@ export default function SettingsPage() {
  const [savingStaff, setSavingStaff] = useState(false);
  const [staffMsg, setStaffMsg] = useState({ text: '', type: '' });
 
+ // MFA State
+ const [mfaSetupStep, setMfaSetupStep] = useState<'none' | 'setup'>('none');
+ const [mfaQrUrl, setMfaQrUrl] = useState('');
+ const [mfaSecret, setMfaSecret] = useState('');
+ const [mfaCode, setMfaCode] = useState('');
+ const [mfaMsg, setMfaMsg] = useState({ text: '', type: '' });
+ const [isMfaLoading, setIsMfaLoading] = useState(false);
 
+ const startMfaSetup = async () => {
+   setIsMfaLoading(true);
+   try {
+     const res = await axios.post('/api/cms/auth/mfa/setup', {}, {
+       headers: { Authorization: `Bearer ${token}` }
+     });
+     setMfaQrUrl(res.data.qrCodeUrl);
+     setMfaSecret(res.data.secret);
+     setMfaSetupStep('setup');
+   } catch (err: any) {
+     setMfaMsg({ text: 'Failed to initiate MFA setup.', type: 'error' });
+   } finally {
+     setIsMfaLoading(false);
+   }
+ };
+
+ const confirmMfaSetup = async (e: React.FormEvent) => {
+   e.preventDefault();
+   setIsMfaLoading(true);
+   try {
+     await axios.post('/api/cms/auth/mfa/enable', { code: mfaCode }, {
+       headers: { Authorization: `Bearer ${token}` }
+     });
+     setMfaMsg({ text: 'MFA enabled successfully.', type: 'success' });
+     setMfaSetupStep('none');
+     if (user) {
+       setUser({ ...user, mfaEnabled: true });
+     }
+   } catch (err: any) {
+     setMfaMsg({ text: err.response?.data?.error || 'Invalid code.', type: 'error' });
+   } finally {
+     setIsMfaLoading(false);
+   }
+ };
 
  const fetchStaff = React.useCallback(async () => {
  setLoadingStaff(true);
@@ -235,6 +276,75 @@ export default function SettingsPage() {
  Update Password
  </button>
  </form>
+
+ <div className="mt-12 pt-8 border-t border-gray-200/50">
+   <h3 className="text-lg font-black text-gray-900 mb-6 flex items-center gap-3">
+     <div className="p-2 bg-gray-100 rounded-[10px]">
+       <Smartphone className="w-4 h-4 text-gray-900" />
+     </div>
+     Multi-Factor Authentication (MFA)
+   </h3>
+   
+   <div className="bg-gray-50 border border-gray-200 rounded-[16px] p-6">
+     {user?.mfaEnabled ? (
+       <div className="flex items-center gap-4">
+         <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center shrink-0">
+           <Shield className="w-6 h-6" />
+         </div>
+         <div>
+           <h4 className="font-bold text-gray-900">MFA is Active</h4>
+           <p className="text-sm text-gray-600 mt-1">Your account is secured with a Time-Based One-Time Password (TOTP).</p>
+         </div>
+       </div>
+     ) : mfaSetupStep === 'none' ? (
+       <div>
+         <p className="text-sm text-gray-600 mb-4">Add an extra layer of security to your account by enabling Multi-Factor Authentication.</p>
+         <button onClick={startMfaSetup} disabled={isMfaLoading} className="flex items-center justify-center gap-2 bg-gray-900 text-white shadow-sm hover:bg-gray-800 transition-all rounded-[12px] px-6 py-2.5 text-sm font-bold disabled:opacity-70">
+           {isMfaLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <QrCode className="w-4 h-4" />}
+           Set up MFA
+         </button>
+       </div>
+     ) : (
+       <form onSubmit={confirmMfaSetup} className="space-y-6">
+         <p className="text-sm text-gray-600">Scan this QR code with your Authenticator app (e.g., Google Authenticator, Authy), then enter the 6-digit code below to verify.</p>
+         
+         <div className="bg-white p-4 inline-block rounded-xl border border-gray-200 shadow-sm">
+           {mfaQrUrl ? <img src={mfaQrUrl} alt="MFA QR Code" className="w-48 h-48" /> : <div className="w-48 h-48 bg-gray-100 animate-pulse rounded-lg"></div>}
+         </div>
+         
+         <div className="max-w-xs">
+           <label className="block text-sm font-bold text-gray-900 mb-2">Verification Code</label>
+           <input 
+             type="text" 
+             required
+             maxLength={6}
+             value={mfaCode}
+             onChange={e => setMfaCode(e.target.value)}
+             className="w-full px-4 py-3 bg-white border border-gray-200 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] rounded-[12px] focus:bg-white focus:ring-2 focus:ring-gray-200 focus:border-gray-300 outline-none text-center font-mono text-lg font-bold tracking-widest transition-all" 
+             placeholder="000000"
+           />
+         </div>
+         
+         {mfaMsg.text && (
+           <div className={`p-4 rounded-[12px] text-sm flex items-center gap-3 border shadow-sm ${mfaMsg.type === 'success' ? 'bg-green-50/80 text-green-700 border-green-200/50' : 'bg-red-50/80 text-red-600 border-red-200/50'}`}>
+             {mfaMsg.type === 'success' ? <CheckCircle2 className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
+             <span className="font-bold">{mfaMsg.text}</span>
+           </div>
+         )}
+         
+         <div className="flex items-center gap-3">
+           <button type="submit" disabled={isMfaLoading} className="flex items-center justify-center gap-2 bg-gray-900 text-white shadow-sm hover:bg-gray-800 transition-all rounded-[12px] px-6 py-2.5 text-sm font-bold disabled:opacity-70">
+             {isMfaLoading && <Loader2 className="w-4 h-4 animate-spin" />}
+             Verify and Enable
+           </button>
+           <button type="button" onClick={() => setMfaSetupStep('none')} className="px-6 py-2.5 text-sm font-bold text-gray-600 hover:text-gray-900 transition-colors">
+             Cancel
+           </button>
+         </div>
+       </form>
+     )}
+   </div>
+ </div>
  </div>
  )}
 
