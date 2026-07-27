@@ -6,7 +6,9 @@ import { Image as ImageIcon, Play, X, Sparkles } from 'lucide-react';
 export default function GalleryPage() {
   const [activeMedia, setActiveMedia] = useState<string | null>(null);
 
-  const mediaItems = [
+  type MediaItem = { type: string; url: string; title: string; thumb?: string };
+
+  const mediaItems: MediaItem[] = [
     { type: 'image', url: 'https://folknet.in/wp-content/uploads/2020/01/1G1A1661-compressor-400x284.jpg', title: 'Youth Program 1' },
     { type: 'image', url: 'https://folknet.in/wp-content/uploads/2020/01/1G1A2280-compressor-400x284.jpg', title: 'Youth Program 2' },
     { type: 'image', url: 'https://folknet.in/wp-content/uploads/2020/01/1G1A1888-compressor-400x284.jpg', title: 'Youth Program 3' },
