@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useCms } from '@/components/CmsContext';
-import { Loader2, Download } from 'lucide-react';
+import { Loader2, Download, Trash2, X } from 'lucide-react';
 import axios from '@/lib/axios';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
@@ -24,6 +24,11 @@ export default function LeadsDashboard() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  
+  const [deleteLeadId, setDeleteLeadId] = useState<string | null>(null);
+  const [deletePassword, setDeletePassword] = useState('');
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
 
   useEffect(() => {
     if (!token) return;
@@ -95,6 +100,29 @@ export default function LeadsDashboard() {
     doc.save("Inquiries.pdf");
   };
 
+  const handleDelete = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!deleteLeadId || !deletePassword) return;
+
+    setDeleteLoading(true);
+    setDeleteError('');
+
+    try {
+      await axios.delete(`/api/cms/leads/${deleteLeadId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        data: { password: deletePassword }
+      });
+      setLeads(leads.filter(l => l.id !== deleteLeadId));
+      setDeleteLeadId(null);
+      setDeletePassword('');
+    } catch (err: any) {
+      console.error(err);
+      setDeleteError(err.response?.data?.error || 'Failed to delete inquiry.');
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex h-[60vh] items-center justify-center">
@@ -146,6 +174,7 @@ export default function LeadsDashboard() {
                 <th className="px-6 py-4">Interest / Target</th>
                 <th className="px-6 py-4">Date</th>
                 <th className="px-6 py-4">Message</th>
+                <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -171,11 +200,20 @@ export default function LeadsDashboard() {
                   <td className="px-6 py-4 text-xs font-medium text-gray-600 max-w-xs truncate" title={lead.message}>
                     {lead.message || '-'}
                   </td>
+                  <td className="px-6 py-4 text-right">
+                    <button
+                      onClick={() => setDeleteLeadId(lead.id)}
+                      className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      title="Delete Inquiry"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </td>
                 </tr>
               ))}
               {leads.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
+                  <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
                     No leads found.
                   </td>
                 </tr>
@@ -184,6 +222,64 @@ export default function LeadsDashboard() {
           </table>
         </div>
       </div>
+      
+      {deleteLeadId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm">
+          <div className="bg-white rounded-[24px] shadow-2xl w-full max-w-md overflow-hidden">
+            <div className="flex justify-between items-center p-6 border-b border-gray-100">
+              <h2 className="text-xl font-bold text-gray-900 tracking-tight">Delete Inquiry</h2>
+              <button onClick={() => { setDeleteLeadId(null); setDeletePassword(''); setDeleteError(''); }} className="text-gray-400 hover:text-gray-600 transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <form onSubmit={handleDelete} className="p-6">
+              <p className="text-sm font-medium text-gray-600 mb-6">
+                Are you sure you want to delete this inquiry? This action cannot be undone. Please enter your password to confirm.
+              </p>
+              
+              <div className="mb-6">
+                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={deletePassword}
+                  onChange={(e) => setDeletePassword(e.target.value)}
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-[#004B2C]/20 focus:border-[#004B2C] outline-none text-sm transition-all"
+                  placeholder="Enter your password"
+                />
+              </div>
+
+              {deleteError && (
+                <div className="mb-6 p-3 bg-red-50 text-red-600 text-sm font-medium rounded-lg border border-red-100">
+                  {deleteError}
+                </div>
+              )}
+
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => { setDeleteLeadId(null); setDeletePassword(''); setDeleteError(''); }}
+                  className="px-5 py-2.5 text-sm font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors"
+                  disabled={deleteLoading}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-red-600 hover:bg-red-700 rounded-xl transition-colors disabled:opacity-50"
+                  disabled={deleteLoading || !deletePassword}
+                >
+                  {deleteLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                  {deleteLoading ? 'Deleting...' : 'Delete Permanently'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

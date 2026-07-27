@@ -539,6 +539,55 @@ router.get('/leads', authenticateCms(['superadmin', 'staff']), async (req, res) 
 });
 
 /**
+ * DELETE /api/cms/leads/:id
+ */
+router.delete('/leads/:id', authenticateCms(['superadmin', 'staff']), async (req, res) => {
+  const { id } = req.params;
+  const { password } = req.body;
+
+  if (!password) {
+    return res.status(400).json({ error: 'Password is required to delete an inquiry.' });
+  }
+
+  try {
+    // Verify password for the currently logged in user
+    const userDoc = await db.collection('users').doc(req.user.uid).get();
+    if (!userDoc.exists) {
+      return res.status(401).json({ error: 'User not found.' });
+    }
+
+    const userData = userDoc.data();
+    if (userData.password !== hashPassword(password)) {
+      return res.status(401).json({ error: 'Incorrect password.' });
+    }
+
+    // Password verified, delete the lead
+    const leadRef = db.collection('leads').doc(id);
+    const leadDoc = await leadRef.get();
+    if (!leadDoc.exists) {
+      return res.status(404).json({ error: 'Inquiry not found.' });
+    }
+
+    await leadRef.delete();
+
+    // Log the action
+    await db.collection('logs').add({
+      userName: req.user.name,
+      userRole: req.user.role,
+      action: `Deleted inquiry: ${leadDoc.data().email || id}`,
+      module: 'Leads',
+      createdAt: new Date(),
+      ip: req.ip
+    });
+
+    res.json({ success: true, message: 'Inquiry deleted successfully.' });
+  } catch (error) {
+    console.error('Error deleting lead:', error);
+    res.status(500).json({ error: 'Failed to delete inquiry.' });
+  }
+});
+
+/**
  * GET /api/cms/dashboard-stats
  */
 router.get('/dashboard-stats', authenticateCms(['superadmin', 'staff']), async (req, res) => {
