@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useCms } from '@/components/CmsContext';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
+import AnimatedButton from '@/components/AnimatedButton';
 
 export default function LoginPage() {
   const { login, verifyMfa } = useCms();
@@ -115,14 +116,13 @@ export default function LoginPage() {
           </div>
 
           <div className="pt-2">
-            <button
+            <AnimatedButton
               type="submit"
-              disabled={isLoading}
-              className="w-full flex items-center justify-center py-3.5 px-4 border border-transparent rounded-[14px] shadow-sm text-[15px] font-bold text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-all disabled:opacity-70 mt-6"
-            >
-              {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
-              Sign In to Dashboard
-            </button>
+              isLoading={isLoading}
+              text="Sign In"
+              loadingText="Signing In..."
+              className="mt-6"
+            />
           </div>
         </form>
         ) : (
@@ -143,14 +143,13 @@ export default function LoginPage() {
             </div>
             
             <div className="pt-2">
-              <button 
+              <AnimatedButton
                 type="submit"
-                disabled={isLoading}
-                className="w-full flex items-center justify-center py-3.5 px-4 border border-transparent rounded-[14px] shadow-sm text-[15px] font-bold text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-all disabled:opacity-70 mt-6"
-              >
-                {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
-                Verify & Sign In
-              </button>
+                isLoading={isLoading}
+                text="Verify & Sign In"
+                loadingText="Verifying..."
+                className="mt-6"
+              />
             </div>
           </form>
         )}
