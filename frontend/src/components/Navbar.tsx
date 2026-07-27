@@ -29,8 +29,7 @@ export const Navbar: React.FC = () => {
       pathname.startsWith('/life-coach') ||
       pathname.startsWith('/blogs_youthprogram') ||
       pathname.startsWith('/blogs-youth-program') ||
-      pathname.startsWith('/reels') ||
-      pathname.startsWith('/gallery'))
+      pathname.startsWith('/reels'))
   ) {
     return null;
   }

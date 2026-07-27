@@ -7,12 +7,20 @@ export default function GalleryPage() {
   const [activeMedia, setActiveMedia] = useState<string | null>(null);
 
   const mediaItems = [
-    { type: 'image', url: 'https://images.unsplash.com/photo-1570126688035-1e6adadbe99b?q=80&w=600', title: 'Protected Cows Feeding' },
-    { type: 'image', url: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?q=80&w=600', title: 'Sadhu Annadana Feeds' },
-    { type: 'image', url: 'https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=600', title: 'Radha Kund Sandhya Aarti' },
-    { type: 'image', url: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600', title: 'Yoga & Meditation Retreat' },
-    { type: 'image', url: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=600', title: 'Divine Temple Weddings' },
-    { type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', title: 'Ashram Sandhya Aarti Preview', thumb: 'https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=600' }
+    { type: 'image', url: 'https://folknet.in/wp-content/uploads/2020/01/1G1A1661-compressor-400x284.jpg', title: 'Youth Program 1' },
+    { type: 'image', url: 'https://folknet.in/wp-content/uploads/2020/01/1G1A2280-compressor-400x284.jpg', title: 'Youth Program 2' },
+    { type: 'image', url: 'https://folknet.in/wp-content/uploads/2020/01/1G1A1888-compressor-400x284.jpg', title: 'Youth Program 3' },
+    { type: 'image', url: 'https://folknet.in/wp-content/uploads/2019/11/IMG_1148-400x284.jpg', title: 'Youth Program 4' },
+    { type: 'image', url: 'https://folknet.in/wp-content/uploads/2019/11/IMG_1170-400x284.jpg', title: 'Youth Program 5' },
+    { type: 'image', url: 'https://folknet.in/wp-content/uploads/2019/11/IMG_1222-400x284.jpg', title: 'Youth Program 6' },
+    { type: 'image', url: 'https://folknet.in/wp-content/uploads/2019/11/DSC04183-400x284.jpg', title: 'Youth Program 7' },
+    { type: 'image', url: 'https://folknet.in/wp-content/uploads/2019/11/DSC04072-400x284.jpg', title: 'Youth Program 8' },
+    { type: 'image', url: 'https://folknet.in/wp-content/uploads/2019/11/DSC04089-400x284.jpg', title: 'Youth Program 9' },
+    { type: 'image', url: 'https://folknet.in/wp-content/uploads/2020/01/7X2A4606-400x284.jpg', title: 'Youth Program 10' },
+    { type: 'image', url: 'https://folknet.in/wp-content/uploads/2019/09/1G1A9392-400x284.jpg', title: 'Youth Program 11' },
+    { type: 'image', url: 'https://folknet.in/wp-content/uploads/2019/09/1G1A9408-400x284.jpg', title: 'Youth Program 12' },
+    { type: 'image', url: 'https://folknet.in/wp-content/uploads/2019/09/1G1A9427-400x284.jpg', title: 'Youth Program 13' },
+    { type: 'image', url: 'https://folknet.in/wp-content/uploads/2019/09/1G1A9541-400x284.jpg', title: 'Youth Program 14' }
   ];
 
   return (
@@ -21,9 +29,9 @@ export default function GalleryPage() {
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
         <span className="text-xs uppercase font-bold tracking-widest text-saffron-dark">Visual Memories</span>
-        <h1 className="text-4xl font-extrabold text-charcoal-900">Life at Radha Krishna Dham</h1>
+        <h1 className="text-4xl font-extrabold text-charcoal-900">Youth Program Gallery</h1>
         <p className="text-xs sm:text-sm text-charcoal-700">
-          A dynamic visual archive of daily temple prayers, rescued cow feedings, and sadhu prasadam distributions.
+          A dynamic visual archive of our youth programs, retreats, and interactive sessions.
         </p>
       </div>
 
@@ -41,10 +49,9 @@ export default function GalleryPage() {
               className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
             />
 
-            <div className="absolute inset-0 bg-gradient-to-t from-charcoal-900/80 to-transparent flex flex-col justify-end p-6">
-              <span className="text-white font-bold text-sm tracking-wide flex items-center gap-1.5">
-                {item.type === 'video' ? <Play className="w-4 h-4 fill-white text-saffron" /> : <ImageIcon className="w-4 h-4 text-saffron" />}
-                {item.title}
+            <div className="absolute inset-0 bg-charcoal-900/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span className="text-white bg-saffron/90 p-3 rounded-full flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform duration-300 shadow-lg">
+                <ImageIcon className="w-6 h-6" />
               </span>
             </div>
 

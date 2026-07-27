@@ -6,6 +6,7 @@ import { ArrowRight, Menu, X, ChevronLeft, ChevronRight, Pause, Play, BookOpen, 
 import Link from 'next/link';
 import axios from '@/lib/axios';
 import FolkNavbar from '@/components/FolkNavbar';
+import YouthGallery from '@/components/YouthGallery';
 
 const Reveal = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
   <motion.div
@@ -684,6 +685,9 @@ export default function YouthFOLKPage() {
           </div>
         </div>
       </section>
+
+      {/* ── YOUTH GALLERY SECTION ────────────────────────────────────────────── */}
+      <YouthGallery />
 
       {/* ── THE BIG PICTURE (STATS BANNER - LIQUID GLASS & COUNT-UP) ───────────────── */}
       <section className="py-20 md:py-28 bg-white relative overflow-hidden">
