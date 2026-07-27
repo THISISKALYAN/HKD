@@ -11,7 +11,7 @@ const { sendInquiryConfirmation } = require('../services/email');
 const cache = require('../services/cache');
 const { authLimiter } = require('../middleware/security');
 const { JWT_SECRET, hashPassword, authenticateCms } = require('../middleware/cmsAuth');
-const { authenticator } = require('otplib');
+const { generateSecret, generateURI, verifySync } = require('otplib');
 const QRCode = require('qrcode');
 
 /**
@@ -140,7 +140,8 @@ router.post('/auth/mfa/verify', authLimiter, async (req, res) => {
       return res.status(400).json({ error: 'MFA is not enabled for this user.' });
     }
 
-    const isValid = authenticator.verify({ token: code, secret: userData.mfaSecret });
+    const verifyResult = verifySync({ token: code, secret: userData.mfaSecret });
+    const isValid = verifyResult && verifyResult.valid;
     if (!isValid) return res.status(401).json({ error: 'Invalid MFA code.' });
 
     const token = jwt.sign(
@@ -172,8 +173,8 @@ router.post('/auth/mfa/verify', authLimiter, async (req, res) => {
  */
 router.post('/auth/mfa/setup', authenticateCms(), async (req, res) => {
   try {
-    const secret = authenticator.generateSecret();
-    const otpauth = authenticator.keyuri(req.user.email, 'HKD CMS', secret);
+    const secret = generateSecret();
+    const otpauth = generateURI({ accountName: req.user.email, issuer: 'HKD CMS', secret });
     const qrCodeUrl = await QRCode.toDataURL(otpauth);
     
     await db.collection('users').doc(req.user.uid).update({
@@ -182,6 +183,7 @@ router.post('/auth/mfa/setup', authenticateCms(), async (req, res) => {
 
     res.json({ qrCodeUrl, secret });
   } catch (error) {
+    console.error('MFA setup error:', error);
     res.status(500).json({ error: 'Failed to setup MFA.' });
   }
 });
@@ -199,7 +201,8 @@ router.post('/auth/mfa/enable', authenticateCms(), async (req, res) => {
       return res.status(400).json({ error: 'MFA setup not initiated.' });
     }
 
-    const isValid = authenticator.verify({ token: code, secret: userData.tempMfaSecret });
+    const verifyResult = verifySync({ token: code, secret: userData.tempMfaSecret });
+    const isValid = verifyResult && verifyResult.valid;
     if (!isValid) {
       return res.status(400).json({ error: 'Invalid MFA code.' });
     }
