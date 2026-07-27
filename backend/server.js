@@ -11,10 +11,6 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error('[FATAL] Unhandled Rejection at:', promise, 'reason:', reason);
 });
 
-process.on('uncaughtException', (err) => {
-  console.error('[FATAL] Uncaught Exception:', err);
-  process.exit(1);
-});
 
 dotenv.config();
 
@@ -189,7 +185,7 @@ app.use(async (req, res, next) => {
   next();
 });
 
-if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+if (!process.env.VERCEL) {
   initialize().then(() => {
     app.listen(PORT, () => {
       console.log(`[HKD Backend] Running on port ${PORT} | env: ${process.env.NODE_ENV || 'development'}`);
