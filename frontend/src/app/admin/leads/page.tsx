@@ -2,8 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { useCms } from '@/components/CmsContext';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Download } from 'lucide-react';
 import axios from '@/lib/axios';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+import * as XLSX from 'xlsx';
 
 type Lead = {
   id: string;
@@ -50,6 +53,48 @@ export default function LeadsDashboard() {
     return new Date(dateObj).toLocaleString();
   };
 
+  const exportToExcel = () => {
+    const exportData = leads.map(lead => ({
+      Name: lead.name,
+      Email: lead.email,
+      Phone: lead.phone,
+      'Interest Type': lead.interestType,
+      Target: lead.targetId,
+      Date: formatDate(lead.createdAt),
+      Message: lead.message || ''
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Inquiries");
+    XLSX.writeFile(workbook, "Inquiries.xlsx");
+  };
+
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Inquiries & Leads", 14, 15);
+    
+    const tableColumn = ["Name", "Contact Info", "Interest", "Date", "Message"];
+    const tableRows = leads.map(lead => [
+      lead.name,
+      `${lead.email}\n${lead.phone}`,
+      `${lead.interestType}\n${lead.targetId}`,
+      formatDate(lead.createdAt),
+      lead.message || '-'
+    ]);
+
+    (doc as any).autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 20,
+      theme: 'grid',
+      styles: { fontSize: 8, cellPadding: 2 },
+      headStyles: { fillColor: [0, 75, 44] }
+    });
+    
+    doc.save("Inquiries.pdf");
+  };
+
   if (loading) {
     return (
       <div className="flex h-[60vh] items-center justify-center">
@@ -68,9 +113,27 @@ export default function LeadsDashboard() {
 
   return (
     <div className="px-4 sm:px-6 max-w-[1600px] mx-auto pb-20 font-sans">
-      <div className="mb-8">
-        <h1 className="text-2xl font-black text-gray-900 tracking-tight mb-1">Inquiries & Leads</h1>
-        <p className="text-sm font-medium text-gray-500">View and manage all contact requests and volunteer signups.</p>
+      <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-black text-gray-900 tracking-tight mb-1">Inquiries & Leads</h1>
+          <p className="text-sm font-medium text-gray-500">View and manage all contact requests and volunteer signups.</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={exportToPDF}
+            className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 transition-colors rounded-[10px] px-4 py-2 text-sm font-bold border border-gray-200 shadow-sm"
+          >
+            <Download className="w-4 h-4" />
+            PDF
+          </button>
+          <button
+            onClick={exportToExcel}
+            className="flex items-center gap-2 bg-green-50 hover:bg-green-100 text-green-700 transition-colors rounded-[10px] px-4 py-2 text-sm font-bold border border-green-200 shadow-sm"
+          >
+            <Download className="w-4 h-4" />
+            Excel
+          </button>
+        </div>
       </div>
       
       <div className="bg-white rounded-[24px] shadow-sm border border-gray-200 overflow-hidden">
