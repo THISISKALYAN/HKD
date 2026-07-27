@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useCms } from '@/components/CmsContext';
 import { Loader2, Download, Trash2, X } from 'lucide-react';
 import axios from '@/lib/axios';
-import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 
 type Lead = {
@@ -88,7 +88,7 @@ export default function LeadsDashboard() {
       lead.message || '-'
     ]);
 
-    (doc as any).autoTable({
+    autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
       startY: 20,
