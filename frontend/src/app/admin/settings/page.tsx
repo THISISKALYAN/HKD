@@ -28,11 +28,9 @@ const MODULES = [
   const { token, user, role, setUser } = useCms();
  const [activeTab, setActiveTab] = useState<'profile' | 'staff'>('profile');
  
- // Profile State
- const [oldPassword, setOldPassword] = useState('');
- const [newPassword, setNewPassword] = useState('');
- const [profileMsg, setProfileMsg] = useState({ text: '', type: '' });
- const [savingProfile, setSavingProfile] = useState(false);
+  // Profile State
+  // Passwords are managed by developer only
+
 
  // Staff State
  const [staffList, setStaffList] = useState<Staff[]>([]);
@@ -115,23 +113,7 @@ const MODULES = [
   }, [activeTab, role, token, fetchStaff]);
 
 
- const handlePasswordChange = async (e: React.FormEvent) => {
- e.preventDefault();
- setSavingProfile(true);
- setProfileMsg({ text: '', type: '' });
- try {
- await axios.post('/api/cms/users/change-password', { oldPassword, newPassword }, {
- headers: { Authorization: `Bearer ${token}` }
- });
- setProfileMsg({ text: 'Password updated successfully.', type: 'success' });
- setOldPassword('');
- setNewPassword('');
- } catch (err: any) {
- setProfileMsg({ text: err.response?.data?.error || 'Failed to update password.', type: 'error' });
- } finally {
- setSavingProfile(false);
- }
- };
+
 
  const openAddModal = () => {
  setEditingStaff(null);
@@ -235,47 +217,20 @@ const MODULES = [
  </div>
  </div>
 
- <h3 className="text-lg font-black text-gray-900 mb-6 flex items-center gap-3">
- <div className="p-2 bg-gray-100 rounded-[10px]">
- <Lock className="w-4 h-4 text-gray-900 " />
- </div>
- Change Password
- </h3>
- <form onSubmit={handlePasswordChange} className="space-y-5">
- <div>
- <label className="block text-sm font-bold text-gray-900 mb-2">Current Password</label>
- <input 
- type="password" 
- required
- value={oldPassword}
- onChange={e => setOldPassword(e.target.value)}
- className="w-full px-4 py-3 bg-white border border-gray-200 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] rounded-[16px] focus:bg-white focus:ring-2 focus:ring-gray-200 focus:border-gray-300 outline-none text-sm font-medium transition-all text-gray-900 " 
- />
- </div>
- <div>
- <label className="block text-sm font-bold text-gray-900 mb-2">New Password (Min 8 chars)</label>
- <input 
- type="password" 
- required
- minLength={8}
- value={newPassword}
- onChange={e => setNewPassword(e.target.value)}
- className="w-full px-4 py-3 bg-white border border-gray-200 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] rounded-[16px] focus:bg-white focus:ring-2 focus:ring-gray-200 focus:border-gray-300 outline-none text-sm font-medium transition-all text-gray-900 " 
- />
- </div>
- 
- {profileMsg.text && (
- <div className={`p-4 rounded-[12px] text-sm flex items-center gap-3 border shadow-sm ${profileMsg.type === 'success' ? 'bg-green-50/80 text-green-700 border-green-200/50' : 'bg-red-50/80 text-red-600 border-red-200/50'}`}>
- {profileMsg.type === 'success' ? <CheckCircle2 className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
- <span className="font-bold">{profileMsg.text}</span>
- </div>
- )}
-
- <button disabled={savingProfile} type="submit" className="flex items-center justify-center w-full gap-2 bg-gray-900 text-white shadow-sm hover:bg-gray-800 transition-all transition-all rounded-[12px] px-6 py-3.5 text-sm font-bold disabled">
- {savingProfile && <Loader2 className="w-4 h-4 animate-spin" />}
- Update Password
- </button>
- </form>
+  <h3 className="text-lg font-black text-gray-900 mb-6 flex items-center gap-3">
+  <div className="p-2 bg-gray-100 rounded-[10px]">
+  <Lock className="w-4 h-4 text-gray-900 " />
+  </div>
+  Password Management
+  </h3>
+  <div className="bg-gray-50 border border-gray-200 rounded-[16px] p-6 flex flex-col items-center justify-center text-center">
+    <Shield className="w-8 h-8 text-gray-400 mb-3" />
+    <h4 className="font-bold text-gray-900 mb-1">Managed by Administrator</h4>
+    <p className="text-sm text-gray-600">
+      For security purposes, passwords can only be changed by the developer or system administrator.
+      Please contact support if you need to reset your credentials.
+    </p>
+  </div>
 
  <div className="mt-12 pt-8 border-t border-gray-200/50">
    <h3 className="text-lg font-black text-gray-900 mb-6 flex items-center gap-3">
