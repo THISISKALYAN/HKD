@@ -12,7 +12,15 @@ interface Message {
   quickLinks?: { label: string; href: string }[];
 }
 
-const KNOWLEDGE_BASE: { keywords: string[]; answer: string; links?: { label: string; href: string }[] }[] = [
+  {
+    keywords: ["hi", "hello", "hey", "hare krishna", "namaste", "pranam", "greetings", "good morning", "good evening", "good afternoon"],
+    answer: "Hare Krishna! 🙏 Welcome to Hare Krishna Movement Dehradun. How may I assist your spiritual journey or seva today?",
+    links: [
+      { label: "📞 Contact Info", href: "/#footer" },
+      { label: "🐮 Gau Seva", href: "/gau-seva" },
+      { label: "🍲 Annadana Seva", href: "/annadana-seva" }
+    ]
+  },
   {
     keywords: ["timing", "darshan", "time", "open", "schedule", "aarti", "timings"],
     answer: "Hare Krishna! 🙏 Temple timings are currently being updated. We will be updating them soon! Thank you.",
@@ -181,10 +189,10 @@ export default function AiChatbotWidget() {
     }
 
     return {
-      answer: `Hare Krishna! 🙏 Thank you for your inquiry about "${userQuery}". Our temple team is dedicated to serving you. You can connect with us directly or explore our Seva programs below.`,
+      answer: `Hare Krishna! 🙏 Thank you for reaching out to Hare Krishna Movement Dehradun. How may we assist your spiritual journey or seva today?`,
       links: [
-        { label: "Explore Seva Opportunities", href: "/donate" },
-        { label: "Contact Temple Team", href: "/volunteer#register-form" }
+        { label: "📞 Contact Info", href: "/#footer" },
+        { label: "Explore Seva Opportunities", href: "/donate" }
       ]
     };
   };
