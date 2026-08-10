@@ -17,10 +17,14 @@ const KNOWLEDGE_BASE: { keywords: string[]; answer: string; links?: { label: str
     keywords: ["hi", "hello", "hey", "hare krishna", "namaste", "pranam", "greetings", "good morning", "good evening", "good afternoon"],
     answer: "Hare Krishna! 🙏 Welcome to Hare Krishna Movement Dehradun. How may I assist your spiritual journey or seva today?",
     links: [
-      { label: "📞 Contact Info", href: "/#footer" },
+      { label: "📞 Contact Info", query: "Contact Info" },
       { label: "🐮 Gau Seva", href: "/gau-seva" },
       { label: "🍲 Annadana Seva", href: "/annadana-seva" }
     ]
+  },
+  {
+    keywords: ["contact", "contact info", "info", "phone", "mobile", "number", "prabhu", "call", "reach", "talk", "speak", "address", "location", "email", "mail"],
+    answer: "📍 Address:\nNear LP Villas, Suddhowala, Dehradun\n\n📞 Contact Numbers:\n• Hari Krishna Prabhu: +91 82968 75074\n• Anand Narthak Prabhu: +91 78950 68399\n• Janeshwar Prabhu: +91 81211 51508\n• Vasta vardhana Dasa: +91 97622 43256\n\n✉️ Email: contact@hkmdehradun.org"
   },
   {
     keywords: ["timing", "darshan", "time", "open", "schedule", "aarti", "timings"],
@@ -142,14 +146,6 @@ const KNOWLEDGE_BASE: { keywords: string[]; answer: string; links?: { label: str
       { label: "Privacy Policy", href: "/privacy" },
       { label: "Terms & Conditions", href: "/terms" }
     ]
-  },
-  {
-    keywords: ["email", "mail", "write", "send email", "email address"],
-    answer: "✉️ Official Email Address:\ncontact@hkmdehradun.org\n\nFeel free to send us an email for any queries, donation receipt requests, or seva bookings!"
-  },
-  {
-    keywords: ["contact", "phone", "mobile", "number", "prabhu", "call", "reach", "talk", "speak", "address", "location"],
-    answer: "📍 Address:\nNear LP Villas, Suddhowala, Dehradun\n\n📞 Contact Numbers:\n• Hari Krishna Prabhu: +91 82968 75074\n• Anand Narthak Prabhu: +91 78950 68399\n• Janeshwar Prabhu: +91 81211 51508\n• Vasta vardhana Dasa: +91 97622 43256\n\n✉️ Email: contact@hkmdehradun.org"
   }
 ];
 
