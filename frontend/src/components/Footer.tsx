@@ -82,7 +82,7 @@ export function Footer() {
       {/* Styles moved to globals.css for faster navigation */}
 
       {/* ── Background Temple (Positioned Higher Upside) ── */}
-      <div className="absolute z-0 pointer-events-none select-none hidden xl:block transition-all duration-500" style={{ width: '560px', right: '0%', bottom: '95px' }}>
+      <div className="absolute z-0 pointer-events-none select-none hidden xl:block transition-all duration-500" style={{ width: '560px', right: '0%', bottom: '120px' }}>
         <div className="relative w-full h-full">
           {/* Subtle gold ambient glow halo */}
           <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#eab308]/12 to-transparent blur-3xl rounded-full scale-95" />
