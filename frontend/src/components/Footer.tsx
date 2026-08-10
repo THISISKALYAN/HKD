@@ -81,7 +81,7 @@ export function Footer() {
       
       {/* Styles moved to globals.css for faster navigation */}
 
-      {/* ── Background Temple (Positioned Higher Upside) ── */}
+      {/* ── Background Temple (Seamlessly Blended Watermark) ── */}
       <div className="absolute z-0 pointer-events-none select-none hidden xl:block transition-all duration-500" style={{ width: '560px', right: '0%', bottom: '120px' }}>
         <div className="relative w-full h-full">
           {/* Subtle gold ambient glow halo */}
@@ -94,10 +94,10 @@ export function Footer() {
             className="w-full h-auto object-contain block transform origin-bottom hover:scale-[1.02] transition-transform duration-700"
             style={{
               mixBlendMode: 'multiply',
-              opacity: 0.6,
-              filter: 'sepia(0.6) saturate(1.4) brightness(0.92) contrast(0.95)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 20%), linear-gradient(to top, transparent 0%, black 15%)',
-              maskImage: 'linear-gradient(to right, transparent 0%, black 20%), linear-gradient(to top, transparent 0%, black 15%)',
+              opacity: 0.45,
+              filter: 'sepia(0.5) saturate(1.3) brightness(0.95)',
+              WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at 75% 50%, black 20%, transparent 78%)',
+              maskImage: 'radial-gradient(ellipse 80% 70% at 75% 50%, black 20%, transparent 78%)',
             }}
           />
         </div>
