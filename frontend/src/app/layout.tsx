@@ -64,8 +64,19 @@ export default function RootLayout({
           <Footer />
 
           {/* Floated Support Overlays */}
-          <script dangerouslySetInnerHTML={{ __html: `window.chtlConfig = { chatbotId: "2451993731" };` }} />
-          <script async data-id="2451993731" id="chtl-script" type="text/javascript" src="https://chatling.ai/js/embed.js" />
+          <Script
+            id="chatling-config"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `window.chtlConfig = { chatbotId: "2451993731" };`,
+            }}
+          />
+          <Script
+            id="chtl-script"
+            src="https://chatling.ai/js/embed.js"
+            data-id="2451993731"
+            strategy="afterInteractive"
+          />
 
           <SocialFloatWidget />
           <FloatingReelsWidget />
