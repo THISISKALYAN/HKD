@@ -2,18 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { 
-  Bot, 
-  X, 
-  Send, 
-  Sparkles, 
-  MessageSquare, 
-  Clock, 
-  HeartHandshake, 
-  BookOpen, 
-  ShieldCheck,
-  ChevronDown
-} from "lucide-react";
+import { Bot, X, Send } from "lucide-react";
 
 interface Message {
   id: string;
@@ -162,28 +151,32 @@ export default function AiChatbotWidget() {
   return (
     <>
       {/* ── FLOATING LAUNCHER BUTTON ── */}
-      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
         {!isOpen && (
-          <button
-            onClick={() => setIsOpen(true)}
-            className="group relative flex items-center gap-3 bg-[#072149] text-white px-5 py-3.5 rounded-full shadow-[0_10px_30px_rgba(7,33,73,0.35)] border border-amber-400/50 hover:scale-105 transition-all duration-300 cursor-pointer"
-          >
-            {/* Glowing Aura Ring */}
-            <span className="absolute -inset-1 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 opacity-30 group-hover:opacity-60 blur-md transition-opacity" />
-            
-            <div className="relative w-8 h-8 rounded-full bg-[#F5C518] text-[#072149] flex items-center justify-center font-bold shadow-md">
-              <Sparkles className="w-4 h-4 animate-pulse" />
+          <>
+            {/* Label badge above button */}
+            <div className="flex items-center gap-1.5 bg-[#072149] text-amber-300 text-[11px] font-bold tracking-wider px-3 py-1 rounded-full shadow-lg border border-amber-400/40">
+              <span className="flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+              </span>
+              Ask AI
             </div>
-            
-            <span className="relative text-sm font-extrabold tracking-wide text-amber-300">
-              Hare Krishna AI
-            </span>
 
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-            </span>
-          </button>
+            {/* Round Icon Button */}
+            <button
+              onClick={() => setIsOpen(true)}
+              className="group relative w-16 h-16 rounded-full bg-[#072149] shadow-[0_8px_30px_rgba(7,33,73,0.45)] border-2 border-amber-400/60 hover:scale-110 hover:border-amber-400 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center"
+            >
+              {/* Pulsing aura ring */}
+              <span className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400/30 to-transparent group-hover:from-amber-400/50 blur-sm transition-all duration-300" />
+
+              {/* Inner gold circle */}
+              <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-[#F5C518] to-amber-500 flex items-center justify-center shadow-inner">
+                <Bot className="w-5 h-5 text-[#072149]" strokeWidth={2.5} />
+              </div>
+            </button>
+          </>
         )}
       </div>
 
@@ -202,7 +195,7 @@ export default function AiChatbotWidget() {
               </div>
               <div>
                 <h3 className="font-extrabold text-base tracking-tight text-white flex items-center gap-1.5">
-                  Hare Krishna AI <Sparkles className="w-3.5 h-3.5 text-[#F5C518]" />
+                  Hare Krishna AI <span className="text-[#F5C518]">✨</span>
                 </h3>
                 <p className="text-[11px] text-amber-200/90 font-medium">
                   Temple Assistant &amp; Seva Guide
