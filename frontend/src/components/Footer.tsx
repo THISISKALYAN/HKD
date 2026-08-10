@@ -81,15 +81,24 @@ export function Footer() {
       
       {/* Styles moved to globals.css for faster navigation */}
 
-      {/* ── Background Temple ── */}
-      <div className="absolute z-10 pointer-events-none select-none hidden xl:block transition-all duration-500" style={{ width: '480px', right: '0%', bottom: '105px' }}>
+      {/* ── Background Temple (Integrated Watermark) ── */}
+      <div className="absolute z-0 pointer-events-none select-none hidden xl:block transition-all duration-500" style={{ width: '500px', right: '0%', bottom: '60px' }}>
         <div className="relative w-full h-full">
+          {/* Subtle gold ambient glow halo */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#eab308]/10 to-transparent blur-3xl rounded-full scale-95" />
           <Image
             src="/bottom_corner_side-removebg-preview.png"
-            alt="Temple"
-            width={480}
-            height={480}
-            className="w-full h-auto object-contain block opacity-100 transform origin-bottom hover:scale-[1.02] transition-transform duration-700"
+            alt="Temple Illustration"
+            width={500}
+            height={500}
+            className="w-full h-auto object-contain block transform origin-bottom hover:scale-[1.02] transition-transform duration-700"
+            style={{
+              mixBlendMode: 'multiply',
+              opacity: 0.5,
+              filter: 'sepia(0.6) saturate(1.4) brightness(0.92) contrast(0.95)',
+              WebkitMaskImage: 'radial-gradient(circle at 85% 45%, black 25%, transparent 80%)',
+              maskImage: 'radial-gradient(circle at 85% 45%, black 25%, transparent 80%)',
+            }}
           />
         </div>
       </div>
