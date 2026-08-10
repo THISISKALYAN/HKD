@@ -12,6 +12,7 @@ interface Message {
   quickLinks?: { label: string; href: string }[];
 }
 
+const KNOWLEDGE_BASE: { keywords: string[]; answer: string; links?: { label: string; href: string }[] }[] = [
   {
     keywords: ["hi", "hello", "hey", "hare krishna", "namaste", "pranam", "greetings", "good morning", "good evening", "good afternoon"],
     answer: "Hare Krishna! 🙏 Welcome to Hare Krishna Movement Dehradun. How may I assist your spiritual journey or seva today?",
