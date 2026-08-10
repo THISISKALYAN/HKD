@@ -12,6 +12,7 @@ import { Footer } from "@/components/Footer";
 
 const SocialFloatWidget = dynamic(() => import("@/components/SocialFloatWidget"), { ssr: false });
 const FloatingReelsWidget = dynamic(() => import("@/components/FloatingReelsWidget"), { ssr: false });
+const AiChatbotWidget = dynamic(() => import("@/components/AiChatbotWidget"), { ssr: false });
 
 export const metadata: Metadata = {
   title: "Hare Krishna Dharma Trust - Gau Seva & Annadana Seva",
@@ -80,6 +81,7 @@ export default function RootLayout({
 
           <SocialFloatWidget />
           <FloatingReelsWidget />
+          <AiChatbotWidget />
         </CmsProvider>
         </ThemeProvider>
       </body>
