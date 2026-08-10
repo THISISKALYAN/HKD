@@ -353,7 +353,7 @@ export default function Home() {
                   }}
                 >
                   <video
-                    src="/the.mp4"
+                    src="/1786349204091234.mp4"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     autoPlay
                     loop
@@ -438,7 +438,7 @@ export default function Home() {
                 </svg>
               </button>
               <video
-                src="/the.mp4"
+                src="/1786349204091234.mp4"
                 className="w-full h-full object-contain"
                 controls
                 autoPlay
