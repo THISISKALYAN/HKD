@@ -9,7 +9,7 @@ export default function FloatingReelsWidget() {
   if (pathname === '/reels') return null;
 
   return (
-    <Link href="/reels" className="fixed bottom-[75px] sm:bottom-[80px] right-4 sm:right-[18px] z-[40] hover:scale-110 transition-transform drop-shadow-xl group">
+    <Link href="/reels" className="fixed bottom-[100px] sm:bottom-[104px] right-6 z-[40] hover:scale-110 transition-transform drop-shadow-xl group">
       <div className="relative">
         {/* Glow effect on hover */}
         <div className="absolute inset-0 bg-white/20 blur-md rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>

@@ -154,10 +154,10 @@ export default function RefundPolicyPage() {
               📧 contact@hkmdehradun.org
             </a>
             <a
-              href="tel:+919398710996"
+              href="tel:+918296875074"
               className="inline-flex items-center gap-2 border-2 border-[#0f4c81] text-[#0f4c81] px-6 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors"
             >
-              📞 +91 9398710996
+              📞 +91 82968 75074
             </a>
           </div>
         </div>

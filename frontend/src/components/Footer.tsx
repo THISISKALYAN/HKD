@@ -134,14 +134,28 @@ export function Footer() {
             <div className="text-gray-500 text-[16.5px] leading-relaxed mb-4 max-w-full font-medium space-y-3">
               <p>
                 <strong>Address:</strong><br />
-                Khasra No. 801, Suddhowala,<br />
-                Near IIM Kashipur Satellite Campus,<br />
-                Dehradun 248015
+                Near LP Villas, Suddhowala,<br />
+                Dehradun
               </p>
-              <p>
-                <strong>Phone:</strong> +91 9398710996<br />
-                <strong>Email:</strong> contact@hkmdehradun.org
-              </p>
+              <div>
+                <strong>Phone / Contacts:</strong>
+                <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[14.5px] mt-1.5">
+                  <span className="font-medium">Hari Krishna Prabhu:</span>
+                  <a href="tel:+918296875074" className="hover:text-[#0f4c81] transition-colors whitespace-nowrap">+91 82968 75074</a>
+                  
+                  <span className="font-medium">Anand Narthak Prabhu:</span>
+                  <a href="tel:+917895068399" className="hover:text-[#0f4c81] transition-colors whitespace-nowrap">+91 78950 68399</a>
+                  
+                  <span className="font-medium">Janeshwar Prabhu:</span>
+                  <a href="tel:+918121151508" className="hover:text-[#0f4c81] transition-colors whitespace-nowrap">+91 81211 51508</a>
+                  
+                  <span className="font-medium">Vasta vardhana Dasa:</span>
+                  <a href="tel:+919762243256" className="hover:text-[#0f4c81] transition-colors whitespace-nowrap">+91 97622 43256</a>
+
+                  <span className="font-bold text-gray-700 pt-1">Email:</span>
+                  <a href="mailto:contact@hkmdehradun.org" className="hover:text-[#0f4c81] transition-colors pt-1">contact@hkmdehradun.org</a>
+                </div>
+              </div>
             </div>
 
             {/* Follow Us Social Links */}

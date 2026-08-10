@@ -196,11 +196,11 @@ export default function KhichdiPrasadamSevaPage() {
                 Cooked with pure ghee, high-quality grains, lentils, and fresh vegetables, every meal is sanctified by offering it to Lord Krishna.
               </p>
             </div>
-            <div className="overflow-hidden rounded-2xl border border-[#e8dfc8] bg-[#fffcf5] flex items-center justify-center p-2">
+            <div className="overflow-hidden rounded-2xl border border-[#e8dfc8] bg-white flex items-center justify-center p-6 min-h-[180px]">
               <img 
-                src="https://hkmdehradun.org/live-site/assets/12/annadaan-seva-banner1.png" 
-                alt="Khichdi Prasadam Banner" 
-                className="w-full h-auto object-contain rounded-xl"
+                src="/fh.webp" 
+                alt="Hare Krishna Movement Dehradun Logo" 
+                className="h-28 sm:h-36 w-auto object-contain"
               />
             </div>
           </div>

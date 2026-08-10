@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Bot, X, Send } from "lucide-react";
+import { Bot, X, Send, Sparkles } from "lucide-react";
 
 interface Message {
   id: string;
@@ -14,15 +14,15 @@ interface Message {
 
 const KNOWLEDGE_BASE: { keywords: string[]; answer: string; links?: { label: string; href: string }[] }[] = [
   {
-    keywords: ["timing", "darshan", "time", "open", "schedule", "aarti"],
-    answer: "Hare Krishna! 🙏 Daily Temple Timings at Hare Krishna Movement Dehradun:\n• Morning Darshan & Mangala Aarti: 4:30 AM - 1:00 PM\n• Evening Darshan & Sandhya Aarti: 4:30 PM - 8:30 PM",
+    keywords: ["timing", "darshan", "time", "open", "schedule", "aarti", "timings"],
+    answer: "Hare Krishna! 🙏 Temple timings are currently being updated. We will be updating them soon! Thank you.",
     links: [
       { label: "View Daily Darshan", href: "/daily-darshan" },
-      { label: "Explore Temple", href: "/#about" }
+      { label: "Explore Temple", href: "/about" }
     ]
   },
   {
-    keywords: ["gau", "cow", "gauseva", "surabhi"],
+    keywords: ["gau", "cow", "gauseva", "surabhi", "gaushala"],
     answer: "Gau Seva (Cow Protection) is one of the highest virtues in Vedic culture. Your support feeds, protects, and nurtures sacred cows at our Gaushala.",
     links: [
       { label: "Donate to Gau Seva", href: "/gau-seva" }
@@ -33,14 +33,36 @@ const KNOWLEDGE_BASE: { keywords: string[]; answer: string; links?: { label: str
     answer: "We distribute hot, sanctified Krishna Prasadam daily to sadhus, pilgrims, school children, and underprivileged families across Dehradun.",
     links: [
       { label: "Annadana Seva", href: "/annadana-seva" },
+      { label: "Child Annadana", href: "/child-annadana-seva" },
       { label: "Khichdi Prasadam", href: "/khichdi-prasadam-seva" }
     ]
   },
   {
-    keywords: ["donate", "donation", "tax", "80g", "receipt", "deduction"],
+    keywords: ["child", "children", "kid", "school", "midday"],
+    answer: "Our Child Annadana Seva provides wholesome, nutritious Krishna Prasadam to underprivileged school children to eliminate hunger and support their education.",
+    links: [
+      { label: "Child Annadana Seva", href: "/child-annadana-seva" }
+    ]
+  },
+  {
+    keywords: ["ekadashi", "fast", "fasting", "vrat", "ekadasi"],
+    answer: "Ekadashi is the holiest day to deepen spiritual devotion. Sponsor special Ekadashi Prasadam distribution and deity sevas on auspicious Ekadashi Tithis.",
+    links: [
+      { label: "Offer Ekadashi Seva", href: "/ekadashi-seva" }
+    ]
+  },
+  {
+    keywords: ["donate", "donation", "tax", "80g", "receipt", "deduction", "contribute", "pay"],
     answer: "All donations to Hare Krishna Movement Dehradun are 100% eligible for 80G Income Tax Exemption under the Income Tax Act. Instant digital receipts are issued immediately.",
     links: [
       { label: "Donate Online", href: "/donate" }
+    ]
+  },
+  {
+    keywords: ["book", "gita", "prabhupada", "literature", "shastra", "vedic"],
+    answer: "We actively distribute Srila Prabhupada's transcendental books, including Bhagavad-gita As It Is, Srimad-Bhagavatam, and life-changing spiritual literature.",
+    links: [
+      { label: "Book Distribution Seva", href: "/book-distribution" }
     ]
   },
   {
@@ -51,7 +73,7 @@ const KNOWLEDGE_BASE: { keywords: string[]; answer: string; links?: { label: str
     ]
   },
   {
-    keywords: ["youth", "folk", "student", "workshop", "college"],
+    keywords: ["youth", "folk", "student", "college", "gita course"],
     answer: "FOLK (Friends of Lord Krishna) is our youth empowerment initiative offering Gita life courses, personality enrichment, and stress-management workshops for students and young professionals.",
     links: [
       { label: "Youth Programs", href: "/youth" },
@@ -59,15 +81,66 @@ const KNOWLEDGE_BASE: { keywords: string[]; answer: string; links?: { label: str
     ]
   },
   {
-    keywords: ["monk", "monkhood", "challenge", "dedicate", "life"],
+    keywords: ["monk", "monkhood", "challenge", "dedicate", "brahmachari"],
     answer: "Experience the transformative monkhood program! Learn timeless self-discipline, meditation, and spiritual leadership in our structured retreat.",
     links: [
       { label: "Become a Monk Program", href: "/become-a-monk" }
     ]
   },
   {
-    keywords: ["location", "address", "reach", "contact", "phone", "where"],
-    answer: "📍 Address: Khasra No. 801, Suddhowala, Near IIM Kashipur Satellite Campus, Dehradun 248015\n📞 Phone: +91 9398710996\n✉️ Email: contact@hkmdehradun.org"
+    keywords: ["workshop", "happiness", "empowerment", "life coach", "seminar", "mind", "stress"],
+    answer: "Transform your life with our scientific workshops on Gita wisdom, mind control, stress management, and self-empowerment led by experienced spiritual life coaches.",
+    links: [
+      { label: "Life Coach & Workshops", href: "/life-coach" },
+      { label: "Happiness Workshops", href: "/happiness-workshops" },
+      { label: "Self Empowerment", href: "/self-empowerment-workshops" }
+    ]
+  },
+  {
+    keywords: ["festival", "event", "janmashtami", "ratha yatra", "panihati", "utsav", "celebration"],
+    answer: "Experience soul-stirring grand festivals including Sri Krishna Janmashtami, Sri Jagannatha Ratha Yatra, and Panihati Chida-Dahi Utsav at HKM Dehradun!",
+    links: [
+      { label: "Sri Janmashtami", href: "/janmashtami" },
+      { label: "Ratha Yatra", href: "/sri-jagannatha-ratha-yatra" },
+      { label: "Panihati Utsav", href: "/panihati-chida-dahi-utsav" },
+      { label: "Upcoming Events", href: "/events" }
+    ]
+  },
+  {
+    keywords: ["about", "mission", "objective", "governance", "who we are", "hkm"],
+    answer: "Hare Krishna Movement Dehradun is dedicated to promoting spiritual clarity, peace, and universal brotherhood based on the teachings of His Divine Grace A.C. Bhaktivedanta Swami Prabhupada.",
+    links: [
+      { label: "About Us", href: "/about" },
+      { label: "Our Mission", href: "/mission" },
+      { label: "Objectives", href: "/objectives" },
+      { label: "Governance", href: "/governance" }
+    ]
+  },
+  {
+    keywords: ["media", "gallery", "reels", "photo", "video", "blog"],
+    answer: "Explore our rich media collection featuring daily darshan photos, festival highlights, spiritual reels, inspiring articles, and blogs.",
+    links: [
+      { label: "Photo Gallery", href: "/gallery" },
+      { label: "HKM Reels", href: "/reels" },
+      { label: "Spiritual Blogs", href: "/blogs" }
+    ]
+  },
+  {
+    keywords: ["policy", "privacy", "terms", "refund", "receipt"],
+    answer: "Find transparent details regarding our privacy practices, donation refund policies, and terms of service.",
+    links: [
+      { label: "Refund Policy", href: "/refund-policy" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms & Conditions", href: "/terms" }
+    ]
+  },
+  {
+    keywords: ["email", "mail", "write", "send email", "email address"],
+    answer: "✉️ Official Email Address:\ncontact@hkmdehradun.org\n\nFeel free to send us an email for any queries, donation receipt requests, or seva bookings!"
+  },
+  {
+    keywords: ["contact", "phone", "mobile", "number", "prabhu", "call", "reach", "talk", "speak", "address", "location"],
+    answer: "📍 Address:\nNear LP Villas, Suddhowala, Dehradun\n\n📞 Contact Numbers:\n• Hari Krishna Prabhu: +91 82968 75074\n• Anand Narthak Prabhu: +91 78950 68399\n• Janeshwar Prabhu: +91 81211 51508\n• Vasta vardhana Dasa: +91 97622 43256\n\n✉️ Email: contact@hkmdehradun.org"
   }
 ];
 
@@ -85,10 +158,7 @@ export default function AiChatbotWidget() {
       text: "Hare Krishna! 🙏 Welcome to Hare Krishna Movement Dehradun. How may I assist your spiritual journey or seva today?",
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       quickLinks: [
-        { label: "🕉️ Temple Timings", href: "/daily-darshan" },
-        { label: "🐮 Gau Seva", href: "/gau-seva" },
-        { label: "🍲 Annadana Seva", href: "/annadana-seva" },
-        { label: "🤝 Volunteer", href: "/volunteer" }
+        { label: "📞 Contact Info", href: "/#footer" }
       ]
     }
   ]);
@@ -154,14 +224,7 @@ export default function AiChatbotWidget() {
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
         {!isOpen && (
           <>
-            {/* Label badge above button */}
-            <div className="flex items-center gap-1.5 bg-[#072149] text-amber-300 text-[11px] font-bold tracking-wider px-3 py-1 rounded-full shadow-lg border border-amber-400/40">
-              <span className="flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-              </span>
-              Ask AI
-            </div>
+
 
             {/* Round Icon Button */}
             <button
@@ -172,8 +235,8 @@ export default function AiChatbotWidget() {
               <span className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400/30 to-transparent group-hover:from-amber-400/50 blur-sm transition-all duration-300" />
 
               {/* Inner gold circle */}
-              <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-[#F5C518] to-amber-500 flex items-center justify-center shadow-inner">
-                <Bot className="w-5 h-5 text-[#072149]" strokeWidth={2.5} />
+              <div className="relative w-11 h-11 rounded-full bg-white flex items-center justify-center p-1 shadow-inner overflow-hidden border border-amber-400">
+                <img src="/logo-dehradun.jpg" alt="HKD Logo" className="w-full h-full object-contain rounded-full" />
               </div>
             </button>
           </>
@@ -182,22 +245,19 @@ export default function AiChatbotWidget() {
 
       {/* ── CHATBOX WINDOW ── */}
       {isOpen && (
-        <div className="fixed bottom-6 right-4 sm:right-6 z-50 w-[calc(100vw-32px)] sm:w-[400px] h-[580px] max-h-[85vh] bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-200/80 shadow-[0_20px_60px_rgba(7,33,73,0.22)] flex flex-col overflow-hidden font-sans animate-in fade-in slide-in-from-bottom-5 duration-300">
+        <div className="fixed bottom-6 right-4 sm:right-6 z-50 w-[calc(100vw-32px)] sm:w-[400px] h-[580px] max-h-[85vh] bg-white/95 backdrop-blur-xl rounded-3xl border border-slate-200/80 shadow-[0_20px_60px_rgba(7,33,73,0.22)] flex flex-col overflow-hidden font-heading animate-in fade-in slide-in-from-bottom-5 duration-300">
           
           {/* Header */}
           <div className="bg-[#072149] text-white p-4 sm:p-5 flex items-center justify-between border-b border-amber-500/30">
             <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-400 p-0.5 shadow-md flex items-center justify-center">
-                <div className="w-full h-full bg-[#072149] rounded-[14px] flex items-center justify-center text-[#F5C518]">
-                  <Bot className="w-5 h-5" />
-                </div>
-                <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-[#072149] rounded-full" />
+              <div className="relative w-10 h-10 rounded-2xl bg-white p-1 shadow-md flex items-center justify-center overflow-hidden border border-amber-400/60">
+                <img src="/logo-dehradun.jpg" alt="HKD Logo" className="w-full h-full object-contain rounded-xl" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base tracking-tight text-white flex items-center gap-1.5">
-                  Hare Krishna AI <span className="text-[#F5C518]">✨</span>
+                <h3 className="font-heading font-extrabold text-sm sm:text-base tracking-tight text-white flex items-center gap-1.5 leading-snug">
+                  Hare Krishna Dehradun Movement AI
                 </h3>
-                <p className="text-[11px] text-amber-200/90 font-medium">
+                <p className="font-body text-[11px] text-amber-200/90 font-medium tracking-wide">
                   Temple Assistant &amp; Seva Guide
                 </p>
               </div>
@@ -262,33 +322,7 @@ export default function AiChatbotWidget() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Suggested Quick Prompts */}
-          <div className="px-3 py-2 bg-white border-t border-slate-100 flex gap-2 overflow-x-auto no-scrollbar">
-            <button
-              onClick={() => handleSendMessage("Temple Timings")}
-              className="text-[11px] whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-2.5 py-1 rounded-full transition-colors"
-            >
-              ⏱️ Timings
-            </button>
-            <button
-              onClick={() => handleSendMessage("How to offer Gau Seva?")}
-              className="text-[11px] whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-2.5 py-1 rounded-full transition-colors"
-            >
-              🐮 Gau Seva
-            </button>
-            <button
-              onClick={() => handleSendMessage("Annadana Seva details")}
-              className="text-[11px] whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-2.5 py-1 rounded-full transition-colors"
-            >
-              🍲 Annadana
-            </button>
-            <button
-              onClick={() => handleSendMessage("80G Tax Exemption")}
-              className="text-[11px] whitespace-nowrap bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-2.5 py-1 rounded-full transition-colors"
-            >
-              📜 80G Tax
-            </button>
-          </div>
+
 
           {/* Input Bar */}
           <div className="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
