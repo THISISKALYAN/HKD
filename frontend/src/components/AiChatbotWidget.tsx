@@ -176,25 +176,40 @@ export default function AiChatbotWidget() {
     return null;
   }
 
-  const generateAiReply = (userQuery: string) => {
-    const queryLower = userQuery.toLowerCase();
-    
-    for (const item of KNOWLEDGE_BASE) {
-      if (item.keywords.some((kw) => queryLower.includes(kw))) {
-        return { answer: item.answer, links: item.links };
-      }
-    }
+  const SYSTEM_PROMPT = `You are Hare Krishna Dehradun Movement AI, an official spiritual assistant and temple guide for Hare Krishna Movement Dehradun.
+Always begin your answer with 'Hare Krishna! 🙏'.
+Key Temple Info:
+- Address: Near LP Villas, Suddhowala, Dehradun
+- Contacts: Hari Krishna Prabhu (+91 82968 75074), Anand Narthak Prabhu (+91 78950 68399), Janeshwar Prabhu (+91 81211 51508), Vasta vardhana Dasa (+91 97622 43256)
+- Email: contact@hkmdehradun.org
+- Programs: Gau Seva (Gaushala), Annadana Seva, Child Annadana Seva, Ekadashi Seva, Book Distribution (Bhagavad-gita), 80G Tax Exemption, Youth Programs (FOLK), Monkhood Program.
+- Temple Timings: Currently being updated.
+Answer concise, warm, and uplifting responses (2-4 sentences) based on Srila Prabhupada's teachings and Vedic wisdom.`;
 
-    return {
-      answer: `Hare Krishna! 🙏 Thank you for reaching out to Hare Krishna Movement Dehradun. How may we assist your spiritual journey or seva today?`,
-      links: [
-        { label: "📞 Contact Info", query: "Contact Info" },
-        { label: "Explore Seva Opportunities", href: "/donate" }
-      ]
-    };
+  const fetchFreeAiReply = async (userQuery: string): Promise<string> => {
+    try {
+      const response = await fetch("https://text.pollinations.ai/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [
+            { role: "system", content: SYSTEM_PROMPT },
+            { role: "user", content: userQuery }
+          ],
+          model: "openai"
+        })
+      });
+      if (response.ok) {
+        const data = await response.text();
+        if (data && data.trim()) return data.trim();
+      }
+    } catch (e) {
+      console.error("AI API call error:", e);
+    }
+    return `Hare Krishna! 🙏 Thank you for reaching out to Hare Krishna Movement Dehradun. How may we assist your spiritual journey or seva today?`;
   };
 
-  const handleSendMessage = (textToSend?: string) => {
+  const handleSendMessage = async (textToSend?: string) => {
     const query = textToSend || inputText;
     if (!query.trim()) return;
 
@@ -209,18 +224,35 @@ export default function AiChatbotWidget() {
     if (!textToSend) setInputText("");
     setIsTyping(true);
 
-    setTimeout(() => {
-      const reply = generateAiReply(query);
-      const aiMsg: Message = {
-        id: (Date.now() + 1).toString(),
-        sender: "ai",
-        text: reply.answer,
-        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-        quickLinks: reply.links
-      };
-      setMessages((prev) => [...prev, aiMsg]);
-      setIsTyping(false);
-    }, 600);
+    const queryLower = query.toLowerCase().trim();
+    const localMatch = KNOWLEDGE_BASE.find((item) =>
+      item.keywords.some((kw) => queryLower.includes(kw))
+    );
+
+    let answerText = "";
+    let links = localMatch?.links;
+
+    if (localMatch) {
+      answerText = localMatch.answer;
+      await new Promise((resolve) => setTimeout(resolve, 300));
+    } else {
+      answerText = await fetchFreeAiReply(query);
+      links = [
+        { label: "📞 Contact Info", query: "Contact Info" },
+        { label: "Explore Seva Opportunities", href: "/donate" }
+      ];
+    }
+
+    const aiMsg: Message = {
+      id: (Date.now() + 1).toString(),
+      sender: "ai",
+      text: answerText,
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      quickLinks: links
+    };
+
+    setMessages((prev) => [...prev, aiMsg]);
+    setIsTyping(false);
   };
 
   return (
