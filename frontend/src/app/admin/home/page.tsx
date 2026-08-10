@@ -26,11 +26,20 @@ export default function HomeCmsPage() {
 
   useEffect(() => {
     if (pageContent['home']) {
-      if (pageContent['home'].heroImages && pageContent['home'].heroImages.length > 0) {
-        setHeroImages(pageContent['home'].heroImages);
+      const home = pageContent['home'];
+      if (home.heroImages) {
+        if (Array.isArray(home.heroImages)) {
+          setHeroImages(home.heroImages);
+        } else if (typeof home.heroImages === 'object') {
+          setHeroImages(Object.values(home.heroImages));
+        }
       }
-      if (pageContent['home'].templeGallery && pageContent['home'].templeGallery.length > 0) {
-        setGallery(pageContent['home'].templeGallery);
+      if (home.templeGallery) {
+        if (Array.isArray(home.templeGallery)) {
+          setGallery(home.templeGallery);
+        } else if (typeof home.templeGallery === 'object') {
+          setGallery(Object.values(home.templeGallery));
+        }
       }
     }
   }, [pageContent]);

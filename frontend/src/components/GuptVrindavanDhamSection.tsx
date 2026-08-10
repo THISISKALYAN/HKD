@@ -8,7 +8,7 @@ export default function GuptVrindavanDhamSection() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   return (
-    <section className="relative w-full pt-8 pb-16 sm:pt-12 sm:pb-24 bg-[#fbf6f0] overflow-hidden text-gray-800 border-t border-b border-[#eae4d5]/30">
+    <section className="relative w-full bg-[#fbf6f0] overflow-hidden text-gray-800 border-t border-b border-[#eae4d5]/30 py-8 md:py-12">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
         
         {/* Main Grid: Left Circular Image with Organic Blobs + Right Content */}
@@ -165,7 +165,7 @@ export default function GuptVrindavanDhamSection() {
 
             {/* Paragraph 2 (Quote exact style without custom box) */}
             <p className="text-base sm:text-lg text-[#374151] leading-relaxed">
-              <strong className="text-[#111827] font-bold">Srila Prabhupada</strong>, the Founder-Acharya of the International Society for Krishna Consciousness, stated, <span className="italic">&quot;Unless you change the society, how can you make social welfare?&quot;</span>
+              <strong className="text-[#111827] font-bold">Srila Prabhupada</strong>, the Founder-Acharya of the International Society for Krishna Consciousness, stated, <span className="">&quot;Unless you change the society, how can you make social welfare?&quot;</span>
             </p>
 
             {/* Bottom right decorative dot grid pattern (Screenshot Match) */}

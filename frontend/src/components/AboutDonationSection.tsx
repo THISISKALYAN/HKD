@@ -8,7 +8,7 @@ export default function AboutDonationSection() {
   const donationSevas = [
     {
       title: "Temple Construction",
-      link: "/mandir-nirman",
+      link: "/donate",
       bgClass: "from-indigo-600 to-indigo-800",
       image: "/h3.webp" // Reusing available assets as background hints
     },
@@ -33,7 +33,7 @@ export default function AboutDonationSection() {
   ];
 
   return (
-    <section className="py-4 sm:py-8 bg-[#faf8f5] relative z-10 font-sans overflow-hidden">
+    <section className="bg-[#faf8f5] relative z-10 font-sans overflow-hidden py-8 md:py-12">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
           

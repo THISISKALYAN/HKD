@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Script from "next/script";
 import axios from "@/lib/axios";
-import RespectedContributors from "@/components/RespectedContributors";
 
 export default function KhichdiPrasadamSevaPage() {
   const [amount, setAmount] = useState<number>(551);
@@ -118,7 +117,7 @@ export default function KhichdiPrasadamSevaPage() {
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
 
       {/* ── HERO BANNER ─────────────────────────────────────── */}
-      <section className="relative pt-12 sm:pt-16 pb-2 overflow-hidden z-10">
+      <section className="relative overflow-hidden z-10 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
           
           {/* Decorative Tag */}
@@ -155,12 +154,12 @@ export default function KhichdiPrasadamSevaPage() {
       </section>
 
       {/* ── QUOTE SECTION ───────────────────────────────────── */}
-      <section className="py-6 lg:py-8 px-6 sm:px-10 max-w-[1200px] mx-auto border-b border-gray-100">
+      <section className="px-6 sm:px-10 max-w-[1200px] mx-auto border-b border-gray-100 py-8 md:py-12">
         <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
           <svg className="w-8 h-8 text-[#d4af37] mb-3 opacity-60" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
             <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8.6c.8-2 2.7-3.4 4.9-3.9V8zm16 0c-3.3 0-6 2.7-6 6v10h10V14h-5.4c.8-2 2.7-3.4 4.9-3.9V8z"/>
           </svg>
-          <p className="text-lg sm:text-xl lg:text-2xl font-serif italic text-gray-800 leading-relaxed mb-4">
+          <p className="text-lg sm:text-xl lg:text-2xl font-serif text-gray-800 leading-relaxed mb-4">
             "By offering sanctified food to everyone, one satisfies all living entities and Lord Vishnu Himself."
           </p>
           <p className="text-xs sm:text-sm uppercase tracking-[0.2em] font-bold text-[#d4af37]">
@@ -170,7 +169,7 @@ export default function KhichdiPrasadamSevaPage() {
       </section>
 
       {/* ── SIGNIFICANCE & SCRIPTURES SECTION ──────────────────── */}
-      <section className="py-8 lg:py-12 px-6 sm:px-12 max-w-[1440px] mx-auto border-b border-gray-100">
+      <section className="px-6 sm:px-12 max-w-[1440px] mx-auto border-b border-gray-100 py-8 md:py-12">
         <div className="flex items-center justify-center gap-3.5 mb-4 text-center">
           <span className="h-10 w-2 bg-[#c89b27] rounded-full"></span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#051937] tracking-tight">
@@ -215,7 +214,7 @@ export default function KhichdiPrasadamSevaPage() {
               </div>
               
               <div className="space-y-3 mb-5">
-                <div className="p-4 bg-[#fbf9f4] border border-[#e8dfc8] rounded-2xl text-sm italic text-[#4a5568] leading-relaxed">
+                <div className="p-4 bg-[#fbf9f4] border border-[#e8dfc8] rounded-2xl text-sm text-[#4a5568] leading-relaxed">
                   "Prasadam is the mercy of the Supreme Lord. Participating in its distribution bestows endless spiritual fortune."
                   <span className="block not-italic font-bold text-[#c89b27] text-xs mt-1 uppercase tracking-wider">— Srila Prabhupada</span>
                 </div>
@@ -241,7 +240,7 @@ export default function KhichdiPrasadamSevaPage() {
       </section>
 
       {/* ── DONATION FORM SECTION (FULL WIDTH CENTERED) ──────────────── */}
-      <section className="py-8 lg:py-12 px-6 sm:px-12 max-w-[1440px] mx-auto border-b border-gray-100">
+      <section className="px-6 sm:px-12 max-w-[1440px] mx-auto border-b border-gray-100 py-8 md:py-12">
         <div className="flex justify-center">
           
           <div className="w-full max-w-2xl relative">
@@ -386,13 +385,8 @@ export default function KhichdiPrasadamSevaPage() {
         </div>
       </section>
 
-      {/* ── ONLINE DONATIONS & RECENT CONTRIBUTIONS ─────────── */}
-      <section className="py-6 border-b border-gray-100 bg-[#fbf9f4]">
-        <RespectedContributors />
-      </section>
-
       {/* ── IMAGE GALLERY ───────────────────────────────────── */}
-      <section className="py-12 pb-32 px-6 sm:px-10 max-w-[1440px] mx-auto">
+      <section className="px-6 sm:px-10 max-w-[1440px] mx-auto py-8 md:py-12">
         <div className="flex items-center justify-center gap-3.5 mb-3 text-center">
           <span className="h-8 w-1.5 bg-[#c89b27] rounded-full"></span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#051937] tracking-tight">

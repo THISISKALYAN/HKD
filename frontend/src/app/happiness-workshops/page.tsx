@@ -346,7 +346,7 @@ export default function HappinessWorkshopsPage() {
                   <ChevronLeft className="w-3.5 h-3.5" /> Youth Programs
                 </Link>
                 <span className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-[#F5C518] text-[#072149] font-black text-xs uppercase tracking-wider shadow-sm">
-                  <Sparkles className="w-3.5 h-3.5" /> Complete 12-Session Masterclass
+                  Complete 12-Session Masterclass
                 </span>
               </div>
 
@@ -422,7 +422,7 @@ export default function HappinessWorkshopsPage() {
                 <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/60 via-black/10 to-transparent flex flex-col justify-end p-6 sm:p-8 pointer-events-none">
                   <div className="flex items-center justify-between w-full">
                     <span className="px-3 py-1 rounded-full bg-[#F5C518]/90 backdrop-blur-md text-[#072149] font-black text-xs uppercase tracking-wider">
-                      ✨ Transformative Experience
+                      Transformative Experience
                     </span>
                     {/* Dots indicator */}
                     <div className="flex items-center gap-1.5 pointer-events-auto">
@@ -448,93 +448,99 @@ export default function HappinessWorkshopsPage() {
       </section>
 
       {/* ── INTERACTIVE SPOTLIGHT CAROUSEL (SMOOTH CROSSFADE WITHOUT BLANK SCREENS) ───────────────── */}
-      <section id="curriculum" className="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+      <section id="curriculum" className="py-8 md:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         
         {/* Section Header & Category Filter Tabs */}
-        <div className="text-center max-w-4xl mx-auto mb-12 bg-white p-8 sm:p-10 rounded-3xl shadow-xl border border-gray-100">
-          <span className="text-xs sm:text-sm font-extrabold text-[#FF7A00] uppercase tracking-widest block mb-2">
-            Complete Workshop Curriculum
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#072149] tracking-tight mb-4">
-            The 12 Sessions across 6 Vital Dimensions
-          </h2>
-          <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-6">
-            From inner self-control and dietary habits to relationships and karmic destiny—explore every section of the complete FOLK Happiness Workshops masterclass below.
-          </p>
+        <div className="text-center max-w-4xl mx-auto mb-12 relative">
+          {/* Glassmorphic Container with Subtle Glow */}
+          <div className="absolute inset-0 bg-white/70 backdrop-blur-xl rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 -z-10"></div>
+          <div className="absolute -inset-0.5 bg-gradient-to-br from-[#F5C518]/30 via-transparent to-[#FF7A00]/10 rounded-[2rem] blur-sm -z-20"></div>
 
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-8 pt-4 border-t border-gray-100">
-            {CATEGORIES.map((cat) => {
-              const isSelected = selectedCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  onClick={() => {
-                    setSelectedCategory(cat);
-                    setIsPaused(true);
-                    if (cat !== "All") {
-                      const firstInCat = SESSIONS_DATA.findIndex((s) => s.category === cat);
-                      if (firstInCat !== -1) setActiveSession(firstInCat);
-                    }
-                  }}
-                  className={`px-4 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center gap-1.5 ${
-                    isSelected
-                      ? "bg-[#072149] text-[#F5C518] shadow-md scale-105"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  }`}
-                >
-                  <Filter className="w-3.5 h-3.5" />
-                  <span>{cat === "All" ? "All 12 Sessions" : cat}</span>
-                </button>
-              );
-            })}
-          </div>
+          <div className="p-8 sm:p-12 relative z-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF7A00]/10 border border-[#FF7A00]/20 text-[#FF7A00] text-xs font-bold tracking-[0.2em] uppercase mb-4">
+              Complete Workshop Curriculum
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-[42px] font-black leading-tight tracking-tight mb-5 bg-gradient-to-br from-[#072149] via-[#041229] to-[#FF7A00] bg-clip-text text-transparent">
+              The 12 Sessions across 6 Vital Dimensions
+            </h2>
+            <p className="text-gray-600 text-sm sm:text-base leading-relaxed max-w-3xl mx-auto mb-8 font-medium">
+              From inner self-control and dietary habits to relationships and karmic destiny—explore every section of the complete FOLK Happiness Workshops masterclass below.
+            </p>
 
-          {/* Interactive Session Selector Tabs */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
-            {filteredSessions.map((sess) => {
-              const isActive = SESSIONS_DATA[activeSession]?.id === sess.id;
-              return (
-                <button
-                  key={sess.id}
-                  onClick={() => {
-                    const idx = SESSIONS_DATA.findIndex((s) => s.id === sess.id);
-                    if (idx !== -1) {
-                      setActiveSession(idx);
+            {/* Premium Category Filter Pills */}
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+              {CATEGORIES.map((cat) => {
+                const isSelected = selectedCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => {
+                      setSelectedCategory(cat);
                       setIsPaused(true);
-                    }
-                  }}
-                  className={`p-2.5 rounded-xl font-bold text-xs transition-all duration-300 text-left flex flex-col justify-between ${
-                    isActive
-                      ? "bg-[#F5C518] text-[#072149] shadow-md ring-2 ring-[#072149]"
-                      : "bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200/60"
-                  }`}
-                >
-                  <div className="flex items-center justify-between w-full mb-1">
-                    <span className={`w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-black ${
-                      isActive ? "bg-[#072149] text-white" : "bg-gray-300 text-gray-800"
-                    }`}>
-                      {sess.id}
-                    </span>
-                    <span className="text-[10px] uppercase font-extrabold opacity-70">{sess.category}</span>
-                  </div>
-                  <div className="font-extrabold line-clamp-1">{sess.title}</div>
-                </button>
-              );
-            })}
+                      if (cat !== "All") {
+                        const firstInCat = SESSIONS_DATA.findIndex((s) => s.category === cat);
+                        if (firstInCat !== -1) setActiveSession(firstInCat);
+                      }
+                    }}
+                    className={`relative overflow-hidden px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 flex items-center gap-2 border ${
+                      isSelected
+                        ? "bg-[#072149] text-white border-[#072149] shadow-lg shadow-[#072149]/25 scale-105"
+                        : "bg-white/80 text-gray-600 border-gray-200/60 hover:bg-white hover:text-[#072149] hover:border-gray-300 hover:shadow-md"
+                    }`}
+                  >
+                    {isSelected && (
+                      <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-[shimmer_1.5s_infinite]"></span>
+                    )}
+                    <Filter className={`w-3.5 h-3.5 transition-colors ${isSelected ? 'text-[#F5C518]' : 'text-gray-400'}`} />
+                    <span className="relative z-10">{cat === "All" ? "All 12 Sessions" : cat}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* ACTIVE SESSION SPOTLIGHT CARD (STABLE SHELL + STACKED IMAGE CROSSFADE = NO WHITE/BLACK FLASH) */}
-        <div className="bg-white rounded-[32px] sm:rounded-[40px] shadow-2xl border border-gray-200/80 overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[480px] sm:min-h-[540px]">
+        {/* Interactive Session Selector Tabs */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 mb-12">
+          {filteredSessions.map((sess) => {
+            const isActive = SESSIONS_DATA[activeSession]?.id === sess.id;
+            return (
+              <button
+                key={sess.id}
+                onClick={() => {
+                  const idx = SESSIONS_DATA.findIndex((s) => s.id === sess.id);
+                  if (idx !== -1) {
+                    setActiveSession(idx);
+                    setIsPaused(true);
+                  }
+                }}
+                className={`p-2.5 rounded-xl font-bold text-xs transition-all duration-300 text-left flex flex-col justify-between ${
+                  isActive
+                    ? "bg-[#F5C518] text-[#072149] shadow-md ring-2 ring-[#072149]"
+                    : "bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200/60"
+                }`}
+              >
+                <div className="flex items-center justify-between w-full mb-1">
+                  <span className={`w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-black ${
+                    isActive ? "bg-[#072149] text-white" : "bg-gray-300 text-gray-800"
+                  }`}>
+                    {sess.id}
+                  </span>
+                  <span className="text-[10px] uppercase font-extrabold opacity-70">{sess.category}</span>
+                </div>
+                <div className="font-extrabold line-clamp-1">{sess.title}</div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* ACTIVE SESSION SPOTLIGHT CARD (LIQUID GLASS + WHITE BG + BLACK TEXT) */}
+        <div className="bg-white/80 backdrop-blur-2xl rounded-[32px] sm:rounded-[40px] shadow-[0_20px_60px_rgba(0,0,0,0.07)] border border-white/80 overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[480px] sm:min-h-[540px]">
           
           {/* Left Column: Typography & Content */}
           <div className="lg:col-span-6 p-8 sm:p-12 md:p-14 flex flex-col justify-center relative">
             
-            {/* Yellow Left Accent Bar */}
-            <div className="absolute left-0 top-0 bottom-0 w-3 sm:w-4 bg-[#F5C518]" />
-
-            <div className="pl-3 sm:pl-4">
+            <div className="w-full">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentSession.id}
@@ -545,26 +551,26 @@ export default function HappinessWorkshopsPage() {
                 >
                   {/* Badge & Category */}
                   <div className="flex flex-wrap items-center gap-2 mb-4">
-                    <span className="px-4 py-1.5 rounded-md bg-[#F5C518] text-[#111827] font-black text-xs sm:text-sm uppercase tracking-wider shadow-sm">
+                    <span className="px-4 py-1.5 rounded-md bg-[#F5C518] text-black font-black text-xs sm:text-sm uppercase tracking-wider shadow-sm">
                       {currentSession.badge}
                     </span>
-                    <span className="px-3 py-1 rounded-md bg-gray-100 text-gray-700 font-extrabold text-xs uppercase tracking-wide">
+                    <span className="px-3 py-1 rounded-md bg-black/5 text-black font-extrabold text-xs uppercase tracking-wide border border-black/10">
                       {currentSession.category}
                     </span>
                   </div>
 
                   {/* Tagline / Subtitle */}
-                  <div className="text-sm sm:text-base md:text-lg font-bold text-[#4A5568] mb-2 tracking-normal">
+                  <div className="text-sm sm:text-base md:text-lg font-bold text-gray-800 mb-2 tracking-normal">
                     {currentSession.tagline}
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#111827] tracking-tight leading-tight mb-6">
+                  <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-black tracking-tight leading-tight mb-6">
                     {currentSession.title}
                   </h3>
 
                   {/* Body Paragraphs */}
-                  <div className="space-y-4 text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed font-normal">
+                  <div className="space-y-4 text-black text-sm sm:text-base md:text-lg leading-relaxed font-normal">
                     {currentSession.text.map((para, pIdx) => (
                       <p key={pIdx} className={pIdx === 1 && currentSession.id === 1 ? "font-extrabold text-[#D93025] text-base sm:text-lg" : ""}>
                         {para}
@@ -573,9 +579,9 @@ export default function HappinessWorkshopsPage() {
                   </div>
 
                   {/* Bottom Action Pill inside card */}
-                  <div className="mt-8 pt-6 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
-                    <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
-                      Official Module {currentSession.id} of 12
+                  <div className="mt-8 pt-6 border-t border-gray-200/80 flex items-center justify-between">
+                    <span className="text-xs font-bold text-teal-700 flex items-center gap-1">
+                      <CheckCircle2 className="w-4 h-4" /> Practical Guide
                     </span>
                     <button
                       onClick={() => handleSelectTrack(currentSession.badge, currentSession.title)}
@@ -611,7 +617,7 @@ export default function HappinessWorkshopsPage() {
 
               <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 pointer-events-none">
                 <span className="text-white text-sm font-bold tracking-wide">
-                  ✨ {currentSession.badge} • {currentSession.title} ({currentSession.category})
+                  {currentSession.badge} • {currentSession.title} ({currentSession.category})
                 </span>
               </div>
             </div>
@@ -689,11 +695,8 @@ export default function HappinessWorkshopsPage() {
                     <motion.div
                       key={sess.id}
                       whileHover={{ y: -6 }}
-                      className="bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-200/80 grid grid-cols-1 sm:grid-cols-12 relative group"
+                      className="bg-white/85 backdrop-blur-xl rounded-3xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.06)] border border-white/80 grid grid-cols-1 sm:grid-cols-12 relative group hover:bg-white/95 hover:shadow-2xl transition-all duration-300"
                     >
-                      {/* Left Yellow Bar */}
-                      <div className="absolute left-0 top-0 bottom-0 w-2.5 bg-[#F5C518] z-10" />
-
                       {/* Image side */}
                       <div className={`sm:col-span-5 relative min-h-[220px] sm:min-h-full overflow-hidden bg-gradient-to-br ${sess.bgAccent}`}>
                         <img
@@ -702,20 +705,20 @@ export default function HappinessWorkshopsPage() {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                         <div className="absolute top-3 left-4 sm:left-5 z-10">
-                          <span className="px-3 py-1 rounded bg-[#F5C518] text-[#111827] font-black text-xs uppercase shadow">
+                          <span className="px-3 py-1 rounded bg-[#F5C518] text-black font-black text-xs uppercase shadow">
                             {sess.badge}
                           </span>
                         </div>
                       </div>
 
                       {/* Content side */}
-                      <div className="sm:col-span-7 p-6 sm:p-8 flex flex-col justify-between pl-6 sm:pl-8">
+                      <div className="sm:col-span-7 p-6 sm:p-8 flex flex-col justify-between">
                         <div>
-                          <div className="text-xs font-bold text-gray-400 mb-1">{sess.tagline}</div>
-                          <h4 className="text-xl sm:text-2xl font-black text-[#072149] mb-3 leading-snug">
+                          <div className="text-xs font-bold text-gray-600 mb-1">{sess.tagline}</div>
+                          <h4 className="text-xl sm:text-2xl font-black text-black mb-3 leading-snug">
                             {sess.title}
                           </h4>
-                          <div className="space-y-2 text-gray-600 text-xs sm:text-sm leading-relaxed">
+                          <div className="space-y-2 text-black/90 text-xs sm:text-sm leading-relaxed font-medium">
                             {sess.text.map((t, idx) => (
                               <p key={idx} className={idx === 1 && sess.id === 1 ? "font-bold text-red-600" : ""}>
                                 {t}
@@ -728,13 +731,7 @@ export default function HappinessWorkshopsPage() {
                           <span className="text-xs font-semibold text-teal-600 flex items-center gap-1">
                             <CheckCircle2 className="w-4 h-4" /> Practical Guide
                           </span>
-                          <button
-                            onClick={() => handleSelectTrack(sess.badge, sess.title)}
-                            className="inline-flex items-center gap-1 text-xs font-bold text-[#072149] hover:text-[#FF7A00] transition-colors"
-                          >
-                            <span>Enroll in track</span>
-                            <ArrowRight className="w-3.5 h-3.5" />
-                          </button>
+
                         </div>
                       </div>
                     </motion.div>
@@ -754,7 +751,7 @@ export default function HappinessWorkshopsPage() {
           
           <div className="lg:col-span-5 space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100 text-amber-800 text-xs font-bold tracking-wider uppercase">
-              ✨ Transcendent Benefits
+              Transcendent Benefits
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#072149] leading-tight">
               Why Are These Workshops Different?
@@ -783,48 +780,30 @@ export default function HappinessWorkshopsPage() {
             </div>
           </div>
 
-          {/* Right Column: Stats & Visuals */}
-          <div className="lg:col-span-7 grid grid-cols-2 gap-6">
-            <div className="space-y-6">
-              <div className="rounded-3xl overflow-hidden shadow-xl border-4 border-white aspect-[4/5] bg-gray-100">
-                <img
-                  src="/darshan/DSC04179.webp"
-                  alt="Workshop Community"
-                  className="w-full h-full object-cover"
-                />
+          {/* Right Column: Stats & Highlights (Images Removed) */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="bg-[#072149] text-white p-8 sm:p-10 rounded-3xl shadow-xl flex flex-col justify-center border border-[#072149]">
+              <div className="text-4xl sm:text-5xl font-black text-[#F5C518] mb-2">
+                <AnimatedCounter target={1000} suffix="+" />
               </div>
-              <div className="bg-[#072149] text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col justify-center">
-                <div className="text-3xl sm:text-4xl font-black text-[#F5C518] mb-1">
-                  <AnimatedCounter target={1000} suffix="+" />
-                </div>
-                <div className="text-xs font-bold uppercase tracking-widest text-gray-300">
-                  Youth Transformed
-                </div>
-                <p className="text-xs text-gray-400 mt-2">
-                  Students and professionals experiencing lasting peace across Dehradun.
-                </p>
+              <div className="text-xs font-bold uppercase tracking-widest text-gray-300">
+                Youth Transformed
               </div>
+              <p className="text-xs sm:text-sm text-gray-400 mt-2 leading-relaxed">
+                Students and professionals experiencing lasting peace across Dehradun.
+              </p>
             </div>
 
-            <div className="space-y-6 pt-8">
-              <div className="bg-[#F5C518] text-[#072149] p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col justify-center">
-                <div className="flex items-center gap-1 text-[#072149] mb-2">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-current" />
-                  ))}
-                </div>
-                <div className="text-2xl sm:text-3xl font-black">4.9 / 5.0 Rating</div>
-                <p className="text-xs font-medium text-[#072149]/80 mt-1">
-                  Rated by attendees from IT, medical, and top universities.
-                </p>
+            <div className="bg-[#F5C518] text-[#072149] p-8 sm:p-10 rounded-3xl shadow-xl flex flex-col justify-center border border-[#F5C518]">
+              <div className="flex items-center gap-1 text-[#072149] mb-3">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="w-5 h-5 fill-current" />
+                ))}
               </div>
-              <div className="rounded-3xl overflow-hidden shadow-xl border-4 border-white aspect-[4/5] bg-gray-100">
-                <img
-                  src="/darshan/DSC04180.webp"
-                  alt="Soulful Experience"
-                  className="w-full h-full object-cover object-top"
-                />
-              </div>
+              <div className="text-3xl sm:text-4xl font-black">4.9 / 5.0 Rating</div>
+              <p className="text-xs sm:text-sm font-medium text-[#072149]/80 mt-2 leading-relaxed">
+                Rated by attendees from IT, medical, and top universities.
+              </p>
             </div>
           </div>
 

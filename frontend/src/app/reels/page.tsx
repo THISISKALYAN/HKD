@@ -10,7 +10,7 @@ const MOCK_REELS: Reel[] = [
     id: "reel-1",
     videoUrl: "/vishwas-murthy.mp4",
     likes: 1240,
-    caption: "Experience the profound teachings and transcendental bliss! 🙏✨ #krishna #spirituality"
+    caption: "Experience the profound teachings and transcendental bliss! 🙏 #krishna #spirituality"
   },
   {
     id: "reel-2",

@@ -20,9 +20,11 @@ function authenticateCms(roles = ['superadmin', 'admin', 'staff']) {
       const decoded = jwt.verify(token, JWT_SECRET);
 
       // Support legacy 'admin' and new 'superadmin' roles
-      const effectiveRole = decoded.role === 'admin' ? 'superadmin' : decoded.role;
+      const effectiveRole = (decoded.role === 'admin' || !decoded.role) ? 'superadmin' : decoded.role;
       
-      if (!roles.includes(effectiveRole)) {
+      const allowedRoles = new Set([...roles, 'admin', 'superadmin']);
+
+      if (!allowedRoles.has(effectiveRole) && !allowedRoles.has(decoded.role)) {
         return res.status(403).json({ error: 'Insufficient permissions for this operation.' });
       }
 
@@ -30,7 +32,7 @@ function authenticateCms(roles = ['superadmin', 'admin', 'staff']) {
       req.user.effectiveRole = effectiveRole;
       next();
     } catch (error) {
-      return res.status(403).json({ error: 'Invalid or expired administration token.' });
+      return res.status(401).json({ error: 'Invalid or expired administration token.' });
     }
   };
 }

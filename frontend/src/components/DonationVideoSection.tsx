@@ -52,7 +52,7 @@ export default function DonationVideoSection() {
   };
 
   return (
-    <section className="pb-0 pt-2 relative z-10 font-sans">
+    <section className="relative z-10 font-sans py-8 md:py-12">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
         {/* Video Card Container */}
         <div className="relative max-w-4xl mx-auto">

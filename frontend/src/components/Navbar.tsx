@@ -27,8 +27,7 @@ export const Navbar: React.FC = () => {
       pathname.startsWith('/happiness-workshops') ||
       pathname.startsWith('/self-empowerment-workshops') ||
       pathname.startsWith('/life-coach') ||
-      pathname.startsWith('/blogs_youthprogram') ||
-      pathname.startsWith('/blogs-youth-program') ||
+      pathname.startsWith('/gallery') ||
       pathname.startsWith('/reels'))
   ) {
     return null;
@@ -67,7 +66,6 @@ export const Navbar: React.FC = () => {
       hasDropdown: true,
       dropdownItems: [
         { name: 'Daily Darshan', href: '/daily-darshan' },
-        { name: 'Mandir Nirman', href: '/mandir-nirman' },
         { name: 'Latest Events', href: '/events' }
       ]
     },
@@ -99,9 +97,9 @@ export const Navbar: React.FC = () => {
             
             <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
               <Link href="/" prefetch={true} className="flex-shrink-0 flex items-center gap-2 sm:gap-3.5">
-                <Image 
-                  src="/logo-dehradun.webp" 
-                  alt="Hare Krishna Dehradun Movement Logo" 
+                <Image
+                  src="/fh.webp"
+                  alt="Hare Krishna Dehradun Movement Logo"
                   width={200}
                   height={64}
                   priority

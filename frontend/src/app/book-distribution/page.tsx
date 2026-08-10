@@ -133,7 +133,7 @@ export default function BookDistributionPage() {
     <main className="min-h-screen bg-[#faf8f5] font-sans selection:bg-amber-100">
 
       {/* ── HERO ─────────────────────────────────────── */}
-      <section className="relative min-h-[85vh] flex items-center overflow-hidden">
+      <section className="relative min-h-[85vh] flex items-center overflow-hidden py-8 md:py-12">
         {/* Background Video - Clear Sky */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <video 
@@ -167,7 +167,7 @@ export default function BookDistributionPage() {
                 
                 <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-[#072149] mb-6 leading-[1.1] font-bold drop-shadow-[0_2px_10px_rgba(255,255,255,1)]">
                   Bhagavad Gita <br className="hidden md:block" />
-                  <span className="font-instrument italic text-amber-600 font-medium">
+                  <span className="font-instrument text-amber-600 font-medium">
                     Book Distribution
                   </span>
                 </h1>
@@ -203,7 +203,7 @@ export default function BookDistributionPage() {
       </section>
 
       {/* ── ABOUT GITA DISTRIBUTION ──────────────────── */}
-      <section className="py-8 lg:py-12 bg-[#faf8f5] relative">
+      <section className="bg-[#faf8f5] relative py-8 md:py-12">
         <div className="max-w-5xl mx-auto px-6 sm:px-10 lg:px-20 relative z-10 hidden md:block">
           <motion.div 
             className="relative w-full aspect-[2/1.3] flex items-center justify-center perspective-[2500px] cursor-pointer"
@@ -303,7 +303,7 @@ export default function BookDistributionPage() {
       </section>
 
       {/* ── OUR INITIATIVES ─────────────────── */}
-      <section className="py-8 lg:py-12 bg-[#faf8f5] relative">
+      <section className="bg-[#faf8f5] relative py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-20 relative z-10">
           <Reveal className="mb-10 text-center">
             <div className="flex items-center justify-center gap-3 text-[#d4af37] mb-2">
@@ -338,11 +338,11 @@ export default function BookDistributionPage() {
                         <h3 className="text-xl sm:text-2xl font-bold text-[#072149] tracking-tight">
                           {item.title}
                         </h3>
-                        <div className="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center text-white shrink-0 shadow-sm" title="Active Program">
-                          <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
+                        <img 
+                          src="https://img.icons8.com/?size=100&id=poVlgAcqxww6&format=png&color=000000" 
+                          alt="Verified Program" 
+                          className="w-5 h-5 shrink-0 object-contain" 
+                        />
                       </div>
 
                       {/* Description */}
@@ -364,11 +364,21 @@ export default function BookDistributionPage() {
               </Reveal>
             ))}
           </div>
+
+          <Reveal delay={300} className="mt-10 w-full max-w-3xl mx-auto">
+            <div className="relative w-full rounded-[2rem] overflow-hidden shadow-[0_20px_80px_rgba(7,33,73,0.12)] border border-[#072149]/10 bg-white/50 backdrop-blur-sm p-2 sm:p-4">
+              <img 
+                src="/Gita dan.webp" 
+                alt="Gita Daan Outreach" 
+                className="w-full h-auto max-h-[320px] sm:max-h-[380px] object-cover object-center rounded-xl sm:rounded-2xl shadow-sm" 
+              />
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ── GET INVOLVED ─────────────────────────────── */}
-      <section className="py-8 lg:py-12 bg-[#faf8f5] relative overflow-hidden">
+      <section className="bg-[#faf8f5] relative overflow-hidden py-8 md:py-12">
         {/* Background Decorative Rings */}
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-[#072149]/10 rounded-full" />

@@ -6,14 +6,16 @@ import FolkNavbar from "@/components/FolkNavbar";
 import {
   Clock,
   HeartHandshake,
-  ShieldAlert,
+  Sparkles,
+  ShieldCheck,
   TrendingUp,
-  Smile,
-  Award,
+  Sun,
+  Trophy,
   Compass,
-  UserCheck,
-  Zap,
-  CheckCircle2,
+  Eye,
+  Target,
+  Activity,
+  Wind,
   PhoneCall,
   Video,
   Calendar,
@@ -22,8 +24,8 @@ import {
   Send,
   Loader2,
   Check,
-  Activity,
-  Layers,
+  CheckCircle2,
+  UserCheck,
   Bookmark
 } from "lucide-react";
 import axios from "@/lib/axios";
@@ -31,16 +33,16 @@ import axios from "@/lib/axios";
 const TRANSFORMATION_AREAS = [
   { title: "Time Management", icon: Clock, desc: "Organize priorities, eliminate procrastination, and master your daily schedules." },
   { title: "Managing Relationships", icon: HeartHandshake, desc: "Cultivate empathy, resolve interpersonal conflicts, and build lasting bonds." },
-  { title: "Culturing Good Habits", icon: CheckCircle2, desc: "Embed empowering routines for physical vitality and mental clarity." },
-  { title: "Avoiding Unhealthy Habits", icon: ShieldAlert, desc: "Break free from destructive cycles with mindful awareness and discipline." },
+  { title: "Culturing Good Habits", icon: Sparkles, desc: "Embed empowering routines for physical vitality and mental clarity." },
+  { title: "Avoiding Unhealthy Habits", icon: ShieldCheck, desc: "Break free from destructive cycles with mindful awareness and discipline." },
   { title: "Enhancing Productivity", icon: TrendingUp, desc: "Streamline workflow and focus energy for maximum output with lesser effort." },
-  { title: "Stress Management", icon: Smile, desc: "Anchor your mind in inner peace amidst external demands and deadlines." },
-  { title: "Handling Competition", icon: Award, desc: "Develop healthy sportsmanship and resilience in high-stakes environments." },
+  { title: "Stress Management", icon: Sun, desc: "Anchor your mind in inner peace amidst external demands and deadlines." },
+  { title: "Handling Competition", icon: Trophy, desc: "Develop healthy sportsmanship and resilience in high-stakes environments." },
   { title: "Work-Life Balance", icon: Compass, desc: "Harmonize professional ambitions with personal rejuvenation and spiritual fulfillment." },
-  { title: "Creating Self-Awareness", icon: UserCheck, desc: "Look at yourself from a broader 'helicopter vision' to unlock deeper purpose." },
-  { title: "Self-Management", icon: Zap, desc: "Take control of your decisions, actions, and emotional boundaries." },
+  { title: "Creating Self-Awareness", icon: Eye, desc: "Look at yourself from a broader 'helicopter vision' to unlock deeper purpose." },
+  { title: "Self-Management", icon: Target, desc: "Take control of your decisions, actions, and emotional boundaries." },
   { title: "Managing Mood Swings", icon: Activity, desc: "Stabilize mental equilibrium through timeless wisdom and meditative practices." },
-  { title: "Handling Internal Weather", icon: Layers, desc: "Navigate mental storms with poise, fortitude, and higher spiritual consciousness." },
+  { title: "Handling Internal Weather", icon: Wind, desc: "Navigate mental storms with poise, fortitude, and higher spiritual consciousness." },
 ];
 
 const SALIENT_FEATURES = [
@@ -180,7 +182,7 @@ export default function LifeCoachPage() {
       <FolkNavbar />
 
       {/* Clean White Hero Section with Prominent Image */}
-      <section className="relative pt-4 pb-16 lg:pt-6 lg:pb-20 overflow-hidden border-b border-slate-200 bg-white">
+      <section className="relative overflow-hidden border-b border-slate-200 bg-white py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
@@ -204,7 +206,7 @@ export default function LifeCoachPage() {
 
               {/* CFO Magazine Quote Box */}
               <div className="pl-6 border-l-4 border-blue-600 py-2 my-6">
-                <p className="text-slate-700 text-base sm:text-lg leading-relaxed italic mb-3 font-medium">
+                <p className="text-slate-700 text-base sm:text-lg leading-relaxed mb-3 font-medium">
                   &ldquo;Coaches have the ability to view things from afar — in what some call &lsquo;helicopter vision&rsquo; — and to shed new light on difficult situations. Often they can act as a sounding board through tough decisions, help sharpen skills, and motivate.&rdquo;
                 </p>
                 <div className="flex items-center gap-2">
@@ -251,7 +253,7 @@ export default function LifeCoachPage() {
       </section>
 
       {/* Main Philosophy / Helicopter Vision Section */}
-      <section className="py-20 relative overflow-hidden bg-[#FBF9F5]">
+      <section className="relative overflow-hidden bg-[#FBF9F5] py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7 space-y-6">
@@ -319,7 +321,7 @@ export default function LifeCoachPage() {
                   </div>
                 </div>
 
-                <p className="text-xs text-slate-400 mt-8 italic text-center border-t border-slate-800 pt-4">
+                <p className="text-xs text-slate-400 mt-8 text-center border-t border-slate-800 pt-4">
                   One can hardly then deny the profound importance of a dedicated personal coach.
                 </p>
               </div>
@@ -329,7 +331,7 @@ export default function LifeCoachPage() {
       </section>
 
       {/* 12 Areas of Transformation Section */}
-      <section id="areas" className="py-24 relative bg-white border-y border-slate-200">
+      <section id="areas" className="relative bg-white border-y border-slate-200 py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-amber-700 font-bold uppercase tracking-widest text-xs sm:text-sm">
@@ -355,27 +357,29 @@ export default function LifeCoachPage() {
                   key={idx}
                   onMouseEnter={() => setActiveArea(idx)}
                   onMouseLeave={() => setActiveArea(null)}
-                  className={`p-6 sm:p-8 rounded-2xl transition-all duration-300 border relative group ${
+                  className={`p-6 sm:p-8 rounded-3xl transition-all duration-300 border relative group ${
                     isHovered
-                      ? "bg-[#FBF9F5] border-amber-500 shadow-xl shadow-amber-500/10 -translate-y-1.5"
-                      : "bg-[#FBF9F5] border-slate-200/80 shadow-sm hover:border-slate-300"
+                      ? "bg-white border-amber-400/80 shadow-[0_15px_35px_rgba(245,197,24,0.12)] -translate-y-1.5"
+                      : "bg-white/90 backdrop-blur-md border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:border-slate-300 hover:shadow-lg"
                   }`}
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className={`p-3.5 rounded-xl transition-colors ${
-                      isHovered ? "bg-gradient-to-r from-amber-500 to-orange-500 text-white" : "bg-amber-50 text-amber-700"
+                  <div className="flex items-center justify-between mb-5">
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                      isHovered 
+                        ? "bg-[#072149] text-[#F5C518] shadow-md scale-105" 
+                        : "bg-slate-100/90 text-slate-800 border border-slate-200/60 group-hover:bg-slate-200/80"
                     }`}>
-                      <Icon className="w-6 h-6" />
+                      <Icon className="w-5 h-5 stroke-[2.2]" />
                     </div>
-                    <span className="text-xs font-black text-slate-400 tracking-widest uppercase">
-                      0{idx + 1}
+                    <span className="text-xs font-black text-slate-300 group-hover:text-amber-600 tracking-widest uppercase transition-colors">
+                      {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-amber-700 transition-colors">
+                  <h3 className="text-lg sm:text-xl font-black text-slate-900 mb-2 group-hover:text-[#072149] transition-colors tracking-tight">
                     {area.title}
                   </h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">
+                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-medium">
                     {area.desc}
                   </p>
                 </div>
@@ -386,7 +390,7 @@ export default function LifeCoachPage() {
       </section>
 
       {/* Salient Features of the Coaching Process */}
-      <section className="py-24 relative overflow-hidden bg-[#FBF9F5]">
+      <section className="relative overflow-hidden bg-[#FBF9F5] py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
@@ -419,7 +423,7 @@ export default function LifeCoachPage() {
       </section>
 
       {/* Testimonials Section Replicating Screenshot Style + Auto Scrolling */}
-      <section className="py-24 bg-white border-t border-slate-200 relative overflow-hidden">
+      <section className="bg-white border-t border-slate-200 relative overflow-hidden py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
           <div className="text-center max-w-3xl mx-auto">
             <span className="text-amber-700 font-bold uppercase tracking-widest text-xs sm:text-sm">
@@ -468,141 +472,6 @@ export default function LifeCoachPage() {
         </div>
       </section>
 
-      {/* Get Started / Booking Section */}
-      <section id="get-started" className="py-24 relative overflow-hidden bg-[#FBF9F5]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-8 sm:p-12 lg:p-16 rounded-3xl bg-white border border-slate-200 shadow-xl relative">
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
-                Get in Touch with a <span className="text-amber-600">Life Coach Right Now</span>
-              </h2>
-              <p className="text-slate-600 text-base sm:text-lg">
-                Take the first concrete step toward mental clarity, emotional balance, and doubled personal output. Fill out the form below for a confidential consultation.
-              </p>
-            </div>
-
-            {submitted ? (
-              <div className="p-8 rounded-2xl bg-amber-50 border border-amber-200 text-center max-w-lg mx-auto">
-                <div className="w-16 h-16 rounded-full bg-amber-500 text-white flex items-center justify-center mx-auto mb-4 shadow-md">
-                  <Check className="w-8 h-8 font-bold" />
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">Inquiry Received!</h3>
-                <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                  Thank you for reaching out. One of our senior Life Coaches will contact you shortly via email or WhatsApp to schedule your initial one-on-one session.
-                </p>
-                <button
-                  onClick={() => setSubmitted(false)}
-                  className="mt-6 px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold transition-colors shadow"
-                >
-                  Send Another Inquiry
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {error && (
-                  <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm text-center font-medium">
-                    {error}
-                  </div>
-                )}
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Enter your name"
-                      className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 focus:border-amber-500 focus:bg-white focus:ring-1 focus:ring-amber-500 text-slate-900 placeholder-slate-400 outline-none transition-all text-sm font-medium"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="your.email@example.com"
-                      className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 focus:border-amber-500 focus:bg-white focus:ring-1 focus:ring-amber-500 text-slate-900 placeholder-slate-400 outline-none transition-all text-sm font-medium"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">
-                      Phone Number / WhatsApp *
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="+91 98765 43210"
-                      className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 focus:border-amber-500 focus:bg-white focus:ring-1 focus:ring-amber-500 text-slate-900 placeholder-slate-400 outline-none transition-all text-sm font-medium"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">
-                      Primary Focus Area
-                    </label>
-                    <select
-                      value={formData.focusArea}
-                      onChange={(e) => setFormData({ ...formData, focusArea: e.target.value })}
-                      className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 focus:border-amber-500 focus:bg-white focus:ring-1 focus:ring-amber-500 text-slate-900 outline-none transition-all text-sm font-medium"
-                    >
-                      {TRANSFORMATION_AREAS.map((area, i) => (
-                        <option key={i} value={area.title}>
-                          {area.title}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-bold text-slate-700 mb-2">
-                    Brief Note or Question (Optional)
-                  </label>
-                  <textarea
-                    rows={4}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Tell us a brief about your current situation or what goals you wish to achieve..."
-                    className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-300 focus:border-amber-500 focus:bg-white focus:ring-1 focus:ring-amber-500 text-slate-900 placeholder-slate-400 outline-none transition-all text-sm font-medium resize-none"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-extrabold text-lg shadow-xl shadow-amber-500/25 hover:shadow-amber-500/40 transition-all transform hover:-translate-y-0.5 disabled:opacity-50 flex items-center justify-center gap-2"
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      Submitting Inquiry...
-                    </>
-                  ) : (
-                    <>
-                      Request Personal Consultation
-                      <Send className="w-5 h-5" />
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

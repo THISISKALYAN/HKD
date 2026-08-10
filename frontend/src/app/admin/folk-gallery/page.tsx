@@ -16,11 +16,18 @@ export default function FolkGalleryCmsPage() {
  fetchPageContent('folk-gallery');
  }, [fetchPageContent]);
 
- useEffect(() => {
- if (pageContent['folk-gallery']) {
- setGallery(pageContent['folk-gallery'].gallery || []);
- }
- }, [pageContent]);
+  useEffect(() => {
+    if (pageContent['folk-gallery']) {
+      const raw = pageContent['folk-gallery'].gallery;
+      if (Array.isArray(raw)) {
+        setGallery(raw);
+      } else if (raw && typeof raw === 'object') {
+        setGallery(Object.values(raw));
+      } else {
+        setGallery([]);
+      }
+    }
+  }, [pageContent]);
 
  const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
  if (e.target.files) {
@@ -39,22 +46,23 @@ export default function FolkGalleryCmsPage() {
  setGallery(updated);
  };
 
- const handleSave = async () => {
- setSaving(true);
- setMsg({ text: '', type: '' });
- 
- // Update context state manually before saving
- if (!pageContent['folk-gallery']) pageContent['folk-gallery'] = {};
- pageContent['folk-gallery'].gallery = gallery;
- 
- const success = await savePageContent('folk-gallery');
- if (success) {
- setMsg({ text: 'Gallery saved successfully', type: 'success' });
- } else {
- setMsg({ text: 'Failed to save content', type: 'error' });
- }
- setSaving(false);
- };
+  const handleSave = async () => {
+    setSaving(true);
+    setMsg({ text: '', type: '' });
+    
+    const updatedContent = {
+      ...(pageContent['folk-gallery'] || {}),
+      gallery: gallery
+    };
+    
+    const success = await savePageContent('folk-gallery', updatedContent);
+    if (success) {
+      setMsg({ text: 'Gallery saved successfully', type: 'success' });
+    } else {
+      setMsg({ text: 'Failed to save content', type: 'error' });
+    }
+    setSaving(false);
+  };
 
  if (isLoading && !pageContent['folk-gallery']) {
  return (
@@ -113,15 +121,15 @@ export default function FolkGalleryCmsPage() {
  />
  </div>
  
- {gallery.length === 0 ? (
- <div className="text-center py-16 text-gray-400 bg-white rounded-[20px] border-2 border-gray-200/50 border-dashed flex flex-col items-center justify-center">
- <ImageIcon className="w-12 h-12 mb-3 text-gray-300 " />
- <p className="font-bold text-sm">No images in the gallery</p>
- <p className="text-xs mt-1">Click 'Upload New Images' to begin.</p>
- </div>
- ) : (
- <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
- {gallery.map((url, idx) => (
+  {(!Array.isArray(gallery) || gallery.length === 0) ? (
+  <div className="text-center py-16 text-gray-400 bg-white rounded-[20px] border-2 border-gray-200/50 border-dashed flex flex-col items-center justify-center">
+  <ImageIcon className="w-12 h-12 mb-3 text-gray-300 " />
+  <p className="font-bold text-sm">No images in the gallery</p>
+  <p className="text-xs mt-1">Click 'Upload New Images' to begin.</p>
+  </div>
+  ) : (
+  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+  {(Array.isArray(gallery) ? gallery : []).map((url, idx) => (
  <div key={idx} className="relative group rounded-[16px] overflow-hidden aspect-square border border-gray-200 shadow-sm">
  <img src={url} alt={`Gallery ${idx}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">

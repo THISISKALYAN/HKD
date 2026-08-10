@@ -302,7 +302,7 @@ router.put('/pages/:pageId', authenticateCms(['superadmin', 'staff']), async (re
       ...newContent,
       updatedAt: new Date(),
       updatedBy: req.user.email,
-    }, { merge: true });
+    });
 
     await cache.del(`page:${pageId}`);
 

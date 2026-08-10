@@ -19,7 +19,7 @@ export default function FolkYouthPrograms() {
   }, [isPaused, totalSlides]);
 
   return (
-    <section className="py-16 sm:py-24 bg-[#fbf6f0] relative overflow-hidden select-none">
+    <section className="bg-[#fbf6f0] relative overflow-hidden select-none py-8 md:py-12">
       {/* Animated Background Blobs for Liquid Glass Effect */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-300/30 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-pulse" style={{ animationDuration: '8s' }}></div>
       <div className="absolute top-20 right-1/4 w-[400px] h-[400px] bg-amber-300/30 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 animate-pulse" style={{ animationDuration: '10s', animationDelay: '2s' }}></div>

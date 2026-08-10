@@ -289,7 +289,7 @@ export default function GovernancePage() {
     <div className="min-h-screen bg-[#faf8f5] text-gray-900 font-sans overflow-x-hidden">
 
       {/* ── HERO SECTION ─────────────────────────────────────── */}
-      <section className="relative pt-8 sm:pt-12 pb-6 overflow-hidden z-10 bg-[#faf8f5]">
+      <section className="relative overflow-hidden z-10 bg-[#faf8f5] py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
           
           {/* Decorative Tag */}

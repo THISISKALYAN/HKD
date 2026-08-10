@@ -31,8 +31,13 @@ export default function DailyDarshanCmsPage() {
 
  useEffect(() => {
  if (pageContent['daily-darshan']) {
- if (pageContent['daily-darshan'].gallery && pageContent['daily-darshan'].gallery.length > 0) {
- setGallery(pageContent['daily-darshan'].gallery);
+ if (pageContent['daily-darshan'].gallery) {
+   const gal = pageContent['daily-darshan'].gallery;
+   if (Array.isArray(gal) && gal.length > 0) {
+     setGallery(gal);
+   } else if (typeof gal === 'object') {
+     setGallery(Object.values(gal));
+   }
  }
  }
  }, [pageContent]);

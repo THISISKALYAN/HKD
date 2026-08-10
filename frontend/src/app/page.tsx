@@ -233,7 +233,7 @@ export default function Home() {
     <div className="relative overflow-hidden">
 
       {/* 1. HERO SLIDER SECTION (Vivanta-inspired 3-slide peeking layout) */}
-      <section className="relative w-full aspect-[4/3] md:aspect-[21/9] lg:aspect-[16/9] overflow-hidden bg-[#0a0a0a] z-0 flex items-center">
+      <section className="relative w-full aspect-[4/3] md:aspect-[21/9] lg:aspect-[16/9] overflow-hidden bg-[#0a0a0a] z-0 flex items-center py-8 md:py-12">
 
         {/* Slides Container */}
         <div className="relative w-full h-full">
@@ -313,7 +313,7 @@ export default function Home() {
 
       {/* 2. ABOUT US SECTION (HKM Dehradun) */}
 
-      <section id="about" className="relative w-full py-16 lg:py-24 bg-[#fbf6f0] overflow-hidden text-gray-800 flex items-center justify-center">
+      <section id="about" className="relative w-full bg-[#fbf6f0] overflow-hidden text-gray-800 flex items-center justify-center py-8 md:py-12">
 
         {/* Subtle decorative background elements */}
 
@@ -451,7 +451,7 @@ export default function Home() {
       <UpcomingFestivals isHomePage={true} />
 
       {/* 6. ONLINE DONATIONS SECTION */}
-      <section className="relative w-full pt-10 pb-2 sm:pb-4 bg-[#faf8f5] overflow-hidden flex flex-col items-center">
+      <section className="relative w-full bg-[#faf8f5] overflow-hidden flex flex-col items-center py-8 md:py-12">
         <div className="w-full max-w-[1500px] mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
 
           {/* Section Header */}
@@ -476,7 +476,7 @@ export default function Home() {
               },
               {
                 title: "Annadana Seva",
-                image: "https://hkmdehradun.org/live-site/assets/12/annadaan-seva-banner1.png",
+                image: "/fh.webp",
                 desc: "Support Hare Krishna Movement Dehradun's Annadana Seva by providing sanctified meals to devotees and the needy. Over 2.89 crore meals served.",
                 link: "/annadana-seva"
               },
@@ -543,7 +543,7 @@ export default function Home() {
 
 
       {/* 5. LATEST UPDATES SECTION */}
-      <section className="relative w-full pt-1 pb-2 bg-[#faf8f5] flex flex-col items-center overflow-hidden border-t border-[#eae4d5]/30">
+      <section className="relative w-full bg-[#faf8f5] flex flex-col items-center overflow-hidden border-t border-[#eae4d5]/30 py-8 md:py-12">
 
         {/* Subtle decorative background elements */}
         <div className="absolute top-1/2 left-[-10%] w-80 h-80 bg-[#cca75b]/5 rounded-full blur-[100px] pointer-events-none" />
@@ -804,14 +804,7 @@ export default function Home() {
 
 
 
-      {/* 7. GALLERY SECTION */}
-      <section className="relative pt-6 pb-0 overflow-hidden bg-white">
-        <div className="absolute top-1/2 left-[-10%] w-80 h-80 bg-[#cca75b]/5 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute top-1/3 right-[-5%] w-[350px] h-[350px] bg-[#0c4a8a]/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="relative z-10">
-          <CoverflowGallery />
-        </div>
-      </section>
+
 
 
 
@@ -863,7 +856,7 @@ export default function Home() {
                           );
                         })
                       ) : (
-                        <p className="italic text-gray-400">Full content for this topic is coming soon.</p>
+                        <p className="text-gray-400">Full content for this topic is coming soon.</p>
                       )}
                     </div>
                     

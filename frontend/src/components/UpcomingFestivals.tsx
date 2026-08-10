@@ -7,7 +7,7 @@ export default function UpcomingFestivals({ isHomePage = false }: { isHomePage?:
     <>
       {/* 3. UPCOMING FESTIVALS SECTION */}
 
-      <section className="relative w-full pt-6 pb-2 bg-[#faf8f5] flex flex-col items-center overflow-hidden">
+      <section className="relative w-full bg-[#faf8f5] flex flex-col items-center overflow-hidden py-8 md:py-12">
 
 
 
@@ -579,7 +579,7 @@ export default function UpcomingFestivals({ isHomePage = false }: { isHomePage?:
             <div className="bg-white rounded-[40px] p-3 shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-2xl border border-gray-100 transition-shadow duration-300 flex flex-col h-full min-h-[440px] group font-sans">
               <div className="relative w-full h-full flex-grow flex flex-col justify-end rounded-[32px] overflow-hidden pb-4 px-4 pt-32">
                 <img
-                  src="https://hkmdehradun.org/live-site/assets/images/sri-gaura-purnima.png"
+                  src="/janmashtami-cover.jpg"
                   alt="Janmashtami Temple"
                   loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"

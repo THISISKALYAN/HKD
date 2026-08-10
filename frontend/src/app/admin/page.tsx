@@ -153,65 +153,86 @@ export default function AdminDashboard() {
         </div>
       )}
 
+      {/* Quick Shortcuts Bar */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+        {[
+          { label: 'Manage Blogs', href: '/admin/blogs', icon: FileText, color: 'bg-blue-50/80 text-blue-700 border-blue-200/60 hover:bg-blue-100/80' },
+          { label: 'View Inquiries', href: '/admin/leads', icon: Users, color: 'bg-emerald-50/80 text-emerald-700 border-emerald-200/60 hover:bg-emerald-100/80' },
+          { label: 'Daily Darshan', href: '/admin/daily-darshan', icon: Activity, color: 'bg-amber-50/80 text-amber-700 border-amber-200/60 hover:bg-amber-100/80' },
+          { label: 'Folk Gallery', href: '/admin/folk-gallery', icon: HardDrive, color: 'bg-purple-50/80 text-purple-700 border-purple-200/60 hover:bg-purple-100/80' }
+        ].map((action, i) => (
+          <a
+            key={i}
+            href={action.href}
+            className="bg-white border border-gray-200/80 hover:border-gray-300 p-4 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-md transition-all flex items-center gap-3 group"
+          >
+            <div className={`p-2.5 rounded-xl border transition-colors ${action.color}`}>
+              <action.icon className="w-4 h-4" />
+            </div>
+            <span className="text-xs sm:text-sm font-extrabold text-gray-800 group-hover:text-gray-900">{action.label}</span>
+          </a>
+        ))}
+      </div>
+
       {/* KPI Cards Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         
-        <div className="bg-white border border-gray-200 shadow-sm transition-all rounded-[24px] p-6 relative overflow-hidden group">
+        <div className="bg-white/90 backdrop-blur-xl border border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg hover:border-gray-300 transition-all duration-300 rounded-3xl p-6 relative overflow-hidden group">
           <div className="flex items-center justify-between mb-4 relative z-10">
-            <div className="flex items-center gap-3 text-gray-500">
-              <div className="p-2 bg-gray-50 rounded-[10px] border border-gray-100 text-gray-600">
+            <div className="flex items-center gap-3 text-gray-600">
+              <div className="p-2.5 bg-gray-100/80 rounded-2xl border border-gray-200/60 text-gray-700">
                 <Mail className="w-4 h-4" />
               </div>
-              <span className="text-sm font-bold tracking-wider uppercase">Total Inquiries</span>
+              <span className="text-xs font-black tracking-widest uppercase text-gray-500">Total Inquiries</span>
             </div>
-            <button className="text-gray-400 hover:text-gray-900 transition-colors p-1 rounded-lg hover:bg-gray-50">
+            <button className="text-gray-400 hover:text-gray-900 transition-colors p-1.5 rounded-xl hover:bg-gray-100">
               <MoreHorizontal className="w-4 h-4" />
             </button>
           </div>
-          <div className="flex items-end gap-3 mt-2 relative z-10">
+          <div className="flex items-end justify-between mt-3 relative z-10">
             <h2 className="text-4xl font-black text-gray-900 tracking-tight">{stats?.totalInquiries || 0}</h2>
-            <div className="flex items-center gap-1 bg-green-50 text-green-700 px-2 py-0.5 rounded-[6px] text-sm font-bold mb-1.5">
-              15.8% <ArrowUpRight className="w-3 h-3" />
+            <div className="flex items-center gap-1 bg-emerald-50/80 text-emerald-700 border border-emerald-200/60 px-2.5 py-1 rounded-xl text-xs font-bold mb-1">
+              15.8% <ArrowUpRight className="w-3.5 h-3.5" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 shadow-sm transition-all rounded-[24px] p-6 relative overflow-hidden group">
+        <div className="bg-white/90 backdrop-blur-xl border border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg hover:border-gray-300 transition-all duration-300 rounded-3xl p-6 relative overflow-hidden group">
           <div className="flex items-center justify-between mb-4 relative z-10">
-            <div className="flex items-center gap-3 text-gray-500">
-              <div className="p-2 bg-gray-50 rounded-[10px] border border-gray-100 text-gray-600">
+            <div className="flex items-center gap-3 text-gray-600">
+              <div className="p-2.5 bg-gray-100/80 rounded-2xl border border-gray-200/60 text-gray-700">
                 <FileText className="w-4 h-4" />
               </div>
-              <span className="text-sm font-bold tracking-wider uppercase">Total Blogs</span>
+              <span className="text-xs font-black tracking-widest uppercase text-gray-500">Total Blogs</span>
             </div>
-            <button className="text-gray-400 hover:text-gray-900 transition-colors p-1 rounded-lg hover:bg-gray-50">
+            <button className="text-gray-400 hover:text-gray-900 transition-colors p-1.5 rounded-xl hover:bg-gray-100">
               <MoreHorizontal className="w-4 h-4" />
             </button>
           </div>
-          <div className="flex items-end gap-3 mt-2 relative z-10">
+          <div className="flex items-end justify-between mt-3 relative z-10">
             <h2 className="text-4xl font-black text-gray-900 tracking-tight">{stats?.totalBlogs || 0}</h2>
-            <div className="flex items-center gap-1 bg-red-50 text-red-600 px-2 py-0.5 rounded-[6px] text-sm font-bold mb-1.5">
-              34.0% <ArrowDownRight className="w-3 h-3" />
+            <div className="flex items-center gap-1 bg-amber-50/80 text-amber-700 border border-amber-200/60 px-2.5 py-1 rounded-xl text-xs font-bold mb-1">
+              34.0% <ArrowDownRight className="w-3.5 h-3.5" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white border border-gray-200 shadow-sm transition-all rounded-[24px] p-6 relative overflow-hidden group">
+        <div className="bg-white/90 backdrop-blur-xl border border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg hover:border-gray-300 transition-all duration-300 rounded-3xl p-6 relative overflow-hidden group">
           <div className="flex items-center justify-between mb-4 relative z-10">
-            <div className="flex items-center gap-3 text-gray-500">
-              <div className="p-2 bg-gray-50 rounded-[10px] border border-gray-100 text-gray-600">
+            <div className="flex items-center gap-3 text-gray-600">
+              <div className="p-2.5 bg-gray-100/80 rounded-2xl border border-gray-200/60 text-gray-700">
                 <HardDrive className="w-4 h-4" />
               </div>
-              <span className="text-sm font-bold tracking-wider uppercase">Storage Used</span>
+              <span className="text-xs font-black tracking-widest uppercase text-gray-500">Storage Used</span>
             </div>
-            <button className="text-gray-400 hover:text-gray-900 transition-colors p-1 rounded-lg hover:bg-gray-50">
+            <button className="text-gray-400 hover:text-gray-900 transition-colors p-1.5 rounded-xl hover:bg-gray-100">
               <MoreHorizontal className="w-4 h-4" />
             </button>
           </div>
-          <div className="flex items-end gap-3 mt-2 relative z-10">
+          <div className="flex items-end justify-between mt-3 relative z-10">
             <h2 className="text-4xl font-black text-gray-900 tracking-tight">{formatBytes(stats?.storageUsed || 0)}</h2>
-            <div className="flex items-center gap-1 bg-green-50 text-green-700 px-2 py-0.5 rounded-[6px] text-sm font-bold mb-1.5">
-              24.2% <ArrowUpRight className="w-3 h-3" />
+            <div className="flex items-center gap-1 bg-emerald-50/80 text-emerald-700 border border-emerald-200/60 px-2.5 py-1 rounded-xl text-xs font-bold mb-1">
+              24.2% <ArrowUpRight className="w-3.5 h-3.5" />
             </div>
           </div>
         </div>

@@ -12,12 +12,18 @@ export default function YouthGallery() {
     fetchPageContent('folk-gallery');
   }, [fetchPageContent]);
 
-  const images = pageContent['folk-gallery']?.gallery || [];
+  let images: string[] = [];
+  const rawGallery = pageContent['folk-gallery']?.gallery;
+  if (Array.isArray(rawGallery)) {
+    images = rawGallery;
+  } else if (rawGallery && typeof rawGallery === 'object') {
+    images = Object.values(rawGallery);
+  }
 
   if (images.length === 0) return null;
 
   return (
-    <section className="py-20 bg-white relative overflow-hidden" id="gallery">
+    <section className="bg-white relative overflow-hidden py-8 md:py-12" id="gallery">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <h2 className="text-3xl sm:text-4xl md:text-[42px] font-extrabold text-[#02144c] tracking-widest uppercase mb-3">

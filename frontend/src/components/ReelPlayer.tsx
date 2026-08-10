@@ -174,7 +174,7 @@ export default function ReelPlayer({ reel, isActive, onNext, onPrev, hasNext, ha
             </svg>
           </h2>
           <p className="text-[14px] text-white/95 font-medium drop-shadow-md leading-snug line-clamp-2">
-            {reel.caption || "Ecstatic Kirtan and transcendental bliss at Hare Krishna Dehradun 🙏✨ #harekrishna #kirtan"}
+            {reel.caption || "Ecstatic Kirtan and transcendental bliss at Hare Krishna Dehradun 🙏 #harekrishna #kirtan"}
           </p>
         </div>
 

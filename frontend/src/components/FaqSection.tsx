@@ -40,7 +40,7 @@ export default function FaqSection() {
   };
 
   return (
-    <section className="py-4 sm:py-6 bg-[#faf8f5] relative z-10 font-sans overflow-hidden">
+    <section className="bg-[#faf8f5] relative z-10 font-sans overflow-hidden py-8 md:py-12">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
           {/* Left Header Column */}

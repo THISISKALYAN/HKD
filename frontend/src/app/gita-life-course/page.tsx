@@ -37,146 +37,105 @@ function SocialBtn({ children, className }: { children: React.ReactNode; classNa
   );
 }
 
-/* ── PREMIUM SVG ICON SYSTEM (24x24, dual-tone, rich detail) ── */
+/* ── PREMIUM MINIMALIST ICON SYSTEM (24x24, clean line-art) ── */
 
 const PIcon = ({ children, className = "w-12 h-12" }: { children: React.ReactNode; className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     {children}
   </svg>
 );
 
 const PIBookOpen = ({ className }: { className?: string }) => (
   <PIcon className={className}>
-    <path d="M2 4c2-1 4.5-1.5 6.5-.8C10.5 4 11.5 5 12 5.5c.5-.5 1.5-1.5 3.5-2.3C17.5 2.5 20 3 22 4v14c-2-.5-4.5-.3-6 .5-1.5.8-3 2-4 2.5-1-.5-2.5-1.7-4-2.5-1.5-.8-4-1-6-.5V4z" fill="currentColor" fillOpacity="0.08" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-    <path d="M12 5.5V21" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4"/>
-    <path d="M5 8.5c1.5.3 4.2.8 7 1.5" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5"/>
-    <path d="M5 12c1.5.3 4.2.8 7 1.5" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5"/>
-    <path d="M19 8.5c-1.5.3-4.2.8-7 1.5" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5"/>
-    <path d="M19 12c-1.5.3-4.2.8-7 1.5" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5"/>
+    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
   </PIcon>
 );
 
 const PICompass = ({ className }: { className?: string }) => (
   <PIcon className={className}>
-    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.2" fill="currentColor" fillOpacity="0.06"/>
-    <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="0.6" strokeDasharray="2 2" strokeOpacity="0.3"/>
-    <polygon points="12,4 14,10 12,9 10,10" fill="currentColor" fillOpacity="0.7"/>
-    <polygon points="12,20 10,14 12,15 14,14" fill="currentColor" fillOpacity="0.35"/>
-    <polygon points="4,12 10,10 9,12 10,14" fill="currentColor" fillOpacity="0.35"/>
-    <polygon points="20,12 14,14 15,12 14,10" fill="currentColor" fillOpacity="0.35"/>
-    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+    <circle cx="12" cy="12" r="10"/>
+    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
   </PIcon>
 );
 
 const PIBrain = ({ className }: { className?: string }) => (
   <PIcon className={className}>
-    <path d="M12 2C9 2 6.5 3.5 6 6c-1.5.5-3 2.5-3 5s1.5 4.5 3.5 5c.5 1.5 2.5 3 5.5 3s5-1.5 5.5-3c2-.5 3.5-2.5 3.5-5s-1.5-4.5-3-5C17.5 3.5 15 2 12 2z" fill="currentColor" fillOpacity="0.08" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-    <path d="M12 6v12" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.4"/>
-    <path d="M8 8c1.5 1 2.5 2.5 4 4" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.4"/>
-    <path d="M16 8c-1.5 1-2.5 2.5-4 4" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.4"/>
-    <path d="M7 13c2-.5 3.5 0 5 1" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.4"/>
-    <path d="M17 13c-2-.5-3.5 0-5 1" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.4"/>
-    <circle cx="12" cy="12" r="1.5" fill="currentColor" fillOpacity="0.5"/>
+    <path d="M9.5 2A2.5 2.5 0 0 0 7 4.5C7 5 7.2 5.4 7.4 5.8A4.5 4.5 0 0 0 4 10c0 1.9 1.1 3.5 2.8 4.2A3 3 0 0 0 9 19h6a3 3 0 0 0 2.2-4.8A4.5 4.5 0 0 0 20 10a4.5 4.5 0 0 0-3.4-4.2A2.5 2.5 0 0 0 14.5 2 2.5 2.5 0 0 0 12 4.5a2.5 2.5 0 0 0-2.5-2.5Z"/>
+    <path d="M12 4.5V19"/>
   </PIcon>
 );
 
 const PIMap = ({ className }: { className?: string }) => (
   <PIcon className={className}>
-    <path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2V6z" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-    <line x1="9" y1="4" x2="9" y2="18" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.4"/>
-    <line x1="15" y1="6" x2="15" y2="20" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.4"/>
-    <circle cx="7" cy="10" r="1.2" fill="currentColor" fillOpacity="0.5"/>
-    <circle cx="12" cy="13" r="1.2" fill="currentColor" fillOpacity="0.5"/>
-    <circle cx="17" cy="11" r="1.2" fill="currentColor" fillOpacity="0.5"/>
+    <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+    <line x1="9" y1="3" x2="9" y2="18"/>
+    <line x1="15" y1="6" x2="15" y2="21"/>
   </PIcon>
 );
 
 const PILotus = ({ className }: { className?: string }) => (
   <PIcon className={className}>
-    <path d="M12 20c0 0-5-3-5-8c0-3 2.5-5.5 5-6c2.5.5 5 3 5 6c0 5-5 8-5 8z" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="1.2"/>
-    <path d="M12 6c0 0-3 2-3 6c0 4 3 8 3 8" stroke="currentColor" strokeWidth="0.7" strokeOpacity="0.5"/>
-    <path d="M12 6c0 0 3 2 3 6c0 4-3 8-3 8" stroke="currentColor" strokeWidth="0.7" strokeOpacity="0.5"/>
-    <path d="M7 11c-3-2-5 0-5 3c0 2.5 2 4 5 5" stroke="currentColor" strokeWidth="1" strokeOpacity="0.7" fill="none"/>
-    <path d="M17 11c3-2 5 0 5 3c0 2.5-2 4-5 5" stroke="currentColor" strokeWidth="1" strokeOpacity="0.7" fill="none"/>
-    <circle cx="12" cy="12" r="2" fill="currentColor"/>
-    <line x1="12" y1="20" x2="12" y2="23" stroke="currentColor" strokeWidth="1"/>
+    <path d="M12 22s-4-6-4-10a4 4 0 0 1 8 0c0 4-4 10-4 10z"/>
+    <path d="M12 22s4-3 7-8a4 4 0 0 0-6-6"/>
+    <path d="M12 22s-4-3-7-8a4 4 0 0 1 6-6"/>
   </PIcon>
 );
 
 const PIMentor = ({ className }: { className?: string }) => (
   <PIcon className={className}>
-    <circle cx="12" cy="7" r="3.5" stroke="currentColor" strokeWidth="1.2" fill="currentColor" fillOpacity="0.1"/>
-    <path d="M4 21c0-4.5 3.5-8 8-8s8 3.5 8 8" stroke="currentColor" strokeWidth="1.2" fill="currentColor" fillOpacity="0.06"/>
-    <path d="M12 10.5v3" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5"/>
-    <circle cx="12" cy="16" r="1.5" stroke="currentColor" strokeWidth="0.8" fill="currentColor" fillOpacity="0.2"/>
-    <path d="M8.5 5.5l-.5-2" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.4"/>
-    <path d="M15.5 5.5l.5-2" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.4"/>
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
   </PIcon>
 );
 
 const PISpark = ({ className }: { className?: string }) => (
   <PIcon className={className}>
-    <path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z" fill="currentColor" fillOpacity="0.08" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-    <path d="M12 8l1 3h3l-2.5 2 1 3-2.5-2-2.5 2 1-3-2.5-2h3z" fill="currentColor" fillOpacity="0.35"/>
-    <circle cx="12" cy="12" r="1" fill="currentColor"/>
+    <path d="M12 2L15 9l7 3-7 3-3 7-3-7-7-3 7-3z"/>
   </PIcon>
 );
 
 const PIPresentation = ({ className }: { className?: string }) => (
   <PIcon className={className}>
-    <rect x="2" y="3" width="20" height="14" rx="2" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.2"/>
-    <line x1="8" y1="17" x2="8" y2="21" stroke="currentColor" strokeWidth="1"/>
-    <line x1="16" y1="17" x2="16" y2="21" stroke="currentColor" strokeWidth="1"/>
-    <line x1="6" y1="21" x2="18" y2="21" stroke="currentColor" strokeWidth="1.2"/>
-    <rect x="5" y="6" width="6" height="4" rx="0.5" fill="currentColor" fillOpacity="0.2"/>
-    <line x1="13" y1="7" x2="19" y2="7" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5"/>
-    <line x1="13" y1="9" x2="17" y2="9" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5"/>
-    <line x1="5" y1="13" x2="19" y2="13" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.3"/>
+    <rect width="20" height="14" x="2" y="3" rx="2"/>
+    <path d="M8 21h8"/>
+    <path d="M12 17v4"/>
   </PIcon>
 );
 
 const PINotebook = ({ className }: { className?: string }) => (
   <PIcon className={className}>
-    <rect x="4" y="2" width="16" height="20" rx="2" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.2"/>
-    <line x1="4" y1="6" x2="7" y2="6" stroke="currentColor" strokeWidth="1.2"/>
-    <line x1="4" y1="10" x2="7" y2="10" stroke="currentColor" strokeWidth="1.2"/>
-    <line x1="4" y1="14" x2="7" y2="14" stroke="currentColor" strokeWidth="1.2"/>
-    <line x1="4" y1="18" x2="7" y2="18" stroke="currentColor" strokeWidth="1.2"/>
-    <line x1="9" y1="7" x2="17" y2="7" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5"/>
-    <line x1="9" y1="10" x2="15" y2="10" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5"/>
-    <line x1="9" y1="13" x2="17" y2="13" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5"/>
-    <line x1="9" y1="16" x2="14" y2="16" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5"/>
+    <path d="M2 6h4"/><path d="M2 10h4"/><path d="M2 14h4"/><path d="M2 18h4"/>
+    <rect width="16" height="20" x="4" y="2" rx="2"/>
+    <path d="M16 2v20"/>
   </PIcon>
 );
 
 const PIYoga = ({ className }: { className?: string }) => (
   <PIcon className={className}>
-    <circle cx="12" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.2" fill="currentColor" fillOpacity="0.1"/>
-    <path d="M12 8v6" stroke="currentColor" strokeWidth="1.2"/>
-    <path d="M12 14l-5 6" stroke="currentColor" strokeWidth="1.2"/>
-    <path d="M12 14l5 6" stroke="currentColor" strokeWidth="1.2"/>
-    <path d="M6 10c2 1.5 4 2 6 2s4-.5 6-2" stroke="currentColor" strokeWidth="1.2" fill="none"/>
-    <circle cx="12" cy="11" r="0.8" fill="currentColor" fillOpacity="0.4"/>
+    <path d="M12 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+    <path d="M12 17v-7L9 7"/>
+    <path d="M12 17l-3 5"/>
+    <path d="M12 17l3 5"/>
+    <path d="M12 10l3-3"/>
   </PIcon>
 );
 
 const PIChat = ({ className }: { className?: string }) => (
   <PIcon className={className}>
-    <path d="M21 12c0 4.4-4 8-9 8-1.6 0-3-.3-4.3-.9L3 21l1.5-4C3.5 15.5 3 13.8 3 12c0-4.4 4-8 9-8s9 3.6 9 8z" fill="currentColor" fillOpacity="0.06" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-    <circle cx="8" cy="12" r="1" fill="currentColor"/>
-    <circle cx="12" cy="12" r="1" fill="currentColor"/>
-    <circle cx="16" cy="12" r="1" fill="currentColor"/>
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
   </PIcon>
 );
 
 const PIScroll = ({ className }: { className?: string }) => (
   <PIcon className={className}>
-    <path d="M8 3c-1.5 0-3 1-3 2.5S5 8 8 8h10c1 0 2 .8 2 2v7c0 1.5-1.5 2.5-3 2.5H7c-1.5 0-3-1-3-2.5" stroke="currentColor" strokeWidth="1.2" fill="none"/>
-    <path d="M8 3c1.5 0 3 1 3 2.5S10 8 8 8" stroke="currentColor" strokeWidth="1.2" fill="currentColor" fillOpacity="0.08"/>
-    <path d="M17 19.5c1.5 0 3-1 3-2.5" stroke="currentColor" strokeWidth="1.2"/>
-    <circle cx="17" cy="19.5" r="2.5" stroke="currentColor" strokeWidth="1.2" fill="currentColor" fillOpacity="0.08"/>
-    <line x1="9" y1="12" x2="17" y2="12" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5"/>
-    <line x1="9" y1="15" x2="15" y2="15" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5"/>
+    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+    <polyline points="14 2 14 8 20 8"/>
+    <line x1="16" x2="8" y1="13" y2="13"/>
+    <line x1="16" x2="8" y1="17" y2="17"/>
+    <line x1="10" x2="8" y1="9" y2="9"/>
   </PIcon>
 );
 
@@ -320,7 +279,7 @@ export default function GitaLifeCoursePage() {
     <div className="bg-white font-sans">
 
       {/* ── HERO SECTION ─────────────────────────────────────── */}
-      <section className="relative pt-4 sm:pt-6 pb-2 overflow-hidden z-10 bg-[#faf8f5]">
+      <section className="relative overflow-hidden z-10 bg-[#faf8f5] py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
           
           {/* Decorative Tag */}
@@ -345,7 +304,7 @@ export default function GitaLifeCoursePage() {
             <img 
               src="/gita hero.webp" 
               alt="Gita Life Course" 
-              className="w-full h-auto object-cover max-h-[350px] sm:max-h-[440px] md:max-h-[500px]"
+              className="w-full h-auto block"
             />
           </div>
 
@@ -373,7 +332,7 @@ export default function GitaLifeCoursePage() {
 
 
       {/* ══ ABOUT — redesigned narrative ═══════════════════ */}
-      <section id="about" className="bg-[#FFFBF2]/80 backdrop-blur-sm px-5 sm:px-10 lg:px-20 py-8 lg:py-12 relative overflow-hidden">
+      <section id="about" className="bg-[#FFFBF2]/80 backdrop-blur-sm px-5 sm:px-10 lg:px-20 relative overflow-hidden py-8 md:py-12">
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 100% 0%, #fef3c7 0%, transparent 40%)" }} />
         
         <div className="max-w-4xl mx-auto relative z-10 text-center mb-10">
@@ -404,7 +363,7 @@ export default function GitaLifeCoursePage() {
                   More than 5,000 years ago, just before the great war began, Arjuna became overwhelmed with fear,
                   confusion, and sorrow. His body trembled, his mouth dried up, and he set aside his bow and arrows.
                 </p>
-                <p className="p-6 bg-white/60 rounded-2xl border border-amber-100 italic text-[#072149] shadow-sm">
+                <p className="p-6 bg-white/60 rounded-2xl border border-amber-100 text-[#072149] shadow-sm">
                   In this moment of uncertainty, Arjuna raised profound questions about duty, life, morality,
                   and the purpose of existence. Lord Krishna spoke the eternal wisdom — illuminating the path
                   of knowledge, devotion, and righteous action.
@@ -427,7 +386,7 @@ export default function GitaLifeCoursePage() {
                 <div className="bg-gradient-to-br from-[#072149] to-[#0a2d60] rounded-3xl p-8 relative overflow-hidden shadow-xl mt-8">
                   <div className="absolute top-4 right-6 text-white/10 text-8xl font-serif select-none leading-none">&ldquo;</div>
                   <div className="relative z-10">
-                    <p className="text-white/95 text-[16px] sm:text-[17px] md:text-[18px] leading-relaxed italic mb-6">
+                    <p className="text-white/95 text-[16px] sm:text-[17px] md:text-[18px] leading-relaxed mb-6">
                       We are trying to give human society the opportunity for a life of happiness, good health,
                       peace of mind, and all good qualities through God consciousness.
                     </p>
@@ -470,7 +429,7 @@ export default function GitaLifeCoursePage() {
 
 
       {/* ══ CURRICULUM — redesigned with image & text ════════════════════ */}
-      <section id="modules" className="bg-white/80 backdrop-blur-sm px-5 sm:px-10 lg:px-20 py-8 lg:py-10">
+      <section id="modules" className="bg-white/80 backdrop-blur-sm px-5 sm:px-10 lg:px-20 py-8 md:py-12">
         <div className="max-w-7xl mx-auto">
 
           <AnimeReveal direction="up" delay={80} className="mb-8 max-w-3xl">
@@ -511,7 +470,7 @@ export default function GitaLifeCoursePage() {
               <div className="relative w-full rounded-[2.5rem] overflow-hidden shadow-[0_20px_80px_rgba(7,33,73,0.12)] border border-white/50 group bg-white/40 backdrop-blur-xl p-4 md:p-6 lg:sticky lg:top-24">
                 <div className="absolute inset-0 bg-gradient-to-tr from-amber-100/20 to-blue-50/20 pointer-events-none" />
                 <img 
-                  src="https://hkmdehradun.org/live-site/assets/12/curriculum.png" 
+                  src="/Vrn1.jpg" 
                   alt="Gita Life Course Curriculum Modules" 
                   className="w-full h-auto object-contain rounded-2xl shadow-sm transform group-hover:scale-[1.01] transition-transform duration-700 ease-out relative z-10" 
                 />
@@ -545,7 +504,7 @@ export default function GitaLifeCoursePage() {
       </div>
 
       {/* ══ SPECIAL FEATURES — redesigned with image & text ═════════════════ */}
-      <section className="bg-white/80 backdrop-blur-3xl px-5 sm:px-10 lg:px-20 py-8 lg:py-12 relative overflow-hidden border-y border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.05)]">
+      <section className="bg-white/80 backdrop-blur-3xl px-5 sm:px-10 lg:px-20 relative overflow-hidden border-y border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.05)] py-8 md:py-12">
         <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
           style={{ backgroundImage: "radial-gradient(circle, #000000 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
         <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-amber-400/30 blur-[80px] -translate-y-1/2 translate-x-1/4" />
@@ -568,20 +527,22 @@ export default function GitaLifeCoursePage() {
             </div>
           </AnimeReveal>
 
-          <div className="grid lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-16 items-center">
+          <div className="flex flex-col gap-12 lg:gap-16 items-center">
             
-            <AnimeReveal direction="right" delay={120}>
-              <div className="relative w-full rounded-[2.5rem] overflow-hidden shadow-[0_20px_80px_rgba(7,33,73,0.12)] border border-white/50 group bg-white/40 backdrop-blur-xl p-4 md:p-6 lg:order-1 order-2 lg:sticky lg:top-24">
+            {/* Top Image (Larger) */}
+            <AnimeReveal direction="up" delay={120} className="w-full max-w-5xl">
+              <div className="relative w-full rounded-[2.5rem] overflow-hidden shadow-[0_20px_80px_rgba(7,33,73,0.12)] border border-white/50 group bg-white/40 backdrop-blur-xl p-4 md:p-6">
                 <div className="absolute inset-0 bg-gradient-to-tr from-rose-50/20 to-amber-50/20 pointer-events-none" />
                 <img 
-                  src="https://hkmdehradun.org/live-site/assets/12/features.png" 
+                  src="/vrn2.jpg" 
                   alt="Gita Life Course Special Features" 
-                  className="w-full h-auto object-contain rounded-2xl shadow-sm transform group-hover:scale-[1.01] transition-transform duration-700 ease-out relative z-10" 
+                  className="w-full h-auto max-h-[400px] object-cover object-center rounded-2xl shadow-sm transform group-hover:scale-[1.01] transition-transform duration-700 ease-out relative z-10" 
                 />
               </div>
             </AnimeReveal>
 
-            <div className="grid sm:grid-cols-2 gap-6 lg:order-2 order-1">
+            {/* Bottom Cards (All 6) */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
               {specialFeatures.map(({ Icon, label, desc }, i) => (
                 <AnimeReveal key={i} direction="up" delay={100 + i * 50}>
                   <motion.div 

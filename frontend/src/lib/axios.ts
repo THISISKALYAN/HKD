@@ -37,8 +37,8 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401 && typeof window !== 'undefined') {
-      // Clear invalid token
+    if ((error.response?.status === 401 || error.response?.status === 403) && typeof window !== 'undefined') {
+      // Clear invalid or expired token
       localStorage.removeItem('hkd_admin_token');
       localStorage.removeItem('hkd_admin_role');
       localStorage.removeItem('hkd_admin_user');

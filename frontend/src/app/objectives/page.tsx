@@ -75,18 +75,13 @@ const objectives = [
     image: "https://hkmdehradun.org/assets/images/devotional-item.jpg"
   },
   {
-    title: "9. Upcoming VCM Project",
-    text: "The next objective is to present, preserve and promote the cultural heritage of India through new projects and capitalize on such opportunities to further the mission of Srila Prabhupada. Krishna Lila Theme Park is one such project which is magnificent in scale. This project is likely to be completed in the year 2021-2022. It is an initiative to present the culture and heritage of our country, as described in the Vedic Scriptures, to the contemporary society in a compelling manner using a narrative strategy – technology assisted multi-sensory immersive and experimental story telling. Disney World and Universal Studios use this kind of communication strategy. We want to use this technology to impress the younger generation with the glories of our heroes like Krishna, Rama, Hanuman, etc. The cost estimate of this project is Rs.350 crores. This Theme Park will be a landmark destination in cultural and religious tourism in Bengaluru.",
-    image: "https://hkmdehradun.org/assets/images/devotional-item.jpg"
-  },
-  {
-    title: "10. Life in Harmony with Nature",
+    title: "9. Life in Harmony with Nature",
     text: "Another objective is to bring about a way of life that is in harmony with nature and offers a sustainable alternative to the dominant consumerist and materialistic world. Srila Prabhupada always instructed his disciples to accept a simple life style. He always stressed on simple living and high thinking. He initiated the farm project at New Vrindavan, United States. Hare Krishna Movement Dehradun maintains a Gaushala where cows and bulls are protected and cared for with love and devotion.",
     image: "https://hkmdehradun.org/assets/images/harmony-with-nature.jpg"
   },
   {
-    title: "11. Prasadam Distribution",
-    text: "Food distribution is considered the supreme of all charities. Śrīla Prabhupāda desired that everyone taste the nectar of devotion. Food offered to Lord Krishna, known as prasādam, is divine and has the power to relieve suffering by freeing one from sinful reactions. Śrīla Prabhupāda strongly emphasized that no one should go hungry in the presence of a temple or a devotee.\n\nIn the spirit of this instruction, Hare Krishna Movement Dehradun regularly distributes prasādam in Haridwar to thousands of pilgrims and sadhus who visit the holy dhāma throughout the year. This sacred food distribution program serves nutritious and sanctified meals with devotion and care, enabling pilgrims to spiritually benefit while undertaking their sacred journey.\n\nAll our food distribution activities are carried out with a commitment to sustainability and socially responsible practices, ensuring purity, dignity, and long-term positive impact.",
+    title: "10. Prasadam Distribution",
+    text: "Food distribution is considered the supreme of all charities. Srila Prabhupada desired that everyone taste the nectar of devotion. Food offered to Lord Krishna, known as prasadam, is divine and has the power to relieve suffering by freeing one from sinful reactions. Srila Prabhupada strongly emphasized that no one should go hungry in the presence of a temple or a devotee.\n\nIn the spirit of this instruction, Hare Krishna Movement Dehradun regularly distributes prasadam in Haridwar to thousands of pilgrims and sadhus who visit the holy dhama throughout the year. This sacred food distribution program serves nutritious and sanctified meals with devotion and care, enabling pilgrims to spiritually benefit while undertaking their sacred journey.\n\nAll our food distribution activities are carried out with a commitment to sustainability and socially responsible practices, ensuring purity, dignity, and long-term positive impact.",
     image: "https://hkmdehradun.org/assets/images/prasadam-distribution.jpg"
   }
 ];
@@ -134,7 +129,7 @@ export default function OurObjectivesPage() {
       </div>
 
       {/* ── HERO SECTION ─────────────────────────────────────── */}
-      <section className="relative pt-8 sm:pt-12 pb-6 overflow-hidden z-10 bg-[#faf8f5]">
+      <section className="relative overflow-hidden z-10 bg-[#faf8f5] py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
           
           {/* Decorative Tag */}
@@ -167,7 +162,7 @@ export default function OurObjectivesPage() {
       </section>
 
       {/* Main Content Area */}
-      <section className="py-12 md:py-16 relative z-10 overflow-hidden">
+      <section className="relative z-10 overflow-hidden py-8 md:py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="space-y-16 md:space-y-20">
 

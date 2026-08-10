@@ -9,7 +9,6 @@ const FOLK_NAV = [
   { label: "About Us", href: "/youth#about" },
   { label: "Workshops", href: "/youth#highlights" },
   { label: "Life Coach", href: "/life-coach" },
-  { label: "Youth Blogs", href: "/blogs_youthprogram" },
   { label: "Gallery", href: "/gallery" },
 ];
 

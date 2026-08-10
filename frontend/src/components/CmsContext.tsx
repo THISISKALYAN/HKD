@@ -161,13 +161,18 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     });
   };
 
-  const savePageContent = async (pageId: string): Promise<boolean> => {
+  const savePageContent = async (pageId: string, customContent?: any): Promise<boolean> => {
     if (!token) return false;
     try {
+      const dataToSave = customContent || pageContent[pageId];
       const response = await apiClient.put(
         `/api/cms/pages/${pageId}`,
-        pageContent[pageId]
+        dataToSave
       );
+      setPageContent(prev => ({
+        ...prev,
+        [pageId]: dataToSave
+      }));
       return true;
     } catch (error) {
       console.error(`Failed to save visual CMS page content for ${pageId}:`, error);

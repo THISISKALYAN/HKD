@@ -26,16 +26,19 @@ export default function ReelsCmsPage() {
  }, [fetchPageContent]);
 
  useEffect(() => {
- if (pageContent['reels'] && pageContent['reels'].reels) {
- const fetchedReels = pageContent['reels'].reels;
- // Ensure we always have 3 elements in the UI state
- const initialReels = [
- fetchedReels[0] || { url: '', caption: '' },
- fetchedReels[1] || { url: '', caption: '' },
- fetchedReels[2] || { url: '', caption: '' }
- ];
- setReels(initialReels);
- }
+  if (pageContent['reels'] && pageContent['reels'].reels) {
+  let fetchedReels = pageContent['reels'].reels;
+  if (!Array.isArray(fetchedReels) && typeof fetchedReels === 'object') {
+    fetchedReels = Object.values(fetchedReels);
+  }
+  // Ensure we always have 3 elements in the UI state
+  const initialReels = [
+  fetchedReels[0] || { url: '', caption: '' },
+  fetchedReels[1] || { url: '', caption: '' },
+  fetchedReels[2] || { url: '', caption: '' }
+  ];
+  setReels(initialReels);
+  }
  }, [pageContent]);
 
  const handleReelUpload = async (index: number, file: File) => {

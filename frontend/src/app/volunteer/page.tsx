@@ -194,45 +194,40 @@ export default function VolunteerPage() {
     <div className="bg-[#faf8f5] min-h-screen font-sans overflow-x-hidden relative">
 
       {/* ── HERO SECTION ─────────────────────────────────────── */}
-      <section className="pt-4 sm:pt-6 pb-4 px-4 sm:px-6 lg:px-12 max-w-[1400px] mx-auto relative z-10">
+      <section className="px-4 sm:px-6 lg:px-12 max-w-[1400px] mx-auto relative z-10 py-8 md:py-12">
         
         {/* Decorative Tag & Page Heading */}
-        <div className="flex flex-col items-center text-center mb-6">
+        <div className="flex flex-col items-center text-center mb-8">
           <div className="flex items-center gap-3 text-[#d4af37] mb-2">
             <div className="h-px w-10 bg-current"></div>
             <span className="uppercase tracking-[0.2em] font-bold text-xs sm:text-sm">HARE KRISHNA MOVEMENT DEHRADUN</span>
             <div className="h-px w-10 bg-current"></div>
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#072149] tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#072149] tracking-tight mb-4">
             Volunteer <span className="text-[#d4af37]">With Us</span>
           </h1>
+          <p className="text-base sm:text-lg lg:text-xl text-slate-700 font-medium max-w-3xl leading-relaxed">
+            Offer your talents, and heart in the loving service of Sri Sri Krishna Balaram. Support the temple&apos;s spiritual and outreach activities by volunteering and become an instrument in Srila Prabhupada&apos;s mission. Come serve — and be spiritually transformed.
+          </p>
         </div>
 
         {/* Volunteer Banner */}
         <div 
-          className="relative overflow-hidden rounded-[24px] bg-[#0c4a8a] text-white shadow-xl group"
+          className="relative overflow-hidden rounded-[24px] bg-[#072149] text-white shadow-2xl group flex flex-col justify-end items-center min-h-[320px] sm:min-h-[380px] p-6 sm:p-10"
         >
-          {/* Static Background Image with Correct Ratio */}
-          <div 
-            className="absolute inset-0 bg-contain bg-right bg-no-repeat mix-blend-luminosity opacity-60 pointer-events-none"
-            style={{ 
-              backgroundImage: "url('/volunteer_cartoon_bg.png')",
-              backgroundPosition: "100% 50%" 
-            }}
+          {/* Clear Full Opacity Background Image */}
+          <img 
+            src="/Life in Harmony with Nature.jpg" 
+            alt="Volunteer Banner" 
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
-          {/* Gradient overlay to ensure text readability and fade smoothly into the image */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0c4a8a] via-[#0c4a8a]/90 to-[#0c4a8a]/10 pointer-events-none" />
+          {/* Soft Overlay */}
+          <div className="absolute inset-0 bg-black/25 pointer-events-none" />
 
-          {/* Text Content */}
-          <div className="relative z-10 p-8 sm:p-12 lg:p-14 md:w-3/4 lg:w-[65%]">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-5 tracking-tight text-white">
-              Volunteer to <span className="text-[#d4af37]">Serve</span>
-            </h2>
-            <p className="text-[15px] sm:text-base lg:text-[17px] mb-8 leading-relaxed text-white/95 font-medium max-w-2xl">
-              Offer your talents, and heart in the loving service of Sri Sri Krishna Balaram. Support the temple&apos;s spiritual and outreach activities by volunteering and become an instrument in Srila Prabhupada&apos;s mission. Come serve — and be spiritually transformed.
-            </p>
+          {/* Button Centered at Bottom End of Image */}
+          <div className="relative z-10 w-full flex justify-center pb-2 sm:pb-4">
             <a href="#register-form">
-              <button className="bg-[#d4af37] text-[#072149] px-8 py-3.5 rounded-full font-extrabold text-[15px] tracking-wide uppercase hover:bg-white hover:text-[#0c4a8a] hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 shadow-md">
+              <button className="bg-[#F5C518] text-[#072149] px-9 py-4 rounded-full font-black text-[15px] sm:text-base tracking-wider uppercase hover:bg-white hover:text-[#072149] hover:shadow-[0_0_35px_rgba(245,197,24,0.6)] hover:scale-105 transition-all duration-300 shadow-2xl border-2 border-white/40">
                 BECOME A VOLUNTEER
               </button>
             </a>
@@ -240,7 +235,7 @@ export default function VolunteerPage() {
         </div>
       </section>
 
-      <section id="register-form" className="bg-[#faf8f5]">
+      <section id="register-form" className="bg-[#faf8f5] py-8 md:py-12">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-12 py-8 lg:py-12">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             
@@ -270,7 +265,7 @@ export default function VolunteerPage() {
                 <div className="mt-8 bg-white p-8 rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.03)] border border-amber-100 relative overflow-hidden">
                   <div className="absolute -top-10 -left-6 text-[120px] text-amber-100/50 font-serif leading-none pointer-events-none">&ldquo;</div>
                   <div className="relative z-10">
-                    <p className="text-xl md:text-2xl italic text-[#072149] leading-relaxed font-medium">
+                    <p className="text-xl md:text-2xl text-[#072149] leading-relaxed font-medium">
                       Devotional Service is not a job, it is a privilege.
                     </p>
                     <div className="mt-6 flex items-center gap-4">
@@ -419,7 +414,7 @@ export default function VolunteerPage() {
       </section>
 
       {/* ── WHY VOLUNTEER ──────────── */}
-      <section className="bg-[#faf8f5] py-8 lg:py-12">
+      <section className="bg-[#faf8f5] py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto px-6 sm:px-10 lg:px-16">
           
           <Reveal className="text-center mb-10">
@@ -489,7 +484,7 @@ export default function VolunteerPage() {
       </section>
 
       {/* ── AREAS OF SEVA (macOS Sky Blue Cards Style) ──────────── */}
-      <section className="bg-[#faf8f5] py-8 lg:py-12">
+      <section className="bg-[#faf8f5] py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto px-6 sm:px-10 lg:px-16">
 
           <Reveal className="text-center mb-10">

@@ -6,7 +6,7 @@ import { ArrowRight, Menu, X, ChevronLeft, ChevronRight, Pause, Play, BookOpen, 
 import Link from 'next/link';
 import axios from '@/lib/axios';
 import FolkNavbar from '@/components/FolkNavbar';
-import YouthGallery from '@/components/YouthGallery';
+
 
 const Reveal = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
   <motion.div
@@ -164,7 +164,7 @@ export default function YouthFOLKPage() {
       <FolkNavbar />
 
       {/* ── INTERACTIVE HERO CARD CAROUSEL (Zero-flash horizontal scroll matching user design) ── */}
-      <section className="py-4 sm:py-8 px-4 sm:px-6 max-w-7xl mx-auto select-none">
+      <section className="px-4 sm:px-6 max-w-7xl mx-auto select-none py-8 md:py-12">
         <div className="relative rounded-[32px] sm:rounded-[40px] bg-gradient-to-br from-[#DFF0F8] via-[#E2F2FA] to-[#D5EBF6] border border-[#BCE1F1] shadow-2xl overflow-hidden">
           {/* Horizontal Sliding Track: Never flashes white or black screen */}
           <div
@@ -381,45 +381,66 @@ export default function YouthFOLKPage() {
         </div>
       </section>
 
-      {/* ── ABOUT US ─────────────────────────────────────── */}
-      <section id="about" className="py-16 md:py-8" style={{ backgroundColor: '#ffffff' }}>
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <Reveal>
-              <div className="overflow-hidden shadow-xl" style={{ borderRadius: '6px' }}>
-                <img
-                  src="/deity-2.webp"
-                  alt="FOLK Community"
-                  className="w-full h-[400px] object-cover"
-                />
+      {/* ── ABOUT US (Redesigned Modern Editorial Showcase) ─────────────────────────────────────── */}
+      <section id="about" className="bg-gradient-to-b from-white via-[#FAF8F5] to-white relative overflow-hidden py-8 md:py-12">
+        {/* Ambient background glow */}
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#04235f]/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            {/* Left Image Showcase (5 Cols) */}
+            <Reveal className="lg:col-span-5">
+              <div className="relative group mx-auto max-w-md lg:max-w-none">
+                {/* Background decorative accent card */}
+                <div className="absolute -inset-4 bg-gradient-to-tr from-[#02144c]/10 via-[#d99500]/20 to-[#02144c]/10 rounded-[3rem] blur-xl opacity-75 group-hover:opacity-100 transition duration-700 pointer-events-none" />
+                
+                {/* Main Image Container */}
+                <div className="relative rounded-[2.5rem] overflow-hidden bg-white p-3 border border-amber-200/60 shadow-[0_20px_50px_rgba(4,35,95,0.08)] group-hover:shadow-[0_25px_60px_rgba(4,35,95,0.15)] transition-all duration-500">
+                  <div className="relative overflow-hidden rounded-[2rem]">
+                    <img
+                      src="/Add%20this%20pic%20in%20main%20page.png"
+                      alt="FOLK Community"
+                      className="w-full h-auto object-contain rounded-[2rem] group-hover:scale-[1.02] transition-transform duration-700 ease-out"
+                    />
+                  </div>
+                </div>
               </div>
             </Reveal>
-            <Reveal delay={0.2}>
-              <div>
-                <h2 className="font-bold mb-6" style={{ fontSize: '40px', color: '#04235f', lineHeight: 1.15 }}>
-                  About <span style={{ color: '#f5c518' }}>FOLK</span>
+
+            {/* Right Content Column (7 Cols) */}
+            <Reveal delay={0.2} className="lg:col-span-7">
+              <div className="flex flex-col justify-center">
+                
+                {/* Tagline */}
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-[#d99500] text-xs sm:text-sm font-bold tracking-widest uppercase mb-4 w-fit">
+                  <span>ABOUT FOLK DEHRADUN</span>
+                </div>
+
+                {/* Heading */}
+                <h2 className="text-3xl sm:text-5xl font-black text-[#04235f] tracking-tight leading-tight mb-6">
+                  Transforming Youth Through <span className="text-[#d99500]">Timeless Wisdom</span>
                 </h2>
-                <p className="mb-6" style={{ fontSize: '18px', color: '#6d6d6d', lineHeight: '28px' }}>
-                  Welcome to FOLK Dehradun, a Youth Empowerment Club of Hare Krishna Movement Dehradun. We are dedicated to fostering a deeper understanding of life&apos;s purpose and the art of living through the teachings of the Bhagavad Gita.
+
+                {/* Description */}
+                <p className="text-[#4A5568] text-base sm:text-lg leading-relaxed font-medium mb-5">
+                  Welcome to <strong className="text-[#04235f]">FOLK Dehradun</strong>, the Youth Empowerment initiative of Hare Krishna Movement Dehradun. We are dedicated to fostering a deeper understanding of life&apos;s ultimate purpose and the art of joyful living through the practical teachings of the Shrimad Bhagavad Gita.
                 </p>
-                <p className="mb-8" style={{ fontSize: '18px', color: '#6d6d6d', lineHeight: '28px' }}>
-                  Our programs are designed to help young professionals and students navigate modern challenges by tapping into timeless Vedic wisdom, providing practical tools for mind control, emotional stability, and true personality development.
+
+                <p className="text-[#4A5568] text-base sm:text-lg leading-relaxed font-medium">
+                  Our interactive programs equip young professionals and students to navigate modern challenges effortlessly—offering proven techniques for mental focus, emotional poise, stress management, and true character building.
                 </p>
-                <Link
-                  href="#programs"
-                  className="inline-flex items-center gap-2 px-8 py-3 text-white font-semibold transition-colors duration-200 hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f5c518]"
-                  style={{ backgroundColor: '#02144c', borderRadius: '50px', fontSize: '16px' }}
-                >
-                  Explore Programs <ArrowRight className="w-4 h-4" />
-                </Link>
+
               </div>
             </Reveal>
+
           </div>
         </div>
       </section>
 
       {/* ── WHAT WE OFFER: REDESIGNED EDITORIAL ARCH-SHOWCASE (White Theme) ───────────── */}
-      <section id="programs" className="w-full py-16 sm:py-24 bg-white text-[#04235f] overflow-hidden relative">
+      <section id="programs" className="w-full bg-white text-[#04235f] overflow-hidden relative py-8 md:py-12">
         {/* Subtle decorative background accents */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-[#EBF8FF]/60 blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-[#FEFCBF]/30 blur-3xl pointer-events-none" />
@@ -502,7 +523,7 @@ export default function YouthFOLKPage() {
       </section>
 
       {/* ── GET EMPOWERED SECTION ────────────────────────── */}
-      <section id="highlights" className="py-12 sm:py-16 bg-white">
+      <section id="highlights" className="bg-white py-8 md:py-12">
         <div className="max-w-6xl mx-auto px-6">
           <Reveal>
             <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
@@ -565,7 +586,7 @@ export default function YouthFOLKPage() {
       </section>
 
       {/* ── OUR MISSION ──────────────────────────────────── */}
-      <section id="mission" className="py-20 md:py-28 bg-[#faf8f5]">
+      <section id="mission" className="bg-[#faf8f5] py-8 md:py-12">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
@@ -578,10 +599,13 @@ export default function YouthFOLKPage() {
               </Reveal>
               
               <Reveal delay={0.1}>
-                <h2 className="text-3xl sm:text-4xl md:text-[42px] font-extrabold text-[#02144c] leading-tight tracking-tight">
-                  Empowering Youth,<br />
-                  <span className="text-[#d99500] bg-gradient-to-r from-[#d99500] to-[#b7791f] bg-clip-text text-transparent">Enlightening Minds.</span>
-                </h2>
+                <div className="flex items-start gap-3">
+                  <h2 className="text-3xl sm:text-4xl md:text-[42px] font-extrabold text-[#02144c] leading-tight tracking-tight">
+                    Empowering Youth,<br />
+                    <span className="text-[#d99500] bg-gradient-to-r from-[#d99500] to-[#b7791f] bg-clip-text text-transparent">Enlightening Minds.</span>
+                  </h2>
+                  <img src="https://img.icons8.com/?size=100&id=poVlgAcqxww6&format=png&color=000000" alt="Verified" className="w-10 h-10 md:w-12 md:h-12 object-contain shrink-0 mt-1 drop-shadow-md hover:scale-110 transition-transform duration-300" />
+                </div>
               </Reveal>
 
               <Reveal delay={0.2}>
@@ -621,10 +645,8 @@ export default function YouthFOLKPage() {
                       whileHover={{ y: -4, scale: 1.01 }}
                       className="bg-white border border-[#E2D8C5]/30 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-[#f5c518]/40 transition-all duration-300 flex gap-3 h-full"
                     >
-                      <div className="w-6 h-6 rounded-full bg-[#f5c518] flex items-center justify-center shrink-0 mt-0.5">
-                        <svg className="w-3.5 h-3.5 text-[#02144c]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
+                      <div className="w-6 h-6 shrink-0 mt-0.5">
+                        <img src="https://img.icons8.com/?size=100&id=poVlgAcqxww6&format=png&color=000000" alt="Verified" className="w-full h-full object-contain drop-shadow-sm" />
                       </div>
                       <div>
                         <h4 className="font-bold text-sm text-[#02144c] mb-0.5">{item.title}</h4>
@@ -664,21 +686,7 @@ export default function YouthFOLKPage() {
                   />
                 </Reveal>
 
-                {/* Floating Glassmorphic Badge */}
-                <Reveal delay={0.6} className="absolute -bottom-4 left-4 z-30">
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    className="bg-white/95 backdrop-blur-md border border-[#E2D8C5]/50 px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 cursor-default"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-[#f5c518] flex items-center justify-center text-[#02144c] font-black text-sm">
-                      ✨
-                    </div>
-                    <div>
-                      <div className="text-[18px] font-black text-[#02144c] leading-tight">1000+</div>
-                      <div className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider">Youth Guided</div>
-                    </div>
-                  </motion.div>
-                </Reveal>
+
               </div>
             </div>
 
@@ -686,11 +694,10 @@ export default function YouthFOLKPage() {
         </div>
       </section>
 
-      {/* ── YOUTH GALLERY SECTION ────────────────────────────────────────────── */}
-      <YouthGallery />
+
 
       {/* ── THE BIG PICTURE (STATS BANNER - LIQUID GLASS & COUNT-UP) ───────────────── */}
-      <section className="py-20 md:py-28 bg-white relative overflow-hidden">
+      <section className="bg-white relative overflow-hidden py-8 md:py-12">
         {/* Subtle decorative background glow circles */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#f5c518]/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-[#02144c]/5 rounded-full blur-3xl pointer-events-none" />
@@ -780,8 +787,7 @@ export default function YouthFOLKPage() {
                     transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 3.0 }}
                     className="absolute left-[21%] top-[29%] text-[#f5c518]"
                   >
-                    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 fill-[#f5c518]" />
-                  </motion.div>
+                    </motion.div>
                 </div>
 
                 <img
@@ -826,7 +832,7 @@ export default function YouthFOLKPage() {
       </section>
 
       {/* ── CLEAN STRUCTURED REGISTRATION FORM (JOIN FOLK DEHRADUN) ──────────────────────── */}
-      <section id="contact" className="py-16 sm:py-24 bg-[#f0f4f9] font-sans text-[#202124] relative">
+      <section id="contact" className="bg-[#f0f4f9] font-sans text-[#202124] relative py-8 md:py-12">
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
           <Reveal>
             {!sent ? (
@@ -908,6 +914,7 @@ export default function YouthFOLKPage() {
                     {[
                       { id: 'Talk', label: 'Flagship Youth Talks & Seminars' },
                       { id: 'Workshop', label: 'FOLK Workshops & Specialized Training' },
+                      { id: 'LifeCoach', label: 'Get in Touch with a Life Coach Right Now' },
                       { id: 'Meditation', label: 'Mantra Meditation & Inner Peace' },
                       { id: 'Kirtan', label: 'Ecstatic Kirtan & Spiritual Music' },
                       { id: 'Prasadam', label: 'Divine Prasadam & Conscious Cooking' },
@@ -1014,67 +1021,6 @@ export default function YouthFOLKPage() {
         </div>
       </section>
 
-      {/* ── CTA BANNER (LET'S GET STARTED / BEGIN YOUR JOURNEY INWARD - YELLOW LIQUID GLASS) ───────────────────────────────────── */}
-      <section className="py-20 md:py-28 bg-white relative overflow-hidden">
-        {/* Subtle Decorative Ambient Background Highlights */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#f5c518]/15 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <Reveal>
-            {/* VIBRANT YELLOW LIQUID GLASS CARD (EXACT SIZE OF THE BIG PICTURE SECTION) */}
-            <div className="relative pt-12 sm:pt-16 pb-10 sm:pb-14 px-6 sm:px-10 rounded-[36px] sm:rounded-[48px] bg-[#F5C518]/95 backdrop-blur-2xl border-2 border-white/85 shadow-[0_20px_60px_rgba(245,197,24,0.35),inset_0_1px_3px_rgba(255,255,255,0.8)] text-center overflow-hidden">
-              
-              {/* Specular Liquid Glass Top Reflection */}
-              <div className="absolute top-0 inset-x-0 h-1/3 bg-gradient-to-b from-white/70 via-white/20 to-transparent pointer-events-none rounded-t-[48px]" />
-
-              {/* Ambient Liquid Orbs Inside Card */}
-              <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-white/40 rounded-full blur-2xl pointer-events-none" />
-              <div className="absolute -left-20 -top-20 w-64 h-64 bg-white/40 rounded-full blur-2xl pointer-events-none" />
-
-              {/* Glowing Spiritual Context Pill */}
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="inline-flex items-center gap-2 px-4.5 py-1.5 rounded-full bg-white/75 border border-white text-[#02144c] text-[11px] sm:text-xs font-black uppercase tracking-widest mb-5 shadow-sm relative z-10"
-              >
-                <span>✨ Begin Your Journey Inward ✨</span>
-              </motion.div>
-
-              {/* Title Matching Reference Style */}
-              <h2 className="text-3xl sm:text-4xl md:text-[50px] font-black text-[#02144c] tracking-tight uppercase leading-none mb-4 relative z-10">
-                LET&apos;S GET STARTED
-              </h2>
-
-              {/* Subtitle Matching Reference & Spiritual Context */}
-              <p className="text-[#02144c]/90 text-sm sm:text-base md:text-lg font-bold max-w-xl mx-auto mb-8 leading-relaxed relative z-10">
-                Let the amazing journey begin. You will relish every mile traversed. Enrol in our Flagship FOLK Youth Sessions now to experience true self-realization and lasting happiness.
-              </p>
-
-              {/* Dual Action Buttons (Coral Primary Button) */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">
-                <Link
-                  href="#contact"
-                  className="w-full sm:w-auto group relative inline-flex items-center justify-center gap-2.5 px-9 py-4 rounded-2xl bg-gradient-to-r from-[#E06349] via-[#E6735C] to-[#D35400] text-white font-black text-base sm:text-lg shadow-[0_10px_30px_rgba(224,99,73,0.45)] hover:shadow-[0_15px_40px_rgba(224,99,73,0.65)] hover:scale-[1.04] active:scale-[0.98] transition-all duration-300 overflow-hidden"
-                >
-                  <span className="relative z-10">Lets Begin!</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform duration-300 relative z-10" />
-                  <div className="absolute inset-0 bg-white/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </Link>
-
-                <Link
-                  href="/volunteer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-white/75 hover:bg-white border border-white text-[#02144c] font-bold text-base sm:text-lg backdrop-blur-md transition-all duration-300 hover:scale-[1.04] active:scale-[0.98] shadow-md"
-                >
-                  <span>Volunteer With Us</span>
-                </Link>
-              </div>
-
-            </div>
-          </Reveal>
-        </div>
-      </section>
 
     </div>
   );

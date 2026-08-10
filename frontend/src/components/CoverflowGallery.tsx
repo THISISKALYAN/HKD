@@ -23,7 +23,14 @@ export default function CoverflowGallery() {
   const { pageContent } = useCms();
   
   const galleryItems = useMemo(() => {
-    const cmsGallery = pageContent.home?.templeGallery;
+    const rawGallery = pageContent.home?.templeGallery;
+    let cmsGallery: string[] = [];
+    if (Array.isArray(rawGallery)) {
+      cmsGallery = rawGallery;
+    } else if (rawGallery && typeof rawGallery === 'object') {
+      cmsGallery = Object.values(rawGallery);
+    }
+
     if (cmsGallery && cmsGallery.length > 0) {
       return cmsGallery.map((url: string, idx: number) => ({
         id: idx + 1,
@@ -54,8 +61,7 @@ export default function CoverflowGallery() {
 
   return (
     <>
-      <section
-        className="relative w-full bg-white overflow-hidden select-none"
+      <section className="relative w-full bg-white overflow-hidden select-none py-8 md:py-12"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         onTouchStart={() => setIsPaused(true)}

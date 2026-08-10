@@ -106,7 +106,7 @@ export default function ScripturalImportanceSection() {
   };
 
   return (
-    <section className="pt-4 pb-2 sm:pt-6 sm:pb-4 bg-[#faf8f5] relative z-10 font-sans border-t border-[#eae4d5]/40 overflow-hidden">
+    <section className="bg-[#faf8f5] relative z-10 font-sans border-t border-[#eae4d5]/40 overflow-hidden py-8 md:py-12">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-8 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-3 sm:mb-4 relative">

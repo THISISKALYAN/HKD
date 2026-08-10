@@ -3,7 +3,7 @@ import { Utensils, TreePine } from "lucide-react";
 
 export default function ExploreTemple() {
   return (
-    <section className="relative w-full pt-2 pb-12 sm:pt-4 sm:pb-16 bg-[#faf8f5] overflow-hidden font-sans">
+    <section className="relative w-full bg-[#faf8f5] overflow-hidden font-sans py-8 md:py-12">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header Section */}

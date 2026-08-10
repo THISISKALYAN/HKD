@@ -7,7 +7,7 @@ export default function BecomeAMonkPage() {
   return (
     <div className="w-full bg-[#faf8f5] font-sans">
       {/* ── HERO SECTION ─────────────────────────────────────── */}
-      <section className="relative pt-4 sm:pt-6 pb-2 overflow-hidden z-10 bg-[#faf8f5]">
+      <section className="relative overflow-hidden z-10 bg-[#faf8f5] py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
           
           {/* Decorative Tag */}
@@ -29,10 +29,12 @@ export default function BecomeAMonkPage() {
 
           {/* Hero Banner Card */}
           <div className="w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#eae4d5]">
-            <img 
-              src="/bam.webp" 
-              alt="Challenge Yourself" 
-              className="w-full h-auto object-cover max-h-[350px] sm:max-h-[440px] md:max-h-[500px]"
+            <img
+              src="/challenge%20.png"
+              alt="Challenge Yourself"
+              width={1672}
+              height={940}
+              className="w-full h-auto object-contain"
             />
           </div>
 
@@ -65,7 +67,7 @@ export default function BecomeAMonkPage() {
       `}} />
       
       {/* Three Pillars Section */}
-      <section className="py-8 lg:py-12 bg-[#faf8f5] relative z-10">
+      <section className="bg-[#faf8f5] relative z-10 py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           
           <div className="text-center mb-12">
@@ -167,7 +169,7 @@ export default function BecomeAMonkPage() {
                 {/* The Quote Text */}
                 <div className="md:col-span-2 space-y-4">
                   <p className="text-xs font-bold text-[#d4af37] tracking-[0.2em] uppercase">Lord Krishna explains:</p>
-                  <blockquote className="text-xl md:text-2xl font-serif font-extrabold text-[#072149] italic leading-snug relative z-10">
+                  <blockquote className="text-xl md:text-2xl font-serif font-extrabold text-[#072149] leading-snug relative z-10">
                     <Quote className="absolute -left-8 -top-6 w-12 h-12 text-amber-300/30 rotate-180 -z-10" />
                     &ldquo;What is night for all beings is the time of awakening for the self-controlled, and what is the time of awakening for all beings is night for the introspective sage.&rdquo;
                   </blockquote>
@@ -263,7 +265,7 @@ export default function BecomeAMonkPage() {
               {/* Right Column: Application Form */}
               <div className="lg:col-span-2 sticky top-32">
                 <div className="bg-white rounded-3xl p-8 md:p-10 border border-gray-200 shadow-xl font-sans">
-                  <h3 className="text-2xl font-bold text-[#072149] mb-2">Are you looking to become a Monk?</h3>
+                  <h3 className="text-2xl font-bold text-[#072149] mb-2">Experience Monk Life – Take the 30-Day Challenge</h3>
                   <p className="text-gray-500 mb-8 text-sm">Submit your details below...</p>
                   
                   <form className="space-y-6">

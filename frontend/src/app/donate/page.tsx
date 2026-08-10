@@ -4,7 +4,6 @@ import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Script from "next/script";
 import Link from "next/link";
-import RespectedContributors from "@/components/RespectedContributors";
 import DonorPrivileges from "@/components/DonorPrivileges";
 import DonationVideoSection from "@/components/DonationVideoSection";
 import ScripturalImportanceSection from "@/components/ScripturalImportanceSection";
@@ -51,7 +50,7 @@ const sevaCards = [
   },
   {
     title: "Annadana Seva",
-    image: "https://hkmdehradun.org/live-site/assets/12/annadaan-seva-banner1.png",
+    image: "/fh.webp",
     desc: "Support Hare Krishna Movement Dehradun's Annadana Seva by providing sanctified meals to devotees and the needy. Over 2.89 crore meals served.",
     label: "Annadana Seva",
     link: "/annadana-seva"
@@ -80,7 +79,7 @@ export default function DonatePage() {
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
 
       {/* ── HERO SECTION ─────────────────────────────────────── */}
-      <section className="relative pt-4 sm:pt-6 lg:pt-8 pb-2 overflow-hidden z-10">
+      <section className="relative overflow-hidden z-10 py-8 md:py-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -110,7 +109,7 @@ export default function DonatePage() {
       </section>
 
       {/* ── SEVA CARDS SECTION ────────────────────────────────── */}
-      <section className="pt-2 sm:pt-3 pb-4 lg:pt-4 lg:pb-6 relative z-10">
+      <section className="relative z-10 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto px-6 sm:px-10 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
             {sevaCards.map((seva, i) => (
@@ -158,13 +157,8 @@ export default function DonatePage() {
         </div>
       </section>
 
-      {/* ── RESPECTED CONTRIBUTORS SECTION ──────────────────────── */}
-      <section className="pb-4 relative z-10">
-        <RespectedContributors />
-      </section>
-
       {/* ── DONOR PRIVILEGES SECTION ────────────────────────────── */}
-      <section className="relative z-10 bg-gradient-to-b from-transparent to-white py-2">
+      <section className="relative z-10 bg-gradient-to-b from-transparent to-white py-8 md:py-12">
         <DonorPrivileges />
       </section>
 

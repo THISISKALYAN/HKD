@@ -155,7 +155,7 @@ export const FESTIVALS_DATA: Record<string, FestivalData> = {
     date: "~ FRIDAY, SEPTEMBER 4, 2026 ~",
     bannerSubtitle: "Maha Abhishek | Chhappan Bhog | Jhulan Alankara | Midnight Aarti | Maha Annadana",
     heroBg: "from-[#101e38] via-[#0b3873] to-[#121c3b]",
-    heroImage: "/ChatGPT Image Jul 22, 2026, 02_53_38 PM.png",
+    heroImage: "/janmashtami-cover.jpg",
     aboutText: "Commemorate the divine appearance of Supreme Lord Sri Krishna with fasting, midnight maha-abhishek, ecstatic kirtans, and grand celebrations.",
     sections: [
       {
@@ -486,7 +486,7 @@ export default function FestivalDetail({ slug }: { slug: string }) {
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-bold tracking-wide drop-shadow-md mb-2">
               {festival.title}
             </h1>
-            <p className="text-lg sm:text-2xl font-serif italic text-amber-200 tracking-wider mb-6 drop-shadow">
+            <p className="text-lg sm:text-2xl font-serif text-amber-200 tracking-wider mb-6 drop-shadow">
               {festival.date}
             </p>
 
