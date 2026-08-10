@@ -9,7 +9,7 @@ interface Message {
   sender: "user" | "ai";
   text: string;
   timestamp: string;
-  quickLinks?: { label: string; href: string }[];
+  quickLinks?: { label: string; href?: string; query?: string }[];
 }
 
 const KNOWLEDGE_BASE: { keywords: string[]; answer: string; links?: { label: string; href: string }[] }[] = [
@@ -167,7 +167,7 @@ export default function AiChatbotWidget() {
       text: "Hare Krishna! 🙏 Welcome to Hare Krishna Movement Dehradun. How may I assist your spiritual journey or seva today?",
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       quickLinks: [
-        { label: "📞 Contact Info", href: "/#footer" }
+        { label: "📞 Contact Info", query: "Contact Info" }
       ]
     }
   ]);
@@ -192,7 +192,7 @@ export default function AiChatbotWidget() {
     return {
       answer: `Hare Krishna! 🙏 Thank you for reaching out to Hare Krishna Movement Dehradun. How may we assist your spiritual journey or seva today?`,
       links: [
-        { label: "📞 Contact Info", href: "/#footer" },
+        { label: "📞 Contact Info", query: "Contact Info" },
         { label: "Explore Seva Opportunities", href: "/donate" }
       ]
     };
@@ -305,15 +305,25 @@ export default function AiChatbotWidget() {
                 {/* Quick Action Chips */}
                 {msg.quickLinks && (
                   <div className="flex flex-wrap gap-1.5 mt-2.5 max-w-[90%]">
-                    {msg.quickLinks.map((link, idx) => (
-                      <a
-                        key={idx}
-                        href={link.href}
-                        className="text-xs bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300/60 font-semibold px-3 py-1.5 rounded-full transition-all duration-200 hover:scale-105 shadow-sm inline-flex items-center gap-1"
-                      >
-                        {link.label}
-                      </a>
-                    ))}
+                    {msg.quickLinks.map((link, idx) =>
+                      link.query ? (
+                        <button
+                          key={idx}
+                          onClick={() => handleSendMessage(link.query)}
+                          className="text-xs bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300/60 font-semibold px-3 py-1.5 rounded-full transition-all duration-200 hover:scale-105 shadow-sm inline-flex items-center gap-1 cursor-pointer"
+                        >
+                          {link.label}
+                        </button>
+                      ) : (
+                        <a
+                          key={idx}
+                          href={link.href}
+                          className="text-xs bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300/60 font-semibold px-3 py-1.5 rounded-full transition-all duration-200 hover:scale-105 shadow-sm inline-flex items-center gap-1"
+                        >
+                          {link.label}
+                        </a>
+                      )
+                    )}
                   </div>
                 )}
               </div>
