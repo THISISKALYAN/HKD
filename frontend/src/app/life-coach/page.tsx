@@ -181,53 +181,71 @@ export default function LifeCoachPage() {
 
       <FolkNavbar />
 
-      {/* Liquid Glass Hero Section */}
-      <section className="relative overflow-hidden py-16 md:py-24 min-h-[85vh] flex items-center">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://i.pinimg.com/1200x/49/00/d5/4900d53b6678ad23dcb7e09e26501356.jpg"
-            alt="Life Coach Background"
-            className="w-full h-full object-cover object-center"
-          />
-          {/* Subtle dark gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="max-w-2xl">
-            {/* Liquid Glass Content Card */}
-            <div className="p-8 sm:p-10 md:p-12 rounded-[2.5rem] bg-white/10 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
-              
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 border border-white/30 text-white text-xs sm:text-sm font-bold tracking-widest uppercase mb-6 shadow-sm backdrop-blur-sm">
-                <Bookmark className="w-4 h-4" />
+      {/* Clean White Hero Section with Prominent Image */}
+      <section className="relative overflow-hidden border-b border-slate-200 bg-white py-8 md:py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left Column: Heading, Subheading & Quote */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300/80 text-amber-800 text-xs sm:text-sm font-bold tracking-wide uppercase">
+                <Bookmark className="w-4 h-4 text-amber-600" />
                 Personal Mentorship
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15] mb-4 drop-shadow-md font-sans">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.15]">
                 Life Begins at the End of Your{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-orange-400 drop-shadow-sm">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700">
                   Comfort Zone
                 </span>
               </h1>
 
-              <p className="text-lg sm:text-xl font-bold text-gray-200 tracking-wider uppercase mb-8 drop-shadow">
+              <p className="text-xl sm:text-2xl font-black text-amber-700 tracking-wide uppercase">
                 GET A PERSONAL LIFECOACH
               </p>
 
               {/* CFO Magazine Quote Box */}
-              <div className="pl-6 border-l-4 border-amber-400 py-2 relative">
-                <p className="text-white/95 text-base sm:text-lg leading-relaxed mb-4 font-medium drop-shadow-sm">
+              <div className="pl-6 border-l-4 border-blue-600 py-2 my-6">
+                <p className="text-slate-700 text-base sm:text-lg leading-relaxed mb-3 font-medium">
                   &ldquo;Coaches have the ability to view things from afar — in what some call &lsquo;helicopter vision&rsquo; — and to shed new light on difficult situations. Often they can act as a sounding board through tough decisions, help sharpen skills, and motivate.&rdquo;
                 </p>
                 <div className="flex items-center gap-2">
-                  <span className="text-amber-300 font-extrabold text-sm uppercase tracking-widest drop-shadow-sm">
+                  <span className="text-slate-900 font-extrabold text-sm uppercase tracking-wider">
                     &ndash; CFO Magazine
                   </span>
                 </div>
               </div>
-              
+
+              <div className="flex flex-wrap gap-4 pt-2">
+                <a
+                  href="#get-started"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-lg shadow-md hover:shadow-lg transition-all duration-300"
+                >
+                  Get Started Now
+                  <ArrowRight className="w-5 h-5" />
+                </a>
+                <a
+                  href="#areas"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-lg transition-all duration-300"
+                >
+                  Explore Areas of Help
+                </a>
+              </div>
             </div>
+
+            {/* Right Column: Clean Image Display */}
+            <div className="lg:col-span-5">
+              <div className="relative mx-auto max-w-md lg:max-w-none rounded-3xl overflow-hidden shadow-xl border border-slate-200 bg-slate-100">
+                <div className="relative w-full aspect-[4/3] sm:aspect-[1/1] lg:aspect-[4/5]">
+                  <img
+                    src="https://i.pinimg.com/1200x/49/00/d5/4900d53b6678ad23dcb7e09e26501356.jpg"
+                    alt="FOLK Life Coach Mentorship"
+                    className="w-full h-full object-cover object-center absolute inset-0"
+                  />
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
