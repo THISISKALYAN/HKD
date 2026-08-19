@@ -87,7 +87,7 @@ Join us on this highly auspicious day to receive the limitless blessings of Sri 
     authorName: "HKM Admin",
     createdAt: "June 10, 2026",
     excerpt: "Learn about the spiritual significance of Anna Daan and our daily initiative to feed hot, nutritious prasadam to sadhus and visitors.",
-    coverImage: "/fh.webp",
+    coverImage: "https://hkmdehradun.org/live-site/assets/12/annadaan-seva-banner1.png",
     published: true,
     content: `DAILY ANNADANA SEVA: NOURISHING PILGRIMS IN VRINDAVAN
 
