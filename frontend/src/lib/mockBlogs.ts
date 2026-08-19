@@ -89,7 +89,7 @@ Participating in Sri Gaura Purnima brings immense spiritual upliftment, inner pe
     authorName: "HKM Admin",
     createdAt: "June 10, 2026",
     excerpt: "Discover how Hare Krishna Movement Dehradun prepares and serves hot, nutritious, Krishna-prasadam daily to pilgrims, sadhus, and the underprivileged.",
-    coverImage: "https://hkmdehradun.org/live-site/assets/12/annadaan-seva-banner1.png",
+    coverImage: "/fh.webp",
     published: true,
     content: `DAILY ANNADANA SEVA: FEEDING SANCTIFIED MEALS TO THOUSANDS
 
