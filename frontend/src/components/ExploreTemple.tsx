@@ -50,7 +50,7 @@ export default function ExploreTemple() {
           {/* Hare Krishna Gifts */}
           <div className="relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border-[6px] border-white group col-span-1 lg:col-span-1 lg:row-span-2 row-span-1 bg-white">
             <img 
-              src="https://lens.usercontent.google.com/banana?agsi=CmdnbG9iYWw6OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAwZWI6MTo2NzlmNTlmNDhmYmJlNGM5OjAwMDA1NWNmZWM3MDAyNmQ6MDAwMDAyZGNmMDUwMzM2ODowMDA2NTk2NTYyZWM2ODdmEAIYASIJaW1hZ2UvcG5n" 
+              src="/image_925ffe24.webp" 
               alt="Hare Krishna Gifts" 
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
             />
