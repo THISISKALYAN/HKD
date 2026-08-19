@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Menu, X, ChevronLeft, ChevronRight, Pause, Play, BookOpen, Mic, Music, Utensils, Sparkles, User, Mail, Phone, Calendar, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Menu, X, ChevronLeft, ChevronRight, Pause, Play, BookOpen, Mic, Music, Utensils, Sparkles, User, Mail, Phone, Calendar, CheckCircle2, ShieldCheck, Volume2, VolumeX, Maximize2 } from 'lucide-react';
 import Link from 'next/link';
 import axios from '@/lib/axios';
 import FolkNavbar from '@/components/FolkNavbar';
@@ -125,17 +125,45 @@ export default function YouthFOLKPage() {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
 
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const totalSlides = 3;
+  const [activeMedia, setActiveMedia] = useState<string | null>(null);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [isMuted, setIsMuted] = useState(true);
 
-  useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % totalSlides);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [isPaused, totalSlides]);
+  const videos = [
+    {
+      url: '/folk%20event%20video.mp4',
+      title: 'FOLK Youth Festival & Kirtan Night',
+      desc: 'Immerse in high-energy youth celebrations, uplifting kirtans, and transformative wisdom sessions with FOLK Dehradun.',
+    },
+    {
+      url: '/Residency.mp4',
+      title: 'FOLK Leadership & Residential Camp',
+      desc: 'A peek into our life-changing residential retreats—mastering focus, character, and spiritual leadership.',
+    },
+    {
+      url: '/Vrindavan%20trip.mp4',
+      title: 'Sacred Vrindavan Heritage Yatra',
+      desc: 'Unforgettable spiritual expeditions with youth exploring ancient temples, wisdom satsangs, and sacred culture.',
+    },
+    {
+      url: '/New%20year%20video.mp4',
+      title: 'FOLK New Year Spiritual Celebration',
+      desc: 'Welcoming the new year with soul-stirring kirtan, mantra meditation, and joyous spiritual fellowship.',
+    },
+    {
+      url: '/Holi.mp4',
+      title: 'Ecstatic Holi & Gaura Purnima Utsav',
+      desc: 'Vibrant colors of devotion, ecstatic dancing, and blissful floral Holi celebrations with the youth community.',
+    },
+  ];
+
+  const prevVideo = () => {
+    setCurrentVideoIndex((prev) => (prev === 0 ? videos.length - 1 : prev - 1));
+  };
+
+  const nextVideo = () => {
+    setCurrentVideoIndex((prev) => (prev === videos.length - 1 ? 0 : prev + 1));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -163,221 +191,97 @@ export default function YouthFOLKPage() {
       {/* ── CUSTOM FOLK NAVBAR (Liquid Glass Style with Round Edges on Scroll) ──────────────── */}
       <FolkNavbar />
 
-      {/* ── INTERACTIVE HERO CARD CAROUSEL (Zero-flash horizontal scroll matching user design) ── */}
-      <section className="px-4 sm:px-6 max-w-7xl mx-auto select-none py-8 md:py-12">
-        <div className="relative rounded-[32px] sm:rounded-[40px] bg-gradient-to-br from-[#DFF0F8] via-[#E2F2FA] to-[#D5EBF6] border border-[#BCE1F1] shadow-2xl overflow-hidden">
-          {/* Horizontal Sliding Track: Never flashes white or black screen */}
-          <div
-            className="flex transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-          >
-            {/* ── SLIDE 1: Escape The Ordinary in 21 Days ────────────────────── */}
-            <div className="w-full flex-shrink-0 p-6 sm:p-10 md:p-12 flex flex-col md:flex-row items-center gap-8 md:gap-12">
-              {/* Left Column: Preview Card */}
-              <div className="w-full md:w-[48%] h-[260px] sm:h-[340px] md:h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl relative bg-gradient-to-br from-[#06142e] via-[#091f46] to-[#040e21] flex flex-col items-center justify-between p-4 border border-blue-900/40">
-                {/* Hanging Banners */}
-                <div className="w-full flex justify-between px-4 -mt-4">
-                  <div className="bg-[#62B824] border-t-2 border-[#81DE3C] shadow-lg px-4 py-2 rounded-b-xl text-white font-black text-xs sm:text-sm tracking-wider">
-                    FREE
-                  </div>
-                  <div className="bg-[#62B824] border-t-2 border-[#81DE3C] shadow-lg px-3 py-2 rounded-b-xl text-white font-black text-[10px] sm:text-xs text-center leading-tight">
-                    EVERY<br />SUNDAY
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-center text-center my-auto">
-                  <img
-                    src="/channels4_profile-removebg-preview.png"
-                    alt="FOLK Emblem"
-                    className="h-14 sm:h-20 w-auto object-contain drop-shadow mb-2"
-                  />
-                  <div className="text-[10px] sm:text-xs font-bold text-gray-300 tracking-widest uppercase mb-1">
-                    Youth Empowerment Club PRESENTS
-                  </div>
-                  <div className="text-lg sm:text-2xl font-black text-[#F5C518] tracking-wider uppercase drop-shadow">
-                    ESCAPE THE ORDINARY IN 21 DAYS
-                  </div>
-                </div>
-
-                <div className="text-[11px] text-gray-300/80 pb-1">
-                  Guided by Bhagavad Gita Wisdom
-                </div>
-              </div>
-
-              {/* Right Column: Title, Description & Action */}
-              <div className="w-full md:w-[52%] flex flex-col justify-center text-left pb-12 md:pb-6">
-                <span className="text-xs sm:text-sm font-extrabold tracking-widest text-blue-700 uppercase mb-2">
-                  Youth Empowerment Club • Dehradun
-                </span>
-                <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-[#111827] tracking-tight leading-tight mb-4">
-                  Escape The Ordinary in 21 Days
-                </h1>
-                <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed mb-6">
-                  Unlock your highest potential through practical Vedic wisdom, meditation techniques, and mind control from the Bhagavad Gita. Specially designed for young professionals and students.
-                </p>
-                <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-semibold text-gray-800 mb-6">
-                  <span className="flex items-center gap-1.5 bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
-                    <span className="text-amber-500">★</span> 4.9 Rated
-                  </span>
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
-                    Every Sunday
-                  </span>
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
-                    Free Entry & Feast
-                  </span>
-                </div>
-                <div>
-                  <a
-                    href="#register"
-                    className="inline-flex items-center gap-2 rounded-full border border-gray-400/80 bg-white hover:bg-gray-50 text-gray-900 font-bold px-6 py-2.5 text-sm shadow-sm transition-all"
-                  >
-                    See details <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* ── SLIDE 2: Sunday Evening Schedule (4 Tracks) ───────────────── */}
-            <div className="w-full flex-shrink-0 p-6 sm:p-10 md:p-12 flex flex-col md:flex-row items-center gap-8 md:gap-12">
-              {/* Left Column: Preview Card */}
-              <div className="w-full md:w-[48%] h-[260px] sm:h-[340px] md:h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl relative bg-gradient-to-b from-[#09152E] to-[#0c1e40] p-4 sm:p-6 flex flex-col justify-between border border-blue-900/40">
-                <div className="text-[#F5C518] text-xs font-black tracking-widest uppercase text-center">
-                  4 Comprehensive Sunday Sessions
-                </div>
-                <div className="grid grid-cols-2 gap-2 sm:gap-3 my-auto">
-                  <div className="bg-white/10 rounded-xl p-2.5 text-center border border-white/10">
-                    <div className="text-[#F37E3E] font-bold text-xs">FOLK WORKSHOP</div>
-                    <div className="text-[10px] text-gray-300">4 - 5 PM • Meditation</div>
-                  </div>
-                  <div className="bg-white/10 rounded-xl p-2.5 text-center border border-white/10">
-                    <div className="text-[#E4CD90] font-bold text-xs">FOLK STANDOUT</div>
-                    <div className="text-[10px] text-gray-300">5 - 6 PM • Leadership</div>
-                  </div>
-                  <div className="bg-white/10 rounded-xl p-2.5 text-center border border-white/10">
-                    <div className="text-[#60BFEA] font-bold text-xs">FOLK HARMONY</div>
-                    <div className="text-[10px] text-gray-300">6 - 7 PM • Kirtan</div>
-                  </div>
-                  <div className="bg-white/10 rounded-xl p-2.5 text-center border border-white/10">
-                    <div className="text-[#86B94A] font-bold text-xs">FOLK FEAST</div>
-                    <div className="text-[10px] text-gray-300">7 PM+ • Dinner Feast</div>
-                  </div>
-                </div>
-                <div className="text-center text-[11px] text-gray-300/80">
-                  All sessions conducted under expert guidance
-                </div>
-              </div>
-
-              {/* Right Column: Title, Description & Action */}
-              <div className="w-full md:w-[52%] flex flex-col justify-center text-left pb-12 md:pb-6">
-                <span className="text-xs sm:text-sm font-extrabold tracking-widest text-blue-700 uppercase mb-2">
-                  Complete Cultural Experience
-                </span>
-                <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-[#111827] tracking-tight leading-tight mb-4">
-                  Sunday Evening Schedule
-                </h2>
-                <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed mb-6">
-                  Immerse yourself every Sunday from 4 PM onwards: Vedic Workshop, Standout Leadership Talk, Soulful Musical Harmony, and a Sanctified Dinner Prasadam Feast.
-                </p>
-                <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-semibold text-gray-800 mb-6">
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
-                    4:00 PM to 8:00 PM
-                  </span>
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
-                    4 Tracks Included
-                  </span>
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
-                    Free Dinner
-                  </span>
-                </div>
-                <div>
-                  <a
-                    href="#register"
-                    className="inline-flex items-center gap-2 rounded-full border border-gray-400/80 bg-white hover:bg-gray-50 text-gray-900 font-bold px-6 py-2.5 text-sm shadow-sm transition-all"
-                  >
-                    See details <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* ── SLIDE 3: Dynamic Youth Community ──────────────────────────── */}
-            <div className="w-full flex-shrink-0 p-6 sm:p-10 md:p-12 flex flex-col md:flex-row items-center gap-8 md:gap-12">
-              {/* Left Column: Preview Card */}
-              <div className="w-full md:w-[48%] h-[260px] sm:h-[340px] md:h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl relative">
-                <img
-                  src="/darshan/DSC04179.webp"
-                  alt="FOLK Community"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
-                  <div className="text-white">
-                    <div className="font-bold text-sm sm:text-base">Friends of Lord Krishna</div>
-                    <div className="text-xs text-gray-300">Hare Krishna Movement Dehradun</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column: Title, Description & Action */}
-              <div className="w-full md:w-[52%] flex flex-col justify-center text-left pb-12 md:pb-6">
-                <span className="text-xs sm:text-sm font-extrabold tracking-widest text-blue-700 uppercase mb-2">
-                  Guided By Bhagavad Gita
-                </span>
-                <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-[#111827] tracking-tight leading-tight mb-4">
-                  Dynamic Youth Fellowship
-                </h2>
-                <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed mb-6">
-                  Step away from stress and anxiety. Build genuine friendships, join weekend spiritual retreats, and grow in an atmosphere of devotion, joy, and conscious living.
-                </p>
-                <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-semibold text-gray-800 mb-6">
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
-                    1000+ Youth Members
-                  </span>
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
-                    Weekly Sessions
-                  </span>
-                  <span className="bg-white/70 px-3 py-1.5 rounded-full border border-blue-200/60">
-                    Life Coaching
-                  </span>
-                </div>
-                <div>
-                  <a
-                    href="#register"
-                    className="inline-flex items-center gap-2 rounded-full border border-gray-400/80 bg-white hover:bg-gray-50 text-gray-900 font-bold px-6 py-2.5 text-sm shadow-sm transition-all"
-                  >
-                    See details <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ── BOTTOM RIGHT SLIDE CONTROLS (Exact layout of attached image: < 1 / 3 > || ) ── */}
-          <div className="absolute bottom-5 right-6 sm:bottom-7 sm:right-10 z-20 flex items-center gap-3 sm:gap-4 text-[#1e293b] font-bold">
+      {/* ── FEATURED VIDEO HERO SHOWCASE ── */}
+      <section className="px-4 sm:px-6 max-w-7xl mx-auto py-8 md:py-12">
+        <div className="relative rounded-[2.5rem] overflow-hidden bg-black/90 shadow-[0_25px_60px_rgba(4,35,95,0.2)] border border-amber-500/20 group">
+          {/* Top Control Bar (Mute/Unmute & Status) */}
+          <div className="absolute top-4 right-4 z-20 flex items-center gap-3">
             <button
-              onClick={() => setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides)}
-              className="p-1.5 hover:bg-black/10 rounded-full transition-colors"
-              aria-label="Previous Slide"
+              onClick={() => setIsMuted(!isMuted)}
+              className="pointer-events-auto flex items-center gap-2 px-4 py-2 rounded-full bg-black/60 hover:bg-[#d99500] text-white font-semibold text-xs backdrop-blur-md border border-white/20 transition-all duration-300 shadow-md"
+              title={isMuted ? "Unmute Audio" : "Mute Audio"}
             >
-              <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
-            </button>
-            <span className="text-xs sm:text-sm tracking-wider px-1">
-              {currentSlide + 1} / {totalSlides}
-            </span>
-            <button
-              onClick={() => setCurrentSlide((prev) => (prev + 1) % totalSlides)}
-              className="p-1.5 hover:bg-black/10 rounded-full transition-colors"
-              aria-label="Next Slide"
-            >
-              <ChevronRight className="w-5 h-5 stroke-[2.5]" />
-            </button>
-            <button
-              onClick={() => setIsPaused(!isPaused)}
-              className="p-1.5 hover:bg-black/10 rounded-full transition-colors ml-1"
-              aria-label={isPaused ? "Play" : "Pause"}
-            >
-              {isPaused ? <Play className="w-4 h-4 fill-current" /> : <Pause className="w-4 h-4 fill-current" />}
+              {isMuted ? (
+                <>
+                  <VolumeX className="w-4 h-4 text-amber-400" />
+                  <span>Unmute</span>
+                </>
+              ) : (
+                <>
+                  <Volume2 className="w-4 h-4 text-emerald-400 animate-pulse" />
+                  <span>Sound On</span>
+                </>
+              )}
             </button>
           </div>
+
+          {/* Autoplay Video Container with Uncropped Ratio */}
+          <div className="relative w-full aspect-video flex items-center justify-center bg-black">
+            <video
+              key={videos[currentVideoIndex].url}
+              src={videos[currentVideoIndex].url}
+              autoPlay
+              loop
+              muted={isMuted}
+              playsInline
+              className="w-full h-full object-contain"
+            />
+          </div>
+
+          {/* Overlay Info Bar */}
+          <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/95 via-black/60 to-transparent flex items-end justify-between pointer-events-none">
+            <div className="max-w-lg pr-4">
+              <span className="text-xs uppercase font-bold tracking-widest text-[#f5c518] mb-1 block">
+                Featured Video {currentVideoIndex + 1} of {videos.length}
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-tight">
+                {videos[currentVideoIndex].title}
+              </h3>
+              <p className="text-xs sm:text-sm text-gray-300 mt-1.5 leading-relaxed">
+                {videos[currentVideoIndex].desc}
+              </p>
+            </div>
+            
+            <button
+              onClick={() => setActiveMedia(videos[currentVideoIndex].url)}
+              className="pointer-events-auto px-5 py-2.5 rounded-full bg-gradient-to-r from-[#d99500] to-amber-600 hover:from-amber-600 hover:to-[#d99500] text-white font-bold text-xs flex items-center gap-2 transition-all duration-300 shadow-lg hover:shadow-amber-500/25 active:scale-95 shrink-0"
+            >
+              <Maximize2 className="w-4 h-4" /> Watch Full Screen
+            </button>
+          </div>
+
+        </div>
+
+        {/* Backward Navigation Arrow (Outside Video) */}
+        <button
+          onClick={prevVideo}
+          aria-label="Previous Video"
+          className="absolute left-0 sm:left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white hover:bg-[#d99500] text-[#04235f] hover:text-white flex items-center justify-center border border-gray-200 hover:border-[#d99500] transition-all duration-300 shadow-xl group"
+        >
+          <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
+        </button>
+
+        {/* Forward Navigation Arrow (Outside Video) */}
+        <button
+          onClick={nextVideo}
+          aria-label="Next Video"
+          className="absolute right-0 sm:right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white hover:bg-[#d99500] text-[#04235f] hover:text-white flex items-center justify-center border border-gray-200 hover:border-[#d99500] transition-all duration-300 shadow-xl group"
+        >
+          <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+        </button>
+
+        {/* Video Slider Indicators */}
+        <div className="flex justify-center items-center gap-3 mt-4">
+          {videos.map((vid, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentVideoIndex(idx)}
+              className={`h-2.5 rounded-full transition-all duration-300 ${
+                currentVideoIndex === idx ? 'w-8 bg-[#d99500]' : 'w-2.5 bg-gray-300 hover:bg-gray-400'
+              }`}
+              title={vid.title}
+            />
+          ))}
         </div>
       </section>
 
@@ -1021,6 +925,26 @@ export default function YouthFOLKPage() {
         </div>
       </section>
 
+
+      {/* Lightbox Popups */}
+      {activeMedia && (
+        <div className="fixed inset-0 z-50 bg-[#04235f]/90 flex items-center justify-center p-4">
+          <button
+            onClick={() => setActiveMedia(null)}
+            className="absolute top-6 right-6 text-white hover:text-amber-500 p-2 bg-white/10 rounded-full"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          <div className="max-w-4xl w-full max-h-[85vh] overflow-hidden rounded-2xl bg-black flex items-center justify-center shadow-2xl">
+            {activeMedia.endsWith('.mp4') ? (
+              <video src={activeMedia} controls autoPlay className="max-w-full max-h-[80vh] rounded-lg" />
+            ) : (
+              <img src={activeMedia} alt="Preview" className="max-w-full max-h-[80vh] object-contain rounded-lg" />
+            )}
+          </div>
+        </div>
+      )}
 
     </div>
   );
