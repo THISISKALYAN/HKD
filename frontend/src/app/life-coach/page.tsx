@@ -17,7 +17,8 @@ import {
   Anchor,
   Crown,
   Bookmark,
-  ArrowRight
+  ArrowRight,
+  Eye
 } from "lucide-react";
 import axios from "@/lib/axios";
 
