@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, X, Phone, ChevronDown, ChevronLeft } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import ReelsButton from './ReelsButton';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -71,7 +70,6 @@ export const Navbar: React.FC = () => {
     },
     { name: 'Youth Programs', href: '/youth', hasDropdown: false },
     { name: 'Blogs', href: '/blogs', hasDropdown: false },
-    { name: 'Reels', href: '/reels', hasDropdown: false },
     { name: 'Donate', href: '/donate', hasDropdown: false },
   ];
 
@@ -144,11 +142,6 @@ export const Navbar: React.FC = () => {
                     key={link.name} 
                     className="relative py-2 group flex items-center"
                   >
-                    {link.name === 'Reels' ? (
-                      <Link href={link.href} prefetch={true} onClick={() => setIsOpen(false)} className="flex items-center">
-                        <ReelsButton isDarkText={!isHome || scrolled} />
-                      </Link>
-                    ) : (
                       <Link
                         href={link.href}
                         prefetch={true}
@@ -164,7 +157,6 @@ export const Navbar: React.FC = () => {
                           }`} />
                         )}
                       </Link>
-                    )}
                     
                     {hasDropdown && (
                       <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-[400px] transition-all duration-300 z-50 opacity-0 invisible translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:pointer-events-auto">
@@ -266,15 +258,7 @@ export const Navbar: React.FC = () => {
               );
             }
             
-            if (link.name === 'Reels') {
-              return (
-                <div key={link.name} className="px-2 mt-4 mb-2 flex items-center">
-                  <Link href={link.href} prefetch={true} onClick={() => setIsOpen(false)}>
-                    <ReelsButton isDarkText={true} />
-                  </Link>
-                </div>
-              );
-            }
+
 
             return (
               <Link
