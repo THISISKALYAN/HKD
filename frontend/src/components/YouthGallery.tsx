@@ -42,10 +42,10 @@ export default function YouthGallery() {
               className="relative cursor-pointer overflow-hidden rounded-2xl shadow-sm hover:shadow-xl group border border-gray-100 bg-white aspect-square"
             >
               {url.toLowerCase().endsWith('.mp4') || url.toLowerCase().endsWith('.webm') ? (
-                <video src={url} autoPlay loop muted playsInline className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <video src={encodeURI(url)} autoPlay loop muted playsInline className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               ) : (
                 <img
-                  src={url}
+                  src={encodeURI(url)}
                   alt={`Youth Gallery ${idx + 1}`}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
@@ -71,9 +71,9 @@ export default function YouthGallery() {
             </button>
             <div className="max-w-5xl w-full max-h-[85vh] flex items-center justify-center">
               {activeMedia.toLowerCase().endsWith('.mp4') || activeMedia.toLowerCase().endsWith('.webm') ? (
-                <video src={activeMedia} controls autoPlay className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" />
+                <video src={encodeURI(activeMedia)} controls autoPlay className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" />
               ) : (
-                <img src={activeMedia} alt="Preview" className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" />
+                <img src={encodeURI(activeMedia)} alt="Preview" className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" />
               )}
             </div>
           </div>

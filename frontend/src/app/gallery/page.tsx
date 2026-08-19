@@ -58,29 +58,27 @@ export default function GalleryPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {displayItems.map((item, idx) => (
-            <div
-              key={idx}
+            <div 
+              key={idx} 
+              className="group relative cursor-pointer overflow-hidden rounded-3xl bg-white border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 aspect-[4/3]"
               onClick={() => setActiveMedia(item.url)}
-              className="relative cursor-pointer overflow-hidden rounded-3xl shadow-md hover:shadow-xl group border border-amber-500/10 bg-white"
             >
-              {item.url.endsWith('.mp4') || item.type === 'video' ? (
-                <video
-                  src={item.url}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+              <div className="absolute inset-0 bg-gradient-to-t from-[#04235f]/90 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              {item.url.toLowerCase().endsWith('.mp4') || item.url.toLowerCase().endsWith('.webm') ? (
+                <video 
+                  src={encodeURI(item.url)} 
+                  autoPlay loop muted playsInline 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
                 />
               ) : (
                 <img
-                  src={item.url}
+                  src={encodeURI(item.url)}
                   alt={item.title}
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  loading="lazy"
                 />
-              )}
-
-              <div className="absolute inset-0 bg-[#04235f]/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              )}<div className="absolute inset-0 bg-[#04235f]/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span className="text-white bg-[#d99500] p-3 rounded-full flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform duration-300 shadow-lg">
                   {item.url.endsWith('.mp4') || item.type === 'video' ? (
                     <Play className="w-6 h-6 fill-current" />
@@ -105,13 +103,21 @@ export default function GalleryPage() {
             <X className="w-6 h-6" />
           </button>
 
-          <div className="max-w-4xl w-full max-h-[85vh] overflow-hidden rounded-2xl bg-black flex items-center justify-center shadow-2xl">
-            {activeMedia.endsWith('.mp4') ? (
-              <video src={activeMedia} controls autoPlay className="max-w-full max-h-[80vh] rounded-lg" />
+          <div className="relative w-full h-full max-w-6xl max-h-[90vh] flex items-center justify-center p-4">
+            {activeMedia.endsWith('.mp4') || activeMedia.endsWith('.webm') ? (
+              <video
+                src={encodeURI(activeMedia)}
+                controls
+                autoPlay
+                className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl bg-black"
+              />
             ) : (
-              <img src={activeMedia} alt="Preview" className="max-w-full max-h-[80vh] object-contain rounded-lg" />
-            )}
-          </div>
+              <img
+                src={encodeURI(activeMedia)}
+                alt="Preview"
+                className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
+              />
+            )}</div>
         </div>
       )}
 
