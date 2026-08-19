@@ -61,7 +61,7 @@ export default function ExploreTemple() {
           {/* Vrindavan Garden */}
           <div className="relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border-[6px] border-white group col-span-1 lg:col-span-1 lg:row-span-1 row-span-1 bg-white">
             <img 
-              src="/mandir-nirman/render-3.webp" 
+              src="https://www.indiasinvitation.com/wp-content/uploads/2016/09/Brindavan-Garden.jpg" 
               alt="Vrindavan Garden" 
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
             />
