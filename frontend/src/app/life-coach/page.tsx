@@ -219,14 +219,14 @@ export default function LifeCoachPage() {
               <div className="flex flex-wrap gap-4 pt-2">
                 <a
                   href="#get-started"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-lg shadow-md hover:shadow-lg transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white/60 hover:bg-white/90 backdrop-blur-md border border-amber-500/40 text-amber-600 font-extrabold text-lg shadow-[0_8px_32px_rgba(245,158,11,0.15)] hover:shadow-[0_8px_32px_rgba(245,158,11,0.3)] hover:-translate-y-1 transition-all duration-300"
                 >
                   Get Started Now
                   <ArrowRight className="w-5 h-5" />
                 </a>
                 <a
                   href="#areas"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-lg transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white/60 hover:bg-white/90 backdrop-blur-md border border-blue-500/40 text-blue-700 font-extrabold text-lg shadow-[0_8px_32px_rgba(59,130,246,0.1)] hover:shadow-[0_8px_32px_rgba(59,130,246,0.25)] hover:-translate-y-1 transition-all duration-300"
                 >
                   Explore Areas of Help
                 </a>
