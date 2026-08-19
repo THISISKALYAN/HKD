@@ -17,7 +17,7 @@ interface CmsContextType {
   pageContent: Record<string, any>;
   fetchPageContent: (pageId: string) => Promise<void>;
   updatePageField: (pageId: string, section: string, field: string, value: any) => void;
-  savePageContent: (pageId: string) => Promise<boolean>;
+  savePageContent: (pageId: string, customContent?: any) => Promise<boolean>;
   uploadFile: (file: File) => Promise<string | null>;
   isLoading: boolean;
   isHydrated: boolean;
