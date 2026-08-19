@@ -41,16 +41,20 @@ export default function YouthGallery() {
               onClick={() => setActiveMedia(url)}
               className="relative cursor-pointer overflow-hidden rounded-2xl shadow-sm hover:shadow-xl group border border-gray-100 bg-white aspect-square"
             >
-              <img
-                src={url}
-                alt={`Youth Gallery ${idx + 1}`}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                loading="lazy"
-              />
+              {url.toLowerCase().endsWith('.mp4') || url.toLowerCase().endsWith('.webm') ? (
+                <video src={url} autoPlay loop muted playsInline className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              ) : (
+                <img
+                  src={url}
+                  alt={`Youth Gallery ${idx + 1}`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-[#02144c]/60 to-transparent flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span className="text-white font-bold text-xs tracking-wide flex items-center gap-1.5">
                   <ImageIcon className="w-3.5 h-3.5 text-[#f5c518]" />
-                  View Image
+                  View
                 </span>
               </div>
             </div>
@@ -66,7 +70,11 @@ export default function YouthGallery() {
               <X className="w-6 h-6" />
             </button>
             <div className="max-w-5xl w-full max-h-[85vh] flex items-center justify-center">
-              <img src={activeMedia} alt="Preview" className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" />
+              {activeMedia.toLowerCase().endsWith('.mp4') || activeMedia.toLowerCase().endsWith('.webm') ? (
+                <video src={activeMedia} controls autoPlay className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" />
+              ) : (
+                <img src={activeMedia} alt="Preview" className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" />
+              )}
             </div>
           </div>
         )}
