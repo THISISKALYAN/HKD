@@ -217,13 +217,7 @@ export default function LifeCoachPage() {
               </div>
 
               <div className="flex flex-wrap gap-4 pt-2">
-                <a
-                  href="#get-started"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white/60 hover:bg-white/90 backdrop-blur-md border border-amber-500/40 text-amber-600 font-extrabold text-lg shadow-[0_8px_32px_rgba(245,158,11,0.15)] hover:shadow-[0_8px_32px_rgba(245,158,11,0.3)] hover:-translate-y-1 transition-all duration-300"
-                >
-                  Get Started Now
-                  <ArrowRight className="w-5 h-5" />
-                </a>
+
                 <a
                   href="#areas"
                   className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white/60 hover:bg-white/90 backdrop-blur-md border border-blue-500/40 text-blue-700 font-extrabold text-lg shadow-[0_8px_32px_rgba(59,130,246,0.1)] hover:shadow-[0_8px_32px_rgba(59,130,246,0.25)] hover:-translate-y-1 transition-all duration-300"
