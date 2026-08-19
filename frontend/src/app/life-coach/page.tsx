@@ -6,7 +6,7 @@ import FolkNavbar from "@/components/FolkNavbar";
 import {
   Hourglass,
   Users,
-  Star,
+  Sprout,
   ShieldAlert,
   Rocket,
   Flower2,
@@ -24,7 +24,7 @@ import axios from "@/lib/axios";
 const TRANSFORMATION_AREAS = [
   { title: "Time Management", icon: Hourglass, desc: "Organize priorities, eliminate procrastination, and master your daily schedules." },
   { title: "Managing Relationships", icon: Users, desc: "Cultivate empathy, resolve interpersonal conflicts, and build lasting bonds." },
-  { title: "Culturing Good Habits", icon: Star, desc: "Embed empowering routines for physical vitality and mental clarity." },
+  { title: "Culturing Good Habits", icon: Sprout, desc: "Embed empowering routines for physical vitality and mental clarity." },
   { title: "Avoiding Unhealthy Habits", icon: ShieldAlert, desc: "Break free from destructive cycles with mindful awareness and discipline." },
   { title: "Enhancing Productivity", icon: Rocket, desc: "Streamline workflow and focus energy for maximum output with lesser effort." },
   { title: "Stress Management", icon: Flower2, desc: "Anchor your mind in inner peace amidst external demands and deadlines." },
