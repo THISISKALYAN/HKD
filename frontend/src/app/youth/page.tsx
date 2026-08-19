@@ -410,7 +410,7 @@ export default function YouthFOLKPage() {
                 >
                   <span className="absolute inset-0 w-full h-full bg-[#02144c] rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 origin-top-left" />
                   <span className="relative z-10 inline-flex items-center gap-2 text-[#02144c] group-hover:text-white font-bold tracking-[0.18em] text-xs sm:text-sm uppercase transition-colors duration-300">
-                    JOIN SUNDAY SESSION <ArrowRight className="w-4 h-4" />
+                    JOIN THE SESSION <ArrowRight className="w-4 h-4" />
                   </span>
                 </a>
               </div>
