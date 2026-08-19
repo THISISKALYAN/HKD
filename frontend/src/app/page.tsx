@@ -14,7 +14,7 @@ import GuptVrindavanDhamSection from '@/components/GuptVrindavanDhamSection';
 import ExploreTemple from '@/components/ExploreTemple';
 import FolkYouthPrograms from '@/components/FolkYouthPrograms';
 import UpcomingFestivals from '@/components/UpcomingFestivals';
-import MusicWaves from '@/components/MusicWaves';
+import MagicRings from '@/components/MagicRings';
 import FaqSection from '@/components/FaqSection';
 import VolunteerBanner from '@/components/VolunteerBanner';
 
@@ -337,7 +337,7 @@ export default function Home() {
                   overflow: 'visible',
                 }}
               >
-                <MusicWaves />
+                <MagicRings />
               </div>
 
               {/* Main Circle */}
