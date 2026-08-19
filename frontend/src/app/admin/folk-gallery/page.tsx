@@ -20,9 +20,9 @@ export default function FolkGalleryCmsPage() {
     if (pageContent['folk-gallery']) {
       const raw = pageContent['folk-gallery'].gallery;
       if (Array.isArray(raw)) {
-        setGallery(raw);
+        setGallery(raw.map((img: any) => typeof img === 'string' ? img : img?.url || '').filter(Boolean));
       } else if (raw && typeof raw === 'object') {
-        setGallery(Object.values(raw));
+        setGallery(Object.values(raw).map((img: any) => typeof img === 'string' ? img : img?.url || '').filter(Boolean) as string[]);
       } else {
         setGallery([]);
       }

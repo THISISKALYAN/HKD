@@ -15,9 +15,9 @@ export default function YouthGallery() {
   let images: string[] = [];
   const rawGallery = pageContent['folk-gallery']?.gallery;
   if (Array.isArray(rawGallery)) {
-    images = rawGallery;
+    images = rawGallery.map((img: any) => typeof img === 'string' ? img : img?.url || '').filter(Boolean);
   } else if (rawGallery && typeof rawGallery === 'object') {
-    images = Object.values(rawGallery);
+    images = Object.values(rawGallery).map((img: any) => typeof img === 'string' ? img : img?.url || '').filter(Boolean) as string[];
   }
 
   if (images.length === 0) return null;
