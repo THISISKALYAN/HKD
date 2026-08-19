@@ -294,6 +294,35 @@ export default function FestivalDetail({ slug }: { slug: string }) {
     return () => clearInterval(interval);
   }, [slug]);
 
+  // Auto-scroll to #donate or any anchor hash on mount or hashchange
+  useEffect(() => {
+    const handleHashScroll = () => {
+      if (typeof window === "undefined") return;
+      const hash = window.location.hash;
+      if (hash) {
+        const targetId = hash.replace("#", "");
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+    };
+
+    // Trigger after initial render & short delays for dynamic heights (images/timers)
+    handleHashScroll();
+    const t1 = setTimeout(handleHashScroll, 150);
+    const t2 = setTimeout(handleHashScroll, 500);
+    const t3 = setTimeout(handleHashScroll, 1000);
+
+    window.addEventListener("hashchange", handleHashScroll);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      window.removeEventListener("hashchange", handleHashScroll);
+    };
+  }, []);
+
   // Checkboxes state mapping seva id -> boolean
   const [selectedSevas, setSelectedSevas] = useState<Record<string, boolean>>(() => {
     const init: Record<string, boolean> = {};
