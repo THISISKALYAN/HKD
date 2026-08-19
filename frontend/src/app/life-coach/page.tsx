@@ -3,47 +3,34 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import FolkNavbar from "@/components/FolkNavbar";
-import {
-  Clock,
-  HeartHandshake,
-  Sparkles,
-  ShieldCheck,
-  TrendingUp,
-  Sun,
-  Trophy,
-  Compass,
-  Eye,
-  Target,
-  Activity,
-  Wind,
-  PhoneCall,
-  Video,
-  Calendar,
-  Quote,
-  ArrowRight,
-  Send,
-  Loader2,
-  Check,
-  CheckCircle2,
-  UserCheck,
-  Bookmark,
+  Hourglass,
+  Users,
+  Star,
+  ShieldAlert,
+  Rocket,
+  Flower2,
+  Medal,
+  Scale,
+  Brain,
+  Waves,
+  Anchor,
   Crown
 } from "lucide-react";
 import axios from "@/lib/axios";
 
 const TRANSFORMATION_AREAS = [
-  { title: "Time Management", icon: Clock, desc: "Organize priorities, eliminate procrastination, and master your daily schedules." },
-  { title: "Managing Relationships", icon: HeartHandshake, desc: "Cultivate empathy, resolve interpersonal conflicts, and build lasting bonds." },
-  { title: "Culturing Good Habits", icon: Sparkles, desc: "Embed empowering routines for physical vitality and mental clarity." },
-  { title: "Avoiding Unhealthy Habits", icon: ShieldCheck, desc: "Break free from destructive cycles with mindful awareness and discipline." },
-  { title: "Enhancing Productivity", icon: TrendingUp, desc: "Streamline workflow and focus energy for maximum output with lesser effort." },
-  { title: "Stress Management", icon: Sun, desc: "Anchor your mind in inner peace amidst external demands and deadlines." },
-  { title: "Handling Competition", icon: Trophy, desc: "Develop healthy sportsmanship and resilience in high-stakes environments." },
-  { title: "Work-Life Balance", icon: Compass, desc: "Harmonize professional ambitions with personal rejuvenation and spiritual fulfillment." },
+  { title: "Time Management", icon: Hourglass, desc: "Organize priorities, eliminate procrastination, and master your daily schedules." },
+  { title: "Managing Relationships", icon: Users, desc: "Cultivate empathy, resolve interpersonal conflicts, and build lasting bonds." },
+  { title: "Culturing Good Habits", icon: Star, desc: "Embed empowering routines for physical vitality and mental clarity." },
+  { title: "Avoiding Unhealthy Habits", icon: ShieldAlert, desc: "Break free from destructive cycles with mindful awareness and discipline." },
+  { title: "Enhancing Productivity", icon: Rocket, desc: "Streamline workflow and focus energy for maximum output with lesser effort." },
+  { title: "Stress Management", icon: Flower2, desc: "Anchor your mind in inner peace amidst external demands and deadlines." },
+  { title: "Handling Competition", icon: Medal, desc: "Develop healthy sportsmanship and resilience in high-stakes environments." },
+  { title: "Work-Life Balance", icon: Scale, desc: "Harmonize professional ambitions with personal rejuvenation and spiritual fulfillment." },
   { title: "Creating Self-Awareness", icon: Eye, desc: "Look at yourself from a broader 'helicopter vision' to unlock deeper purpose." },
-  { title: "Self-Management", icon: Target, desc: "Take control of your decisions, actions, and emotional boundaries." },
-  { title: "Managing Mood Swings", icon: Activity, desc: "Stabilize mental equilibrium through timeless wisdom and meditative practices." },
-  { title: "Handling Internal Weather", icon: Wind, desc: "Navigate mental storms with poise, fortitude, and higher spiritual consciousness." },
+  { title: "Self-Management", icon: Brain, desc: "Take control of your decisions, actions, and emotional boundaries." },
+  { title: "Managing Mood Swings", icon: Waves, desc: "Stabilize mental equilibrium through timeless wisdom and meditative practices." },
+  { title: "Handling Internal Weather", icon: Anchor, desc: "Navigate mental storms with poise, fortitude, and higher spiritual consciousness." },
 ];
 
 const SALIENT_FEATURES = [
@@ -364,14 +351,17 @@ export default function LifeCoachPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between mb-5">
-                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                    <div className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 z-10 overflow-hidden ${
                       isHovered 
-                        ? "bg-[#072149] text-[#F5C518] shadow-md scale-105" 
-                        : "bg-slate-100/90 text-slate-800 border border-slate-200/60 group-hover:bg-slate-200/80"
+                        ? "bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-[0_0_20px_rgba(245,158,11,0.6)] scale-110 -rotate-3 border-none" 
+                        : "bg-slate-50 text-slate-600 border border-slate-200 shadow-sm"
                     }`}>
-                      <Icon className="w-5 h-5 stroke-[2.2]" />
+                      {isHovered && <div className="absolute inset-0 bg-white/20 blur-md rounded-full animate-pulse z-0" />}
+                      <Icon className="relative w-7 h-7 stroke-[2.2] drop-shadow-sm z-10" />
                     </div>
-                    <span className="text-xs font-black text-slate-300 group-hover:text-amber-600 tracking-widest uppercase transition-colors">
+                    <span className={`text-sm font-black tracking-widest uppercase transition-colors duration-300 ${
+                      isHovered ? "text-amber-500" : "text-slate-300"
+                    }`}>
                       {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
                     </span>
                   </div>
