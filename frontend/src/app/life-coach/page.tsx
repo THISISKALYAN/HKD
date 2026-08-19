@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import FolkNavbar from "@/components/FolkNavbar";
+import {
   Hourglass,
   Users,
   Star,
@@ -14,7 +15,9 @@ import FolkNavbar from "@/components/FolkNavbar";
   Brain,
   Waves,
   Anchor,
-  Crown
+  Crown,
+  Bookmark,
+  ArrowRight
 } from "lucide-react";
 import axios from "@/lib/axios";
 
