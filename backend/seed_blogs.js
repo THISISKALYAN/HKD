@@ -87,7 +87,7 @@ Join us on this highly auspicious day to receive the limitless blessings of Sri 
     authorName: "HKM Admin",
     createdAt: "June 10, 2026",
     excerpt: "Learn about the spiritual significance of Anna Daan and our daily initiative to feed hot, nutritious prasadam to sadhus and visitors.",
-    coverImage: "https://hkmdehradun.org/live-site/assets/12/annadaan-seva-banner1.png",
+    coverImage: "/fh.webp",
     published: true,
     content: `DAILY ANNADANA SEVA: NOURISHING PILGRIMS IN VRINDAVAN
 
@@ -142,7 +142,7 @@ We invite you to visit our Goshala and experience the serene joy of Gau Seva. Yo
     authorName: "HKM Admin",
     createdAt: "July 22, 2026",
     excerpt: "Modern life is full of stress, but the 5000-year-old teachings of the Bhagavad-gita offer practical, deeply spiritual solutions for finding lasting peace.",
-    coverImage: "https://hkmdehradun.org/live-site/assets/12/gita-wisdom.png",
+    coverImage: "https://bestmindbh.com/wp-content/uploads/tms-for-anxiety.webp",
     published: true,
     content: `OVERCOMING ANXIETY: TIMELESS WISDOM FROM THE BHAGAVAD-GITA
 

@@ -6,13 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MOCK_BLOGS } from '@/lib/mockBlogs';
 import axios from '@/lib/axios';
 
-const BLOG_CATEGORIES = [
-  "All Articles",
-  "Festivals",
-  "Prasadam & Seva",
-  "Vedic Wisdom",
-  "Youth & Life Skills"
-];
+// Categories will be generated dynamically
 
 export default function BlogsPage() {
   const [selectedCategory, setSelectedCategory] = useState("All Articles");
@@ -47,7 +41,7 @@ export default function BlogsPage() {
     fetchBlogs();
   }, []);
 
-  const displayedBlogs = dbBlogs.length > 0 ? dbBlogs : MOCK_BLOGS.map((blog, idx) => ({
+  const displayedBlogs = (dbBlogs.length === 0 && !loading) ? MOCK_BLOGS.map((blog, idx) => ({
     id: blog.slug,
     title: blog.title,
     category: blog.category,
@@ -56,11 +50,13 @@ export default function BlogsPage() {
     description: blog.excerpt,
     image: blog.coverImage || "/deepostav.webp",
     fullContent: blog.content
-  }));
+  })) : dbBlogs;
 
   const filteredBlogs = selectedCategory === "All Articles"
     ? displayedBlogs
     : displayedBlogs.filter(blog => blog.category === selectedCategory);
+
+  const dynamicCategories = ["All Articles", ...Array.from(new Set(displayedBlogs.map(blog => blog.category).filter(Boolean)))];
 
   return (
     <div className="min-h-screen bg-[#faf8f5] flex flex-col font-sans">
@@ -85,25 +81,30 @@ export default function BlogsPage() {
 
           {/* Category Filter Tabs */}
           <div className="flex items-center justify-center flex-wrap gap-2.5 mb-12">
-            {BLOG_CATEGORIES.map((category) => (
+            {dynamicCategories.map((category) => (
               <button
                 key={category}
-                onClick={() => setSelectedCategory(category)}
+                onClick={() => setSelectedCategory(category as string)}
                 className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 cursor-pointer ${
                   selectedCategory === category
                     ? 'bg-[#0a3d73] text-white shadow-md'
                     : 'bg-white text-[#5c5245] hover:bg-[#f4efe6] border border-[#eae4d5]'
                 }`}
               >
-                {category}
+                {category as string}
               </button>
             ))}
           </div>
 
           {/* Blog Cards Grid — Index Page Style */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredBlogs.map((blog) => (
-              <motion.div
+          {loading ? (
+            <div className="flex justify-center items-center h-64 w-full">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-[#0a3d73]"></div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredBlogs.map((blog) => (
+                <motion.div
                 key={blog.id}
                 layoutId={`blog-card-${blog.id}`}
                 onClick={() => setSelectedBlog(blog)}
@@ -147,6 +148,7 @@ export default function BlogsPage() {
               </motion.div>
             ))}
           </div>
+          )}
 
         </div>
       </main>

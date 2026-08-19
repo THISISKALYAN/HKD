@@ -89,7 +89,7 @@ Participating in Sri Gaura Purnima brings immense spiritual upliftment, inner pe
     authorName: "HKM Admin",
     createdAt: "June 10, 2026",
     excerpt: "Discover how Hare Krishna Movement Dehradun prepares and serves hot, nutritious, Krishna-prasadam daily to pilgrims, sadhus, and the underprivileged.",
-    coverImage: "https://hkmdehradun.org/live-site/assets/12/annadaan-seva-banner1.png",
+    coverImage: '/fh.webp',
     published: true,
     content: `DAILY ANNADANA SEVA: FEEDING SANCTIFIED MEALS TO THOUSANDS
 
@@ -166,7 +166,7 @@ You can become an active part of this noble mission by adopting a cow, sponsorin
     authorName: "HKM Admin",
     createdAt: "July 12, 2026",
     excerpt: "How ancient Vedic psychology provides actionable, scientific tools to detach from exam and career anxiety and master emotional equilibrium.",
-    coverImage: "https://bestmindbh.com/wp-content/uploads/tms-for-anxiety.webp",
+    coverImage: 'https://bestmindbh.com/wp-content/uploads/tms-for-anxiety.webp',
     published: true,
     content: `OVERCOMING ANXIETY AND BURNOUT: LESSONS FROM BHAGAVAD-GITA FOR YOUTH
 

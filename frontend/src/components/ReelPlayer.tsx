@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from 'react';
-import { Heart, Volume2, VolumeX, Play, Pause, ChevronUp, ChevronDown, Forward } from 'lucide-react';
+import { Heart, Volume2, VolumeX, Play, Pause, ChevronUp, ChevronDown, Forward, BadgeCheck } from 'lucide-react';
 
 export type Reel = {
   id: string;
+  index?: number;
   videoUrl: string;
   likes: number;
   caption?: string;
@@ -28,6 +29,23 @@ export default function ReelPlayer({ reel, isActive, onNext, onPrev, hasNext, ha
   const [likesCount, setLikesCount] = useState(reel.likes);
   const [showHeartAnimation, setShowHeartAnimation] = useState(false);
   const lastTapRef = useRef<number>(0);
+  const [isLiking, setIsLiking] = useState(false);
+
+  // Initialize like state from localStorage and update likesCount when reel changes
+  useEffect(() => {
+    let bestCount = reel.likes;
+    if (typeof window !== 'undefined') {
+      const savedCount = localStorage.getItem(`hkd_reel_likes_${reel.id}`);
+      if (savedCount) {
+        bestCount = Math.max(bestCount, parseInt(savedCount, 10));
+      }
+      const likedState = localStorage.getItem(`hkd_reel_liked_${reel.id}`);
+      if (likedState === 'true') {
+        setIsLiked(true);
+      }
+    }
+    setLikesCount(bestCount);
+  }, [reel.likes, reel.id]);
 
   // Play/Pause logic based on intersection observer (isActive prop)
   useEffect(() => {
@@ -60,14 +78,59 @@ export default function ReelPlayer({ reel, isActive, onNext, onPrev, hasNext, ha
     }
   };
 
-  const handleLike = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (isLiked) {
-      setLikesCount(prev => prev - 1);
-    } else {
-      setLikesCount(prev => prev + 1);
+  const handleLike = async (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (isLiking || typeof reel.index !== 'number') return;
+    
+    setIsLiking(true);
+    const newLikedState = !isLiked;
+    
+    // Optimistic update
+    setIsLiked(newLikedState);
+    setLikesCount(prev => {
+      const nextCount = newLikedState ? prev + 1 : prev - 1;
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(`hkd_reel_likes_${reel.id}`, nextCount.toString());
+      }
+      return nextCount;
+    });
+    if (typeof window !== 'undefined') {
+      if (newLikedState) {
+        localStorage.setItem(`hkd_reel_liked_${reel.id}`, 'true');
+      } else {
+        localStorage.removeItem(`hkd_reel_liked_${reel.id}`);
+      }
     }
-    setIsLiked(!isLiked);
+
+    // API call
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000';
+      await fetch(`${baseUrl}/api/cms/reels/${reel.index}/like`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: newLikedState ? 'like' : 'unlike' })
+      });
+    } catch (err) {
+      console.error('Failed to update like count on server:', err);
+      // Revert optimistic update on error
+      setIsLiked(!newLikedState);
+      setLikesCount(prev => {
+        const nextCount = !newLikedState ? prev + 1 : prev - 1;
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(`hkd_reel_likes_${reel.id}`, nextCount.toString());
+        }
+        return nextCount;
+      });
+      if (typeof window !== 'undefined') {
+        if (!newLikedState) {
+          localStorage.setItem(`hkd_reel_liked_${reel.id}`, 'true');
+        } else {
+          localStorage.removeItem(`hkd_reel_liked_${reel.id}`);
+        }
+      }
+    } finally {
+      setIsLiking(false);
+    }
   };
 
   const handleVideoTap = (e: React.MouseEvent) => {
@@ -78,8 +141,7 @@ export default function ReelPlayer({ reel, isActive, onNext, onPrev, hasNext, ha
     if (now - lastTapRef.current < DOUBLE_PRESS_DELAY) {
       // Double tap detected
       if (!isLiked) {
-        setLikesCount(prev => prev + 1);
-        setIsLiked(true);
+        handleLike();
       }
       setShowHeartAnimation(true);
       setTimeout(() => setShowHeartAnimation(false), 800);
@@ -167,11 +229,9 @@ export default function ReelPlayer({ reel, isActive, onNext, onPrev, hasNext, ha
         
         {/* Left Side: Title & Caption */}
         <div className="text-white max-w-[80%] pb-1 sm:pb-0">
-          <h2 className="text-[17px] font-bold mb-1 flex items-center gap-1.5 drop-shadow-md">
+          <h2 className="text-[17px] font-bold mb-1 flex items-center gap-1 drop-shadow-md">
             Hare Krishna Dehradun
-            <svg className="w-4 h-4 text-blue-500 fill-current drop-shadow-md" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
+            <BadgeCheck className="w-4 h-4 text-blue-500" fill="currentColor" stroke="white" />
           </h2>
           <p className="text-[14px] text-white/95 font-medium drop-shadow-md leading-snug line-clamp-2">
             {reel.caption || "Ecstatic Kirtan and transcendental bliss at Hare Krishna Dehradun 🙏 #harekrishna #kirtan"}

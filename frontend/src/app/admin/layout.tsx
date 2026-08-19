@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useCms } from '@/components/CmsContext';
+import { db } from '@/lib/firebase';
+import { collection, onSnapshot, query, orderBy, limit, doc, updateDoc, writeBatch, deleteDoc, getDocs } from 'firebase/firestore';
 import { 
   LayoutDashboard, 
   Home, 
@@ -75,16 +77,85 @@ function AdminLayoutContent({ navItems, allModules, children }: { navItems: any[
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [notifications, setNotifications] = useState([
-    { id: 1, title: 'New lead received', time: '5m ago', read: false },
-    { id: 2, title: 'Hero image updated', time: '2h ago', read: false },
-    { id: 3, title: 'System backup completed', time: '1d ago', read: true }
-  ]);
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const [toast, setToast] = useState<any | null>(null);
+
+  // Real-time notifications listener
+  useEffect(() => {
+    if (!role || !user) return; // Only listen if authenticated
+    
+    const q = query(
+      collection(db, 'cms_notifications'),
+      orderBy('createdAt', 'desc'),
+      limit(50)
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const newNotifs: any[] = [];
+      let hasNewUnread = false;
+
+      snapshot.docs.forEach(doc => {
+        const data = doc.data();
+        const notif = { id: doc.id, ...data };
+        newNotifs.push(notif);
+        
+        // Show toast if this is a NEW unread notification that we haven't seen yet
+        if (!data.read && data.createdAt) {
+          // Check if it was created in the last 10 seconds to show toast
+          const isRecent = (Date.now() - data.createdAt.toMillis()) < 10000;
+          if (isRecent) {
+            hasNewUnread = true;
+            // Only set toast if we don't already have one, or just overwrite it
+            setToast(notif);
+          }
+        }
+      });
+      setNotifications(newNotifs);
+
+      if (hasNewUnread) {
+        // Auto-hide toast after 5 seconds
+        setTimeout(() => setToast(null), 5000);
+      }
+    }, (error) => {
+      console.error("Error listening to notifications:", error);
+    });
+
+    return () => unsubscribe();
+  }, [role, user]);
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
-  const markAllRead = () => setNotifications(notifications.map(n => ({ ...n, read: true })));
-  const clearNotifications = () => setNotifications([]);
+  const markAllRead = async () => {
+    try {
+      const batch = writeBatch(db);
+      notifications.filter(n => !n.read).forEach(n => {
+        batch.update(doc(db, 'cms_notifications', n.id), { read: true });
+      });
+      await batch.commit();
+    } catch (err) {
+      console.error("Error marking all read:", err);
+    }
+  };
+
+  const clearNotifications = async () => {
+    try {
+      const batch = writeBatch(db);
+      notifications.forEach(n => {
+        batch.delete(doc(db, 'cms_notifications', n.id));
+      });
+      await batch.commit();
+    } catch (err) {
+      console.error("Error clearing notifications:", err);
+    }
+  };
+
+  const markAsRead = async (id: string) => {
+    try {
+      await updateDoc(doc(db, 'cms_notifications', id), { read: true });
+    } catch (err) {
+      console.error("Error marking read:", err);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -273,15 +344,37 @@ function AdminLayoutContent({ navItems, allModules, children }: { navItems: any[
                         <p className="text-gray-500 text-sm font-medium">You're all caught up!</p>
                       </div>
                     ) : (
-                      notifications.map(notif => (
-                        <div key={notif.id} className={`p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors flex gap-3 ${!notif.read ? 'bg-blue-50/30' : ''}`}>
-                          <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${notif.read ? 'bg-transparent' : 'bg-blue-600'}`} />
-                          <div>
-                            <p className={`text-sm ${!notif.read ? 'font-bold text-gray-900' : 'font-medium text-gray-600'}`}>{notif.title}</p>
-                            <p className="text-[11px] font-medium text-gray-400 mt-1">{notif.time}</p>
+                      notifications.map(notif => {
+                        let timeAgo = 'Just now';
+                        if (notif.createdAt) {
+                          const seconds = Math.floor((Date.now() - notif.createdAt.toMillis()) / 1000);
+                          if (seconds > 86400) timeAgo = `${Math.floor(seconds/86400)}d ago`;
+                          else if (seconds > 3600) timeAgo = `${Math.floor(seconds/3600)}h ago`;
+                          else if (seconds > 60) timeAgo = `${Math.floor(seconds/60)}m ago`;
+                          else timeAgo = `${seconds}s ago`;
+                        }
+
+                        return (
+                          <div 
+                            key={notif.id} 
+                            onClick={() => {
+                              if (!notif.read) markAsRead(notif.id);
+                              if (notif.link) {
+                                router.push(notif.link);
+                                setNotificationsOpen(false);
+                              }
+                            }}
+                            className={`p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors flex gap-3 cursor-pointer ${!notif.read ? 'bg-blue-50/30' : ''}`}
+                          >
+                            <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${notif.read ? 'bg-transparent' : 'bg-blue-600'}`} />
+                            <div className="flex-1">
+                              <p className={`text-sm ${!notif.read ? 'font-bold text-gray-900' : 'font-medium text-gray-600'}`}>{notif.title}</p>
+                              {notif.message && <p className="text-xs text-gray-500 mt-0.5 line-clamp-2 leading-relaxed">{notif.message}</p>}
+                              <p className="text-[11px] font-medium text-gray-400 mt-1.5">{timeAgo}</p>
+                            </div>
                           </div>
-                        </div>
-                      ))
+                        );
+                      })
                     )}
                   </div>
                 </div>
@@ -291,8 +384,24 @@ function AdminLayoutContent({ navItems, allModules, children }: { navItems: any[
         </header>
 
         {/* Scrollable Page Content */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar bg-transparent">
+        <div className="flex-1 overflow-y-auto custom-scrollbar bg-transparent relative">
           {children}
+          
+          {/* Toast Notification */}
+          {toast && (
+            <div className="fixed bottom-6 right-6 bg-white border border-gray-200 shadow-2xl rounded-2xl p-4 flex gap-4 max-w-sm animate-in slide-in-from-bottom-5 z-[999999]">
+              <div className="bg-blue-100 text-blue-600 p-2.5 rounded-xl flex-shrink-0 self-start">
+                <Bell className="w-5 h-5" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-bold text-sm text-gray-900">{toast.title}</h4>
+                <p className="text-xs text-gray-600 mt-1 leading-relaxed">{toast.message}</p>
+              </div>
+              <button onClick={() => setToast(null)} className="text-gray-400 hover:text-gray-900 self-start p-1 -mr-2 -mt-2">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          )}
         </div>
       </main>
 

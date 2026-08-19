@@ -3,28 +3,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReelPlayer, { Reel } from '@/components/ReelPlayer';
 import { useCms } from '@/components/CmsContext';
+import { Video } from 'lucide-react';
 
-// Fallback Mock CMS Data
-const MOCK_REELS: Reel[] = [
-  {
-    id: "reel-1",
-    videoUrl: "/vishwas-murthy.mp4",
-    likes: 1240,
-    caption: "Experience the profound teachings and transcendental bliss! 🙏 #krishna #spirituality"
-  },
-  {
-    id: "reel-2",
-    videoUrl: "/donation-video.mp4",
-    likes: 856,
-    caption: "Your contribution makes a difference. Join our Gau Seva and Annadana initiatives today. 🐄❤️"
-  },
-  {
-    id: "reel-3",
-    videoUrl: "/jk.mp4",
-    likes: 2104,
-    caption: "Beautiful Darshan and ecstatic kirtan! Radhe Radhe! 🌸🕉️ #vrindavan #darshan"
-  }
-];
+// Fallback Mock CMS Data (Removed as per request)
+const MOCK_REELS: Reel[] = [];
 
 export default function ReelsPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -38,16 +20,29 @@ export default function ReelsPage() {
   }, [fetchPageContent]);
 
   const cmsReels = pageContent['reels']?.reels;
+  const reelLikes = pageContent['reels']?.reelLikes || {};
+  const dataLoaded = pageContent['reels'] !== undefined;
 
   useEffect(() => {
-    if (cmsReels && Array.isArray(cmsReels) && cmsReels.some((r: any) => r.url)) {
-      setReelsData(cmsReels.filter((r: any) => !!r.url).map((r: any, idx: number) => ({
+    console.log("Reels effect triggered. Raw cmsReels:", cmsReels);
+    let normalizedReels = cmsReels;
+    if (normalizedReels && !Array.isArray(normalizedReels) && typeof normalizedReels === 'object') {
+      normalizedReels = Object.values(normalizedReels);
+    }
+    
+    console.log("Normalized reels:", normalizedReels);
+
+    if (normalizedReels && Array.isArray(normalizedReels) && normalizedReels.some((r: any) => r.url)) {
+      console.log("Entering IF block, mapping valid reels.");
+      setReelsData(normalizedReels.filter((r: any) => !!r.url).map((r: any, idx: number) => ({
         id: `cms-reel-${idx}`,
+        index: idx, // Pass the original index so we can use it for the API
         videoUrl: r.url,
-        likes: Math.floor(Math.random() * 2000) + 500, // Simulation of likes since they are not in the new CMS
+        likes: reelLikes[idx] || 0, // Get likes from the dedicated dictionary
         caption: r.caption
       })));
     } else {
+      console.log("Entering ELSE block, setting mock reels.");
       setReelsData(MOCK_REELS);
     }
   }, [cmsReels]);
@@ -171,29 +166,41 @@ export default function ReelsPage() {
           </div>
         </div>
         {/* Render the reels */}
-        {reelsData.map((reel, index) => (
-          <div 
-            key={reel.id} 
-            data-index={index}
-            className="reel-container h-full w-full snap-start snap-always relative"
-          >
-            <ReelPlayer 
-              reel={reel} 
-              isActive={activeIndex === index} 
-              isNearby={Math.abs(activeIndex - index) <= 1}
-              onNext={() => {
-                const elements = containerRef.current?.querySelectorAll('.reel-container');
-                elements?.[index + 1]?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              onPrev={() => {
-                const elements = containerRef.current?.querySelectorAll('.reel-container');
-                elements?.[index - 1]?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              hasNext={index < reelsData.length - 1}
-              hasPrev={index > 0}
-            />
+        {!dataLoaded ? (
+          <div className="h-full w-full flex items-center justify-center bg-black">
+            <div className="w-8 h-8 border-4 border-gray-400 border-t-white rounded-full animate-spin" />
           </div>
-        ))}
+        ) : reelsData.length > 0 ? (
+          reelsData.map((reel, index) => (
+            <div 
+              key={reel.id} 
+              data-index={index}
+              className="reel-container h-full w-full snap-start snap-always relative"
+            >
+              <ReelPlayer 
+                reel={reel} 
+                isActive={activeIndex === index} 
+                isNearby={Math.abs(activeIndex - index) <= 1}
+                onNext={() => {
+                  const elements = containerRef.current?.querySelectorAll('.reel-container');
+                  elements?.[index + 1]?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                onPrev={() => {
+                  const elements = containerRef.current?.querySelectorAll('.reel-container');
+                  elements?.[index - 1]?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                hasNext={index < reelsData.length - 1}
+                hasPrev={index > 0}
+              />
+            </div>
+          ))
+        ) : (
+          <div className="h-full w-full flex flex-col items-center justify-center text-white px-6 text-center">
+            <Video className="w-16 h-16 text-white/20 mb-6" />
+            <h2 className="text-3xl font-bold tracking-tight mb-3">Reels Coming Soon</h2>
+            <p className="text-gray-400 text-lg max-w-xs">We are preparing some amazing content. Please check back later!</p>
+          </div>
+        )}
       </div>
     </main>
   );

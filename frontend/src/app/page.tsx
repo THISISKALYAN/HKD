@@ -233,7 +233,7 @@ export default function Home() {
     <div className="relative overflow-hidden">
 
       {/* 1. HERO SLIDER SECTION (Vivanta-inspired 3-slide peeking layout) */}
-      <section className="relative w-full aspect-[4/3] md:aspect-[21/9] lg:aspect-[16/9] overflow-hidden bg-[#0a0a0a] z-0 flex items-center py-8 md:py-12">
+      <section className="relative w-full h-[60vh] sm:h-[70vh] md:h-[85vh] lg:h-[90vh] overflow-hidden bg-[#0a0a0a] z-0 flex items-center">
 
         {/* Slides Container */}
         <div className="relative w-full h-full">
@@ -256,7 +256,7 @@ export default function Home() {
               <img
                 src={slide}
                 alt="Deity"
-                className="absolute inset-0 w-full h-full object-cover md:object-contain pointer-events-none z-10"
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10"
               />
 
               {/* Text Overlay for Hero (Removed) */}

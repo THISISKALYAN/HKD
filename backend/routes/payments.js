@@ -191,6 +191,20 @@ router.post('/verify-webhook', async (req, res) => {
       const freshDonation = updatedDoc.data();
       freshDonation.id = orderId;
 
+      // Create real-time notification
+      try {
+        await db.collection('cms_notifications').add({
+          title: 'New Donation Received',
+          message: `${freshDonation.donorName} donated ₹${freshDonation.amount} towards ${freshDonation.sevaCategory}.`,
+          type: 'payment',
+          read: false,
+          createdAt: new Date(),
+          link: '/admin'
+        });
+      } catch (notifErr) {
+        console.error('[Notification Error]:', notifErr.message);
+      }
+
       // Generate receipt PDF file in temporary system directory
       const os = require('os');
       const tempReceiptsDir = path.join(os.tmpdir(), 'receipts');
