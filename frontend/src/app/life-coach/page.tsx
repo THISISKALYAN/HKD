@@ -237,12 +237,10 @@ export default function LifeCoachPage() {
             <div className="lg:col-span-5">
               <div className="relative mx-auto max-w-md lg:max-w-none rounded-3xl overflow-hidden shadow-xl border border-slate-200 bg-slate-100">
                 <div className="relative w-full aspect-[4/3] sm:aspect-[1/1] lg:aspect-[4/5]">
-                  <Image
-                    src="/workshops/lifecoach/hero-4k.jpg"
+                  <img
+                    src="https://i.pinimg.com/1200x/49/00/d5/4900d53b6678ad23dcb7e09e26501356.jpg"
                     alt="FOLK Life Coach Mentorship"
-                    fill
-                    className="object-cover object-center"
-                    priority
+                    className="w-full h-full object-cover object-center absolute inset-0"
                   />
                 </div>
               </div>
