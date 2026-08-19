@@ -26,7 +26,8 @@ import {
   Check,
   CheckCircle2,
   UserCheck,
-  Bookmark
+  Bookmark,
+  Crown
 } from "lucide-react";
 import axios from "@/lib/axios";
 
@@ -325,7 +326,14 @@ export default function LifeCoachPage() {
       {/* 12 Areas of Transformation Section */}
       <section id="areas" className="relative bg-white border-y border-slate-200 py-8 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center">
+            <div className="mb-4 relative">
+              <div className="absolute inset-0 bg-amber-400 blur-xl opacity-30 rounded-full animate-pulse" />
+              <div className="relative inline-flex items-center justify-center p-4 rounded-2xl bg-gradient-to-br from-amber-100 to-orange-50 border border-amber-200/60 shadow-[0_4px_20px_rgba(245,158,11,0.15)] ring-1 ring-white/50">
+                <Crown className="w-8 h-8 text-amber-500 drop-shadow-sm" />
+              </div>
+            </div>
+            
             <span className="text-amber-700 font-bold uppercase tracking-widest text-xs sm:text-sm">
               Tailored Guidance
             </span>
