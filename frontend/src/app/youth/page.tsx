@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Menu, X, ChevronLeft, ChevronRight, Pause, Play, BookOpen, Mic, Music, Utensils, Sparkles, User, Mail, Phone, Calendar, CheckCircle2, ShieldCheck, Volume2, VolumeX, Maximize2 } from 'lucide-react';
+import { ArrowRight, Menu, X, ChevronLeft, ChevronRight, Pause, Play, BookOpen, Mic, Music, Utensils, Sparkles, User, Mail, Phone, Calendar, CheckCircle2, ShieldCheck, Volume2, VolumeX, Maximize2, BadgeCheck, UserSearch } from 'lucide-react';
 import Link from 'next/link';
 import axios from '@/lib/axios';
 import FolkNavbar from '@/components/FolkNavbar';
@@ -247,7 +247,7 @@ export default function YouthFOLKPage() {
                 href="#contact"
                 className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-xs sm:text-sm flex items-center gap-2 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:shadow-white/10 hover:-translate-y-0.5 active:scale-95 shrink-0"
               >
-                <img src="https://img.icons8.com/?size=100&id=98A4yZTt9abw&format=png&color=000000" alt="Verified" className="w-5 h-5 object-contain" /> Register Now
+                <BadgeCheck className="w-5 h-5 text-emerald-400" /> Register Now
               </a>
 
               <a
@@ -255,7 +255,7 @@ export default function YouthFOLKPage() {
                 onClick={() => setProgram('LifeCoach')}
                 className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-xs sm:text-sm flex items-center gap-2 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:shadow-white/10 hover:-translate-y-0.5 active:scale-95 shrink-0"
               >
-                <Sparkles className="w-4 h-4 text-[#f5c518]" /> Explore Life Coaching
+                <UserSearch className="w-4 h-4 text-[#f5c518]" /> Explore
               </a>
               
               <button
