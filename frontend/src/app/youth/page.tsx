@@ -229,46 +229,62 @@ export default function YouthFOLKPage() {
           </div>
 
           {/* Overlay Info Bar */}
-          <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/95 via-black/60 to-transparent flex items-end justify-between pointer-events-none">
-            <div className="max-w-lg pr-4">
+          <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 bg-gradient-to-t from-black/95 via-black/60 to-transparent flex flex-col md:flex-row md:items-end justify-between pointer-events-none gap-4">
+            <div className="max-w-xl pr-4">
               <span className="text-xs uppercase font-bold tracking-widest text-[#f5c518] mb-1 block">
                 Featured Video {currentVideoIndex + 1} of {videos.length}
               </span>
-              <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-tight">
+              <h3 className="text-xl sm:text-3xl font-bold text-white tracking-tight leading-tight">
                 {videos[currentVideoIndex].title}
               </h3>
-              <p className="text-xs sm:text-sm text-gray-300 mt-1.5 leading-relaxed">
+              <p className="text-xs sm:text-sm md:text-base text-gray-300 mt-2 leading-relaxed max-w-lg">
                 {videos[currentVideoIndex].desc}
               </p>
             </div>
             
-            <button
-              onClick={() => setActiveMedia(videos[currentVideoIndex].url)}
-              className="pointer-events-auto px-5 py-2.5 rounded-full bg-gradient-to-r from-[#d99500] to-amber-600 hover:from-amber-600 hover:to-[#d99500] text-white font-bold text-xs flex items-center gap-2 transition-all duration-300 shadow-lg hover:shadow-amber-500/25 active:scale-95 shrink-0"
-            >
-              <Maximize2 className="w-4 h-4" /> Watch Full Screen
-            </button>
+            <div className="flex flex-wrap items-center gap-3 w-full md:w-auto pointer-events-auto mt-2 md:mt-0">
+              <a
+                href="#register"
+                className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-xs sm:text-sm flex items-center gap-2 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:shadow-white/10 hover:-translate-y-0.5 active:scale-95 shrink-0"
+              >
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Register Now
+              </a>
+
+              <Link
+                href="/gallery"
+                className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-xs sm:text-sm flex items-center gap-2 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:shadow-white/10 hover:-translate-y-0.5 active:scale-95 shrink-0"
+              >
+                <Sparkles className="w-4 h-4 text-[#f5c518]" /> View Gallery
+              </Link>
+              
+              <button
+                onClick={() => setActiveMedia(videos[currentVideoIndex].url)}
+                className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[#d99500] to-amber-600 hover:from-amber-600 hover:to-[#d99500] text-white font-bold text-xs sm:text-sm flex items-center gap-2 transition-all duration-300 shadow-lg hover:shadow-amber-500/25 hover:-translate-y-0.5 active:scale-95 shrink-0"
+              >
+                <Maximize2 className="w-4 h-4" /> Full Screen
+              </button>
+            </div>
           </div>
 
+          {/* Navigation Arrows (Inside Video Container) */}
+          <button
+            onClick={prevVideo}
+            aria-label="Previous Video"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-[#d99500] text-white backdrop-blur-sm flex items-center justify-center border border-white/20 transition-all duration-300 shadow-xl group opacity-0 group-hover:opacity-100 focus:opacity-100 pointer-events-auto"
+          >
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 group-hover:-translate-x-0.5 transition-transform" />
+          </button>
+
+          <button
+            onClick={nextVideo}
+            aria-label="Next Video"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-[#d99500] text-white backdrop-blur-sm flex items-center justify-center border border-white/20 transition-all duration-300 shadow-xl group opacity-0 group-hover:opacity-100 focus:opacity-100 pointer-events-auto"
+          >
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-0.5 transition-transform" />
+          </button>
         </div>
 
-        {/* Backward Navigation Arrow (Outside Video) */}
-        <button
-          onClick={prevVideo}
-          aria-label="Previous Video"
-          className="absolute left-0 sm:left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white hover:bg-[#d99500] text-[#04235f] hover:text-white flex items-center justify-center border border-gray-200 hover:border-[#d99500] transition-all duration-300 shadow-xl group"
-        >
-          <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
-        </button>
 
-        {/* Forward Navigation Arrow (Outside Video) */}
-        <button
-          onClick={nextVideo}
-          aria-label="Next Video"
-          className="absolute right-0 sm:right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white hover:bg-[#d99500] text-[#04235f] hover:text-white flex items-center justify-center border border-gray-200 hover:border-[#d99500] transition-all duration-300 shadow-xl group"
-        >
-          <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
-        </button>
 
         {/* Video Slider Indicators */}
         <div className="flex justify-center items-center gap-3 mt-4">
