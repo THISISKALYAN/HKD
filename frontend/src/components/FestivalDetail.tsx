@@ -155,7 +155,7 @@ export const FESTIVALS_DATA: Record<string, FestivalData> = {
     date: "~ FRIDAY, SEPTEMBER 4, 2026 ~",
     bannerSubtitle: "Maha Abhishek | Chhappan Bhog | Jhulan Alankara | Midnight Aarti | Maha Annadana",
     heroBg: "from-[#101e38] via-[#0b3873] to-[#121c3b]",
-    heroImage: "/janmashtami-cover.jpg",
+    heroImage: "/front page.jpg",
     aboutText: "Commemorate the divine appearance of Supreme Lord Sri Krishna with fasting, midnight maha-abhishek, ecstatic kirtans, and grand celebrations.",
     sections: [
       {

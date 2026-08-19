@@ -593,12 +593,6 @@ export default function UpcomingFestivals({ isHomePage = false }: { isHomePage?:
                   
                   <div className="flex gap-3">
                     <Link
-                      href="/festivals/janmashtami"
-                      className="flex-1 flex items-center justify-center bg-white/95 backdrop-blur-sm hover:bg-white text-black rounded-[24px] py-3.5 font-semibold text-[16px] transition-colors shadow-lg no-underline"
-                    >
-                      Explore
-                    </Link>
-                    <Link
                       href="/festivals/janmashtami#donate"
                       className="flex-1 flex items-center justify-center bg-white/20 backdrop-blur-md hover:bg-white/30 border border-white/30 text-white rounded-[24px] py-3.5 font-semibold text-[16px] transition-colors shadow-lg no-underline"
                     >
