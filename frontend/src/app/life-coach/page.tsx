@@ -15,10 +15,19 @@ import {
   Brain,
   Waves,
   Anchor,
+  Eye,
   Crown,
   Bookmark,
   ArrowRight,
-  Eye
+  PhoneCall,
+  Video,
+  Calendar,
+  Quote,
+  Send,
+  Loader2,
+  Check,
+  CheckCircle2,
+  UserCheck
 } from "lucide-react";
 import axios from "@/lib/axios";
 
