@@ -14,7 +14,7 @@ import GuptVrindavanDhamSection from '@/components/GuptVrindavanDhamSection';
 import ExploreTemple from '@/components/ExploreTemple';
 import FolkYouthPrograms from '@/components/FolkYouthPrograms';
 import UpcomingFestivals from '@/components/UpcomingFestivals';
-import MagicRings from '@/components/MagicRings';
+import MusicWaves from '@/components/MusicWaves';
 import FaqSection from '@/components/FaqSection';
 import VolunteerBanner from '@/components/VolunteerBanner';
 
@@ -327,17 +327,17 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-[1200px] mx-auto">
             {/* Left: Circular Video Preview */}
             <div className="flex justify-center items-center order-2 lg:order-1 relative min-h-[320px] sm:min-h-[500px]">
-              {/* MagicRings WebGL Background */}
+              {/* MusicWaves WebGL Background */}
               <div
                 className="absolute pointer-events-none"
                 style={{
-                  inset: '-80px',
+                  inset: '-100px',
                   zIndex: 0,
                   background: 'transparent',
                   overflow: 'visible',
                 }}
               >
-                <MagicRings />
+                <MusicWaves />
               </div>
 
               {/* Main Circle */}
