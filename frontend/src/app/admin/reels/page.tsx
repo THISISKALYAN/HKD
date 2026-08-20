@@ -7,6 +7,7 @@ import { Loader2, UploadCloud, Save, Video, Trash2, CheckCircle2, AlertCircle, H
 type Reel = {
  url: string;
  caption: string;
+ likes?: number;
  id?: string;
 };
 

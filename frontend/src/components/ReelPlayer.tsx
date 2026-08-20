@@ -182,7 +182,7 @@ export default function ReelPlayer({ reel, isActive, onNext, onPrev, hasNext, ha
       <video
         ref={videoRef}
         src={isNearby ? reel.videoUrl : undefined}
-        preload={isActive ? "auto" : "metadata"}
+        preload={isActive ? "auto" : "none"}
         className="w-full h-full object-cover sm:rounded-3xl bg-black"
         loop
         playsInline

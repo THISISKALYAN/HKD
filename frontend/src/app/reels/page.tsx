@@ -45,7 +45,7 @@ export default function ReelsPage() {
       console.log("Entering ELSE block, setting mock reels.");
       setReelsData(MOCK_REELS);
     }
-  }, [cmsReels]);
+  }, [cmsReels, reelLikes]);
 
   // Setup Intersection Observer to detect which reel is currently visible
   useEffect(() => {

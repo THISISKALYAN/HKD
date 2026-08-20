@@ -33,11 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="dns-prefetch" href="https://hkmdehradun.org" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="bg-cream-50 antialiased overflow-x-clip max-w-[100vw] w-full">
         <NextTopLoader
@@ -67,7 +63,7 @@ export default function RootLayout({
           {/* Floated Support Overlays */}
           <Script
             id="chatling-config"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
               __html: `window.chtlConfig = { chatbotId: "2451993731" };`,
             }}
@@ -76,7 +72,7 @@ export default function RootLayout({
             id="chtl-script"
             src="https://chatling.ai/js/embed.js"
             data-id="2451993731"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
           />
 
           <SocialFloatWidget />

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from 'react';
-
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { useCms } from '@/components/CmsContext';
@@ -253,10 +253,13 @@ export default function Home() {
                 style={{ backgroundImage: `url('${slide}')` }}
               />
               {/* Actual Image with Correct Aspect Ratio */}
-              <img
+              <Image
                 src={slide}
                 alt="Deity"
-                className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10"
+                fill
+                priority={idx === 0}
+                sizes="100vw"
+                className="object-cover pointer-events-none z-10"
               />
 
               {/* Text Overlay for Hero (Removed) */}
@@ -495,11 +498,12 @@ export default function Home() {
             ].map((seva, index) => (
               <div key={index} className="bg-white rounded-[40px] p-3 shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-2xl border border-gray-100 transition-shadow duration-300 flex flex-col h-full min-h-[440px] group font-sans">
                 <div className="relative w-full aspect-[16/9] rounded-[32px] overflow-hidden mb-6 shrink-0 bg-[#f8f9fa]">
-                  <img
+                  <Image
                     src={seva.image}
                     alt={seva.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    className="object-cover transform group-hover:scale-105 transition-transform duration-700"
                   />
                 </div>
 
@@ -722,10 +726,12 @@ export default function Home() {
                 className="relative flex flex-col justify-between rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border-[6px] border-white group font-card cursor-pointer bg-white min-h-[400px] lg:min-h-[480px]"
                 onClick={() => setSelectedBlog(blog)}
               >
-                <img 
+                <Image 
                   src={blog.image} 
                   alt={blog.titleLines.join(" ")} 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/70 pointer-events-none z-0"></div>
 
@@ -869,10 +875,12 @@ export default function Home() {
                 </div>
                 
                 <div className="relative w-full aspect-[0.74] md:w-[350px] lg:w-[400px] md:h-[470px] lg:h-[540px] flex-shrink-0">
-                  <img 
+                  <Image 
                     src={selectedBlog.image || selectedBlog.coverImage} 
                     alt={selectedBlog.titleLines?.join(' ') || selectedBlog.title} 
-                    className="object-cover block w-full h-full" 
+                    fill
+                    sizes="(max-width: 768px) 100vw, 400px"
+                    className="object-cover block" 
                   />
                 </div>
               </div>

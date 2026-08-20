@@ -302,7 +302,7 @@ export default function GitaLifeCoursePage() {
           {/* Hero Banner Card */}
           <div className="w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#eae4d5]">
             <img 
-              src="/gita hero.webp" 
+              src="/gita hero.jpeg" 
               alt="Gita Life Course" 
               className="w-full h-auto block"
             />
