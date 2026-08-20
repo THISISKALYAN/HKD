@@ -132,9 +132,9 @@ export default function FolkGalleryCmsPage() {
   {(Array.isArray(gallery) ? gallery : []).map((url, idx) => (
   <div key={idx} className="relative group rounded-2xl overflow-hidden border border-gray-200 aspect-square bg-gray-50 flex items-center justify-center">
     {url.toLowerCase().endsWith('.mp4') || url.toLowerCase().endsWith('.webm') ? (
-      <video src={encodeURI(url)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+      <video src={url} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
     ) : (
-      <img loading="lazy" src={encodeURI(url)} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+      <img loading="lazy" src={url} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
     )}
  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
  <button 

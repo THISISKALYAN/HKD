@@ -24,11 +24,14 @@ export default function GalleryPage() {
   } else if (rawGallery && typeof rawGallery === 'object') {
     cmsImages = Object.values(rawGallery);
   }
-  const displayItems: MediaItem[] = cmsImages.map((url: string, idx: number) => ({
-    type: 'image',
-    url,
-    title: `FOLK Gallery ${idx + 1}`
-  }));
+  const displayItems: MediaItem[] = cmsImages.map((img: any, idx: number) => {
+    const url = typeof img === 'string' ? img : img?.url || '';
+    return {
+      type: 'image',
+      url,
+      title: `FOLK Gallery ${idx + 1}`
+    };
+  }).filter(item => item.url);
 
   return (
     <div className="min-h-screen bg-[#faf8f5]">
@@ -67,13 +70,13 @@ export default function GalleryPage() {
               
               {item.url.toLowerCase().endsWith('.mp4') || item.url.toLowerCase().endsWith('.webm') ? (
                 <video 
-                  src={encodeURI(item.url)} 
+                  src={item.url} 
                   autoPlay loop muted playsInline 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" 
                 />
               ) : (
                 <img
-                  src={encodeURI(item.url)}
+                  src={item.url}
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   loading="lazy"
