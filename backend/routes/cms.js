@@ -626,19 +626,23 @@ router.get('/dashboard-stats', authenticateCms(['superadmin', 'staff']), async (
       });
     };
 
-    const leadsSnapshot = await db.collection('leads').get();
-    const blogsSnapshot = await db.collection('blogs').get();
-    const usersSnapshot = await db.collection('users').where('role', 'in', ['staff', 'superadmin']).get();
+    const [leadsSnapshot, blogsSnapshot, usersSnapshot, prasadamSnapshot] = await Promise.allSettled([
+      db.collection('leads').get(),
+      db.collection('blogs').get(),
+      db.collection('users').where('role', 'in', ['staff', 'superadmin']).get(),
+      db.collection('donations').where('receivePrasadam', '==', true).get()
+    ]);
     
-    const filteredLeads = applyDateFilter(leadsSnapshot.docs);
-    const filteredBlogs = applyDateFilter(blogsSnapshot.docs);
+    const leadsDocs = leadsSnapshot.status === 'fulfilled' ? leadsSnapshot.value.docs : [];
+    const blogsDocs = blogsSnapshot.status === 'fulfilled' ? blogsSnapshot.value.docs : [];
+    const usersSize = usersSnapshot.status === 'fulfilled' ? (usersSnapshot.value.size || usersSnapshot.value.docs?.length || 0) : 0;
     
-    // Prasadam metrics
-    const prasadamSnapshot = await db.collection('donations')
-      .where('receivePrasadam', '==', true)
-      .where('status', 'in', ['successful', 'paid'])
-      .get();
-    const filteredPrasadam = applyDateFilter(prasadamSnapshot.docs);
+    const filteredLeads = applyDateFilter(leadsDocs);
+    const filteredBlogs = applyDateFilter(blogsDocs);
+    
+    // Filter prasadam metrics in-memory to avoid needing a composite index
+    const prasadamDocs = prasadamSnapshot.status === 'fulfilled' ? prasadamSnapshot.value.docs.filter(doc => ['successful', 'paid'].includes(doc.data().status)) : [];
+    const filteredPrasadam = applyDateFilter(prasadamDocs);
       
     let totalPrasadamRequests = 0;
     let pendingDeliveries = 0;
@@ -652,14 +656,17 @@ router.get('/dashboard-stats', authenticateCms(['superadmin', 'staff']), async (
       else if (data.deliveryStatus === 'Delivered') delivered++;
       else pendingDeliveries++;
     });
-    // Get CMS pages
-    const homeDoc = await db.collection('cms_pages').doc('home').get();
-    const dailyDarshanDoc = await db.collection('cms_pages').doc('daily-darshan').get();
-    const folkGalleryDoc = await db.collection('cms_pages').doc('folk-gallery').get();
     
-    const homeData = homeDoc.exists ? homeDoc.data() : {};
-    const dailyDarshanData = dailyDarshanDoc.exists ? dailyDarshanDoc.data() : {};
-    const folkGalleryData = folkGalleryDoc.exists ? folkGalleryDoc.data() : {};
+    // Get CMS pages
+    const [homeDoc, dailyDarshanDoc, folkGalleryDoc] = await Promise.allSettled([
+      db.collection('cms_pages').doc('home').get(),
+      db.collection('cms_pages').doc('daily-darshan').get(),
+      db.collection('cms_pages').doc('folk-gallery').get()
+    ]);
+    
+    const homeData = homeDoc.status === 'fulfilled' && homeDoc.value.exists ? homeDoc.value.data() : {};
+    const dailyDarshanData = dailyDarshanDoc.status === 'fulfilled' && dailyDarshanDoc.value.exists ? dailyDarshanDoc.value.data() : {};
+    const folkGalleryData = folkGalleryDoc.status === 'fulfilled' && folkGalleryDoc.value.exists ? folkGalleryDoc.value.data() : {};
 
     const totalHeroImages = homeData.heroImages?.length || 3;
     const totalTempleGallery = homeData.templeGallery?.length || 29;
@@ -688,7 +695,7 @@ router.get('/dashboard-stats', authenticateCms(['superadmin', 'staff']), async (
       totalLeads: filteredLeads.length,
       totalInquiries: filteredLeads.length, 
       totalBlogs: filteredBlogs.length,
-      totalStaff: usersSnapshot.size || usersSnapshot.docs?.length || 0,
+      totalStaff: usersSize,
       totalHeroImages,
       totalTempleGallery,
       totalDailyDarshan,
