@@ -112,8 +112,7 @@ export default function BlogsPage() {
               >
                 {/* Image Section - Top Half */}
                 <div className="w-full h-[220px] overflow-hidden relative">
-                  <img
-                    src={blog.image || blog.coverImage}
+                  <img loading="lazy" src={blog.image || blog.coverImage}
                     alt={blog.title}
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = '/deepostav.webp';
@@ -204,8 +203,7 @@ export default function BlogsPage() {
 
                 {/* Right Side: Sticky Image - Pure Image, No Empty White Box */}
                 <div className="w-full lg:w-5/12 flex-shrink-0 lg:sticky lg:top-8 flex justify-center lg:justify-end items-start">
-                  <img
-                    src={selectedBlog.image || selectedBlog.coverImage}
+                  <img loading="lazy" src={selectedBlog.image || selectedBlog.coverImage}
                     alt={selectedBlog.title}
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = '/deepostav.webp';

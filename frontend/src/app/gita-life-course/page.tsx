@@ -301,8 +301,7 @@ export default function GitaLifeCoursePage() {
 
           {/* Hero Banner Card */}
           <div className="w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#eae4d5]">
-            <img 
-              src="/gita hero.jpeg" 
+            <img loading="lazy" src="/gita hero.jpeg" 
               alt="Gita Life Course" 
               className="w-full h-auto block"
             />
@@ -392,7 +391,7 @@ export default function GitaLifeCoursePage() {
                     </p>
                     <div className="flex items-center gap-4">
                       <div className="w-16 h-16 shrink-0">
-                        <img src="/sp%20logo.webp" alt="Srila Prabhupada" className="w-full h-full object-contain" />
+                        <img loading="lazy" src="/sp%20logo.webp" alt="Srila Prabhupada" className="w-full h-full object-contain" />
                       </div>
                       <div>
                         <p className="text-amber-400 text-sm uppercase tracking-widest" style={{ fontWeight: 600 }}>Srila Prabhupada</p>
@@ -469,8 +468,7 @@ export default function GitaLifeCoursePage() {
             <AnimeReveal direction="left" delay={120}>
               <div className="relative w-full rounded-[2.5rem] overflow-hidden shadow-[0_20px_80px_rgba(7,33,73,0.12)] border border-white/50 group bg-white/40 backdrop-blur-xl p-4 md:p-6 lg:sticky lg:top-24">
                 <div className="absolute inset-0 bg-gradient-to-tr from-amber-100/20 to-blue-50/20 pointer-events-none" />
-                <img 
-                  src="/Vrn1.jpg" 
+                <img loading="lazy" src="/Vrn1.jpg" 
                   alt="Gita Life Course Curriculum Modules" 
                   className="w-full h-auto object-contain rounded-2xl shadow-sm transform group-hover:scale-[1.01] transition-transform duration-700 ease-out relative z-10" 
                 />
@@ -533,8 +531,7 @@ export default function GitaLifeCoursePage() {
             <AnimeReveal direction="up" delay={120} className="w-full max-w-5xl">
               <div className="relative w-full rounded-[2.5rem] overflow-hidden shadow-[0_20px_80px_rgba(7,33,73,0.12)] border border-white/50 group bg-white/40 backdrop-blur-xl p-4 md:p-6">
                 <div className="absolute inset-0 bg-gradient-to-tr from-rose-50/20 to-amber-50/20 pointer-events-none" />
-                <img 
-                  src="/vrn2.jpg" 
+                <img loading="lazy" src="/vrn2.jpg" 
                   alt="Gita Life Course Special Features" 
                   className="w-full h-auto max-h-[400px] object-cover object-center rounded-2xl shadow-sm transform group-hover:scale-[1.01] transition-transform duration-700 ease-out relative z-10" 
                 />

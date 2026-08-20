@@ -38,8 +38,7 @@ export default function FolkNavbar() {
           
           {/* Logo */}
           <Link href="/youth" prefetch={true} className="flex items-center gap-2">
-            <img
-              src="/channels4_profile-removebg-preview.png"
+            <img loading="lazy" src="/channels4_profile-removebg-preview.png"
               alt="FOLK Logo"
               className="h-16 sm:h-20 w-auto object-contain"
             />

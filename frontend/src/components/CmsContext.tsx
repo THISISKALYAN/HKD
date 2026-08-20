@@ -90,8 +90,8 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return { success: true };
     } catch (error: any) {
       console.error("Sign-in failed:", error);
-      if (error.response?.data?.error) {
-        return { success: false, error: error.response.data.error };
+      if ((error as any).response?.data?.error) {
+        return { success: false, error: (error as any).response.data.error };
       }
       return { success: false, error: "Network error: Unable to connect to backend server." };
     }
@@ -115,8 +115,8 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       return { success: true };
     } catch (error: any) {
       console.error("MFA verification failed:", error);
-      if (error.response?.data?.error) {
-        return { success: false, error: error.response.data.error };
+      if ((error as any).response?.data?.error) {
+        return { success: false, error: (error as any).response.data.error };
       }
       return { success: false, error: "Network error: Unable to connect to backend server." };
     }

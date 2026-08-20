@@ -265,7 +265,7 @@ const MODULES = [
          <p className="text-sm text-gray-600">Scan this QR code with your Authenticator app (e.g., Google Authenticator, Authy), then enter the 6-digit code below to verify.</p>
          
          <div className="bg-white p-4 inline-block rounded-xl border border-gray-200 shadow-sm">
-           {mfaQrUrl ? <img src={mfaQrUrl} alt="MFA QR Code" className="w-48 h-48" /> : <div className="w-48 h-48 bg-gray-100 animate-pulse rounded-lg"></div>}
+           {mfaQrUrl ? <img loading="lazy" src={mfaQrUrl} alt="MFA QR Code" className="w-48 h-48" /> : <div className="w-48 h-48 bg-gray-100 animate-pulse rounded-lg"></div>}
          </div>
          
          <div className="max-w-xs">

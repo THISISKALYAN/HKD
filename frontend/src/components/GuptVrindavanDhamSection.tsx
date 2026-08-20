@@ -119,8 +119,7 @@ export default function GuptVrindavanDhamSection() {
 
               {/* Circular Image */}
               <div className="gvd-circle">
-                <img
-                  src="/mandir-nirman/render-1.webp"
+                <img loading="lazy" src="/mandir-nirman/render-1.webp"
                   alt="Gupt Vrindavan Dham"
                 />
               </div>

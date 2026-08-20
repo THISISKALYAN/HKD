@@ -69,7 +69,7 @@ export default function LoginPage() {
       <div className="w-full max-w-[420px]">
         
         <div className="mb-8">
-          <img src="/logo-dehradun.webp" alt="HKD Logo" className="h-16 md:h-20 w-auto object-contain mb-6" />
+          <img loading="lazy" src="/logo-dehradun.webp" alt="HKD Logo" className="h-16 md:h-20 w-auto object-contain mb-6" />
           <h2 className="text-[26px] font-bold text-gray-900 tracking-tight mb-2">
             Authentication
           </h2>

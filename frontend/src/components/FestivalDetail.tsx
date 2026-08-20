@@ -490,8 +490,7 @@ export default function FestivalDetail({ slug }: { slug: string }) {
           {/* Image Container */}
           <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24">
             <div className="relative rounded-2xl sm:rounded-[32px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-white/10 group bg-black/20">
-              <img
-                src={festival.heroImage}
+              <img loading="lazy" src={festival.heroImage}
                 alt={festival.title}
                 className="w-full h-auto block transform transition-transform duration-1000 group-hover:scale-[1.02]"
               />

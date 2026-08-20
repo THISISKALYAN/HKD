@@ -151,8 +151,7 @@ export default function OurObjectivesPage() {
 
           {/* Hero Banner Card */}
           <div className="w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#eae4d5]">
-            <img 
-              src="/ourobjectives .webp" 
+            <img loading="lazy" src="/ourobjectives .webp" 
               alt="Our Objectives" 
               className="w-full h-auto object-cover max-h-[350px] sm:max-h-[440px] md:max-h-[500px]"
             />
@@ -198,8 +197,7 @@ export default function OurObjectivesPage() {
                         <div className="absolute -inset-4 bg-gradient-to-r from-orange-300 via-orange-100 to-blue-200 rounded-[3rem] blur-xl opacity-30 group-hover:opacity-60 transition duration-700" />
                         <div className="relative rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.08)] border-8 border-white/80 bg-white backdrop-blur-sm transform group-hover:-translate-y-2 transition-transform duration-700">
                           <div className="rounded-[2rem] overflow-hidden bg-black/5">
-                            <img
-                              src={obj.image}
+                            <img loading="lazy" src={obj.image}
                               alt={obj.title}
                               className="w-full h-auto transform scale-100 group-hover:scale-105 transition-transform duration-1000 ease-out"
                             />

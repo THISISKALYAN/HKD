@@ -112,8 +112,7 @@ export default function GalleryPage() {
                 className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl bg-black"
               />
             ) : (
-              <img
-                src={encodeURI(activeMedia)}
+              <img loading="lazy" src={encodeURI(activeMedia)}
                 alt="Preview"
                 className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
               />

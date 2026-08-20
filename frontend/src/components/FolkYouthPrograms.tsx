@@ -55,8 +55,7 @@ export default function FolkYouthPrograms() {
                 </div>
 
                 <div className="flex flex-col items-center text-center my-auto">
-                  <img
-                    src="/channels4_profile-removebg-preview.png"
+                  <img loading="lazy" src="/channels4_profile-removebg-preview.png"
                     alt="FOLK Emblem"
                     className="h-14 sm:h-20 w-auto object-contain drop-shadow mb-2"
                   />
@@ -169,8 +168,7 @@ export default function FolkYouthPrograms() {
             {/* ── SLIDE 3: Dynamic Youth Community ──────────────────────────── */}
             <div className="w-full flex-shrink-0 p-6 sm:p-10 md:p-12 flex flex-col md:flex-row items-center gap-8 md:gap-12">
               <div className="w-full md:w-[48%] h-[260px] sm:h-[340px] md:h-[380px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl relative">
-                <img
-                  src="/darshan/DSC04179.webp"
+                <img loading="lazy" src="/darshan/DSC04179.webp"
                   alt="FOLK Community"
                   className="w-full h-full object-cover"
                 />

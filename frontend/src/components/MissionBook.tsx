@@ -26,7 +26,7 @@ export default function MissionBook() {
               // Page 2 Content: Chant
               <div className="animate-fade-in">
                 <div className="w-12 h-12 md:w-24 md:h-24 rounded-full overflow-hidden mx-auto mb-2 md:mb-6 shadow-lg border-2 md:border-4 border-white">
-                  <img src="/monk2.webp" alt="Chanting" className="w-full h-full object-cover" />
+                  <img loading="lazy" src="/monk2.webp" alt="Chanting" className="w-full h-full object-cover" />
                 </div>
                 <h3 className="text-sm md:text-2xl font-serif font-bold text-[#072149] mb-1 md:mb-4">Chant the Holy Names</h3>
                 <p className="text-gray-700 text-[10px] md:text-lg leading-snug md:leading-relaxed">
@@ -36,7 +36,7 @@ export default function MissionBook() {
             ) : (
               // Empty left side or title
               <div className="opacity-50">
-                <img src="/logo-dehradun.webp" alt="Logo" className="w-16 md:w-32 mx-auto mb-2 md:mb-4 grayscale opacity-20 mix-blend-multiply" />
+                <img loading="lazy" src="/logo-dehradun.webp" alt="Logo" className="w-16 md:w-32 mx-auto mb-2 md:mb-4 grayscale opacity-20 mix-blend-multiply" />
                 <p className="font-serif text-sm md:text-2xl text-gray-400">The Core Principles</p>
               </div>
             )}
@@ -48,7 +48,7 @@ export default function MissionBook() {
           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]" />
           <div className="relative z-10 text-center">
              <div className="w-12 h-12 md:w-24 md:h-24 rounded-full overflow-hidden mx-auto mb-2 md:mb-6 shadow-lg border-2 md:border-4 border-white">
-                <img src="https://hkmdehradun.org/live-site/assets/12/khichdi-2.png" alt="Honor Prasadam" className="w-full h-full object-cover bg-white" />
+                <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/12/khichdi-2.png" alt="Honor Prasadam" className="w-full h-full object-cover bg-white" />
               </div>
               <h3 className="text-sm md:text-2xl font-serif font-bold text-[#072149] mb-1 md:mb-4">Honor Prasadam</h3>
               <p className="text-gray-700 text-[10px] md:text-lg leading-snug md:leading-relaxed">
@@ -94,7 +94,7 @@ export default function MissionBook() {
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]" />
             <div className="relative z-10 text-center">
               <div className="w-12 h-12 md:w-24 md:h-24 rounded-full overflow-hidden mx-auto mb-2 md:mb-6 shadow-lg border-2 md:border-4 border-white">
-                <img src="/gita-cover.webp" alt="Read Srimad Bhagavatam" className="w-full h-full object-cover" />
+                <img loading="lazy" src="/gita-cover.webp" alt="Read Srimad Bhagavatam" className="w-full h-full object-cover" />
               </div>
               <h3 className="text-sm md:text-2xl font-serif font-bold text-[#072149] mb-1 md:mb-4">Read Srimad Bhagavatam</h3>
               <p className="text-gray-700 text-[10px] md:text-lg leading-snug md:leading-relaxed">

@@ -8,8 +8,7 @@ export default function VolunteerBanner() {
         className="relative overflow-hidden rounded-[24px] bg-[#072149] text-white shadow-2xl group cursor-pointer flex flex-col justify-end items-center min-h-[320px] sm:min-h-[380px] p-6 sm:p-10"
       >
         {/* Clear Full Opacity Background Image */}
-        <img 
-          src="/Life in Harmony with Nature.jpg" 
+        <img loading="lazy" src="/Life in Harmony with Nature.jpg" 
           alt="Volunteer Banner" 
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />

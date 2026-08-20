@@ -186,7 +186,7 @@ export default function HomeCmsPage() {
               >
                 {imgUrl ? (
                   <>
-                    <img src={imgUrl} alt={`Hero ${idx + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <img loading="lazy" src={imgUrl} alt={`Hero ${idx + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white gap-2 backdrop-blur-[2px]">
                       <UploadCloud className="w-8 h-8" />
                       <span className="font-bold text-sm bg-white text-gray-900 px-3 py-1.5 rounded-[8px]">Replace Image</span>
@@ -247,7 +247,7 @@ export default function HomeCmsPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {gallery.map((url, idx) => (
               <div key={idx} className="relative group rounded-[16px] overflow-hidden aspect-square border border-gray-200 shadow-sm">
-                <img src={url} alt={`Gallery ${idx}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img loading="lazy" src={url} alt={`Gallery ${idx}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 backdrop-blur-[2px]">
                   <label className="w-10 h-10 rounded-[12px] bg-white text-gray-900 flex items-center justify-center transition-colors cursor-pointer shadow-sm border border-gray-200">
                     <UploadCloud className="w-4 h-4" />

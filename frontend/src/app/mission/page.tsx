@@ -31,8 +31,7 @@ export default function OurMissionPage() {
 
           {/* Hero Banner Card */}
           <div className="w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#eae4d5]">
-            <img 
-              src="/ourmission.webp" 
+            <img loading="lazy" src="/ourmission.webp" 
               alt="Our Mission" 
               className="w-full h-auto object-cover max-h-[350px] sm:max-h-[440px] md:max-h-[500px]"
             />
@@ -51,8 +50,7 @@ export default function OurMissionPage() {
             </h2>
 
             <div className="mb-8 rounded-2xl overflow-hidden shadow-lg border border-gray-100">
-              <img
-                src="/ourmm.png"
+              <img loading="lazy" src="/ourmm.png"
                 alt="Our Mission"
                 className="w-full h-auto object-cover max-h-[480px] hover:scale-105 transition-transform duration-700"
               />

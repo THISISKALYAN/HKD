@@ -400,8 +400,7 @@ export default function SelfEmpowermentWorkshopsPage() {
                 {HERO_IMAGES.map((imgSrc, idx) => {
                   const isVisible = idx === activeHeroIdx;
                   return (
-                    <img
-                      key={imgSrc}
+                    <img loading="lazy" key={imgSrc}
                       src={imgSrc}
                       alt={`Self Empowerment Highlight ${idx + 1}`}
                       className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ease-in-out ${
@@ -600,8 +599,7 @@ export default function SelfEmpowermentWorkshopsPage() {
               {SESSIONS_DATA.map((s, idx) => {
                 const isCurrent = idx === activeSession;
                 return (
-                  <img
-                    key={s.id}
+                  <img loading="lazy" key={s.id}
                     src={s.image}
                     alt={s.title}
                     className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
@@ -702,8 +700,7 @@ export default function SelfEmpowermentWorkshopsPage() {
                     >
                       {/* Image side */}
                       <div className={`sm:col-span-5 relative min-h-[220px] sm:min-h-full overflow-hidden bg-gradient-to-br ${sess.bgAccent}`}>
-                        <img
-                          src={sess.image}
+                        <img loading="lazy" src={sess.image}
                           alt={sess.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />

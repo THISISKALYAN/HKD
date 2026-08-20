@@ -133,8 +133,8 @@ export default function KhichdiPrasadamSevaPage() {
       rzp.open();
     } catch (error) {
       console.error(error);
-      if (error.response && error.response.data && error.response.data.error) {
-        alert(error.response.data.error);
+      if ((error as any).response && (error as any).response.data && (error as any).response.data.error) {
+        alert((error as any).response.data.error);
       } else {
         alert("Failed to initiate payment. Please try again.");
       }
@@ -176,8 +176,7 @@ export default function KhichdiPrasadamSevaPage() {
             transition={{ duration: 1, delay: 0.2 }}
             className="w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#eae4d5]"
           >
-            <img 
-              src="https://hkmdehradun.org/live-site/assets/12/annadanam.jpeg" 
+            <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/12/annadanam.jpeg" 
               alt="Khichdi Prasadam Banner" 
               className="w-full h-auto object-cover max-h-[350px] sm:max-h-[440px] md:max-h-[500px]"
             />
@@ -229,8 +228,7 @@ export default function KhichdiPrasadamSevaPage() {
               </p>
             </div>
             <div className="overflow-hidden rounded-2xl border border-[#e8dfc8] bg-white flex items-center justify-center p-6 min-h-[180px]">
-              <img 
-                src="/fh.webp" 
+              <img loading="lazy" src="/fh.webp" 
                 alt="Hare Krishna Movement Dehradun Logo" 
                 className="h-28 sm:h-36 w-auto object-contain"
               />
@@ -534,8 +532,7 @@ export default function KhichdiPrasadamSevaPage() {
               onClick={() => setActiveImage(src)}
               className="relative overflow-hidden rounded-2xl aspect-[16/9] shadow-sm cursor-pointer group border border-[#e8dfc8] bg-[#fffcf5] p-2 flex items-center justify-center"
             >
-              <img 
-                src={src} 
+              <img loading="lazy" src={src} 
                 alt={`Khichdi Prasadam Seva ${idx + 1}`} 
                 className="w-full h-full object-contain rounded-xl group-hover:scale-105 transition-transform duration-500" 
               />
@@ -582,8 +579,7 @@ export default function KhichdiPrasadamSevaPage() {
               onClick={(e) => e.stopPropagation()}
               className="relative max-w-6xl max-h-[92vh] overflow-hidden rounded-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] bg-white p-2.5 sm:p-3 border border-white/20 cursor-default flex items-center justify-center"
             >
-              <img 
-                src={activeImage} 
+              <img loading="lazy" src={activeImage} 
                 alt="Full View" 
                 className="w-full h-auto max-h-[85vh] object-contain rounded-2xl" 
               />

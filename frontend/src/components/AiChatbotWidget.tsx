@@ -273,7 +273,7 @@ Answer concise, warm, and uplifting responses (2-4 sentences) based on Srila Pra
 
               {/* Inner gold circle */}
               <div className="relative w-11 h-11 rounded-full bg-white flex items-center justify-center p-1 shadow-inner overflow-hidden border border-amber-400">
-                <img src="/logo-dehradun.jpg" alt="HKD Logo" className="w-full h-full object-contain rounded-full" />
+                <img loading="lazy" src="/logo-dehradun.jpg" alt="HKD Logo" className="w-full h-full object-contain rounded-full" />
               </div>
             </button>
           </>
@@ -288,7 +288,7 @@ Answer concise, warm, and uplifting responses (2-4 sentences) based on Srila Pra
           <div className="bg-[#072149] text-white p-4 sm:p-5 flex items-center justify-between border-b border-amber-500/30">
             <div className="flex items-center gap-3">
               <div className="relative w-10 h-10 rounded-2xl bg-white p-1 shadow-md flex items-center justify-center overflow-hidden border border-amber-400/60">
-                <img src="/logo-dehradun.jpg" alt="HKD Logo" className="w-full h-full object-contain rounded-xl" />
+                <img loading="lazy" src="/logo-dehradun.jpg" alt="HKD Logo" className="w-full h-full object-contain rounded-xl" />
               </div>
               <div>
                 <h3 className="font-heading font-extrabold text-sm sm:text-base tracking-tight text-white flex items-center gap-1.5 leading-snug">

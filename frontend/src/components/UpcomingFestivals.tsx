@@ -479,8 +479,7 @@ export default function UpcomingFestivals({ isHomePage = false }: { isHomePage?:
 
         {/* Center Temple Illustration & Clouds Background */}
         <div className="absolute -top-2 md:-top-4 left-[75%] -translate-x-1/2 w-[320px] lg:w-[360px] h-full pointer-events-none z-0 hidden sm:block overflow-visible">
-          <img
-            src="/iskcon-blr-line-art-removebg-preview.png"
+          <img loading="lazy" src="/iskcon-blr-line-art-removebg-preview.png"
             alt="Temple Gopuram"
             className="absolute top-4 md:top-2 left-1/2 -translate-x-1/2 h-[85%] w-[260px] md:w-[320px] lg:w-[360px] object-contain object-top opacity-[0.94] transition-all duration-700 select-none"
 

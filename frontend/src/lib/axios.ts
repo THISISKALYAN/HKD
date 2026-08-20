@@ -13,7 +13,7 @@ axiosRetry(apiClient, {
   retryDelay: axiosRetry.exponentialDelay,
   retryCondition: (error: any) => {
     // Retry on network errors or 5xx server errors
-    return axiosRetry.isNetworkOrIdempotentRequestError(error) || (error.response?.status ?? 0) >= 500;
+    return axiosRetry.isNetworkOrIdempotentRequestError(error) || ((error as any).response?.status ?? 0) >= 500;
   }
 });
 
@@ -37,7 +37,7 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if ((error.response?.status === 401 || error.response?.status === 403) && typeof window !== 'undefined') {
+    if (((error as any).response?.status === 401 || (error as any).response?.status === 403) && typeof window !== 'undefined') {
       // Clear invalid or expired token
       localStorage.removeItem('hkd_admin_token');
       localStorage.removeItem('hkd_admin_role');

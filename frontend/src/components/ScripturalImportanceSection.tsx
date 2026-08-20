@@ -158,8 +158,7 @@ export default function ScripturalImportanceSection() {
               >
                 {/* Card Image Container */}
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 shrink-0">
-                  <img
-                    src={card.image}
+                  <img loading="lazy" src={card.image}
                     alt={card.source}
                     className="w-full h-full object-cover object-center transform group-hover/card:scale-105 transition-transform duration-700"
                     onError={(e) => {

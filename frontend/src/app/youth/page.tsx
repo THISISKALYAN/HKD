@@ -366,8 +366,7 @@ export default function YouthFOLKPage() {
                 {/* Main Image Container */}
                 <div className="relative rounded-[2.5rem] overflow-hidden bg-white p-3 border border-amber-200/60 shadow-[0_20px_50px_rgba(4,35,95,0.08)] group-hover:shadow-[0_25px_60px_rgba(4,35,95,0.15)] transition-all duration-500">
                   <div className="relative overflow-hidden rounded-[2rem]">
-                    <img
-                      src="/Add%20this%20pic%20in%20main%20page.png"
+                    <img loading="lazy" src="/Add%20this%20pic%20in%20main%20page.png"
                       alt="FOLK Community"
                       className="w-full h-auto object-contain rounded-[2rem] group-hover:scale-[1.02] transition-transform duration-700 ease-out"
                     />
@@ -475,8 +474,7 @@ export default function YouthFOLKPage() {
 
                 {/* ARCH FRAME */}
                 <div className="w-full h-[440px] sm:h-[520px] rounded-t-[220px] sm:rounded-t-[240px] rounded-b-2xl overflow-hidden border-8 sm:border-[10px] border-white shadow-2xl relative group bg-black/10">
-                  <img
-                    src="https://media.licdn.com/dms/image/v2/C5612AQEfRkB6S8KRXQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1520183426542?e=2147483647&v=beta&t=VjqtHGpqOvkLKptJfLB9nvQ5MqE6w0wUNx7to4cU04Q"
+                  <img loading="lazy" src="https://media.licdn.com/dms/image/v2/C5612AQEfRkB6S8KRXQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1520183426542?e=2147483647&v=beta&t=VjqtHGpqOvkLKptJfLB9nvQ5MqE6w0wUNx7to4cU04Q"
                     alt="FOLK Deities & Wisdom"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
@@ -521,8 +519,7 @@ export default function YouthFOLKPage() {
                       className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-300 animate-ping pointer-events-none"
                       style={{ backgroundColor: item.bg }}
                     />
-                    <img
-                      src={item.img}
+                    <img loading="lazy" src={item.img}
                       alt={item.title}
                       className="relative z-10 w-full h-full object-contain"
                     />
@@ -571,7 +568,7 @@ export default function YouthFOLKPage() {
                     Empowering Youth,<br />
                     <span className="text-[#d99500] bg-gradient-to-r from-[#d99500] to-[#b7791f] bg-clip-text text-transparent">Enlightening Minds.</span>
                   </h2>
-                  <img src="https://img.icons8.com/?size=100&id=poVlgAcqxww6&format=png&color=000000" alt="Verified" className="w-10 h-10 md:w-12 md:h-12 object-contain shrink-0 mt-1 drop-shadow-md hover:scale-110 transition-transform duration-300" />
+                  <img loading="lazy" src="https://img.icons8.com/?size=100&id=poVlgAcqxww6&format=png&color=000000" alt="Verified" className="w-10 h-10 md:w-12 md:h-12 object-contain shrink-0 mt-1 drop-shadow-md hover:scale-110 transition-transform duration-300" />
                 </div>
               </Reveal>
 
@@ -613,7 +610,7 @@ export default function YouthFOLKPage() {
                       className="bg-white border border-[#E2D8C5]/30 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-[#f5c518]/40 transition-all duration-300 flex gap-3 h-full"
                     >
                       <div className="w-6 h-6 shrink-0 mt-0.5">
-                        <img src="https://img.icons8.com/?size=100&id=poVlgAcqxww6&format=png&color=000000" alt="Verified" className="w-full h-full object-contain drop-shadow-sm" />
+                        <img loading="lazy" src="https://img.icons8.com/?size=100&id=poVlgAcqxww6&format=png&color=000000" alt="Verified" className="w-full h-full object-contain drop-shadow-sm" />
                       </div>
                       <div>
                         <h4 className="font-bold text-sm text-[#02144c] mb-0.5">{item.title}</h4>
@@ -637,8 +634,7 @@ export default function YouthFOLKPage() {
 
                 {/* Main Image Frame (Editorial Arch Style) */}
                 <Reveal delay={0.2} className="absolute inset-0 w-[85%] h-[85%] rounded-[30px] overflow-hidden shadow-2xl border-4 border-white z-10 hover:scale-[1.02] transition-transform duration-500">
-                  <img
-                    src="/darshan/DSC04180.webp"
+                  <img loading="lazy" src="/darshan/DSC04180.webp"
                     alt="FOLK Dehradun Youth"
                     className="w-full h-full object-cover object-top"
                   />
@@ -646,8 +642,7 @@ export default function YouthFOLKPage() {
 
                 {/* Overlapping Secondary Image */}
                 <Reveal delay={0.4} className="absolute bottom-0 right-0 w-[55%] h-[55%] rounded-[24px] overflow-hidden shadow-2xl border-4 border-white z-20 hover:scale-[1.03] transition-transform duration-500">
-                  <img
-                    src="/darshan/DSC04178.webp"
+                  <img loading="lazy" src="/darshan/DSC04178.webp"
                     alt="FOLK Interactive Sessions"
                     className="w-full h-full object-cover object-center"
                   />
@@ -757,8 +752,7 @@ export default function YouthFOLKPage() {
                     </motion.div>
                 </div>
 
-                <img
-                  src="/krishna-flute.png"
+                <img loading="lazy" src="/krishna-flute.png"
                   alt="Little Krishna Flute"
                   className="w-full h-auto object-contain animate-bounce-subtle relative z-10"
                 />
@@ -1003,7 +997,7 @@ export default function YouthFOLKPage() {
             {activeMedia.endsWith('.mp4') ? (
               <video src={activeMedia} controls autoPlay className="max-w-full max-h-[80vh] rounded-lg" />
             ) : (
-              <img src={activeMedia} alt="Preview" className="max-w-full max-h-[80vh] object-contain rounded-lg" />
+              <img loading="lazy" src={activeMedia} alt="Preview" className="max-w-full max-h-[80vh] object-contain rounded-lg" />
             )}
           </div>
         </div>

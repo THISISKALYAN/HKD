@@ -29,8 +29,7 @@ export default function BecomeAMonkPage() {
 
           {/* Hero Banner Card */}
           <div className="w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#eae4d5]">
-            <img
-              src="/challenge%20.png"
+            <img loading="lazy" src="/challenge%20.png"
               alt="Challenge Yourself"
               width={1672}
               height={940}
@@ -96,14 +95,14 @@ export default function BecomeAMonkPage() {
                   </p>
                 </div>
                 <div className="relative rounded-[2rem] overflow-hidden shadow-[0_20px_40px_rgba(7,33,73,0.08)] h-[380px] border-4 border-white group">
-                  <img src="/kik.webp" alt="Monk meditating on Krishna" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+                  <img loading="lazy" src="/kik.webp" alt="Monk meditating on Krishna" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
                 </div>
               </div>
 
               {/* Row 2 */}
               <div className="grid md:grid-cols-2 gap-10 items-center">
                 <div className="order-2 md:order-1 relative rounded-[2rem] overflow-hidden shadow-[0_20px_40px_rgba(7,33,73,0.08)] h-[380px] border-4 border-white group">
-                  <img src="https://hkmdehradun.org/live-site/assets/images/monk2.jpg" alt="Morning prayer" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+                  <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/images/monk2.jpg" alt="Morning prayer" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
                 </div>
                 <div className="order-1 md:order-2">
                   <p>
@@ -129,7 +128,7 @@ export default function BecomeAMonkPage() {
                    </p>
                  </div>
                  <div className="lg:col-span-2 relative rounded-[2rem] overflow-hidden shadow-xl h-[400px] w-full border-4 border-white group transition-transform duration-500">
-                   <img src="https://hkmdehradun.org/live-site/assets/images/monk3.jpg" alt="Reading scripture" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+                   <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/images/monk3.jpg" alt="Reading scripture" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
                  </div>
                </div>
             </div>
@@ -137,7 +136,7 @@ export default function BecomeAMonkPage() {
             {/* Row 3 */}
             <div className="grid md:grid-cols-2 gap-10 items-center">
               <div className="relative rounded-[2rem] overflow-hidden shadow-[0_20px_40px_rgba(7,33,73,0.08)] h-[380px] border-4 border-white group">
-                <img src="https://hkmdehradun.org/live-site/assets/images/monk5.jpg" alt="Selfless service" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
+                <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/images/monk5.jpg" alt="Selfless service" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
               </div>
               <div className="space-y-5">
                 <h3 className="text-2xl md:text-3xl font-extrabold text-[#072149] tracking-tight">

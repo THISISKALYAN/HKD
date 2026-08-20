@@ -73,7 +73,7 @@ export default function YouthGallery() {
               {activeMedia.toLowerCase().endsWith('.mp4') || activeMedia.toLowerCase().endsWith('.webm') ? (
                 <video src={encodeURI(activeMedia)} controls autoPlay className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" />
               ) : (
-                <img src={encodeURI(activeMedia)} alt="Preview" className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" />
+                <img loading="lazy" src={encodeURI(activeMedia)} alt="Preview" className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl" />
               )}
             </div>
           </div>

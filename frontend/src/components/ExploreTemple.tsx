@@ -23,8 +23,7 @@ export default function ExploreTemple() {
           
           {/* Gau Shala */}
           <div className="relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border-[6px] border-white group col-span-1 lg:col-span-1 lg:row-span-2 row-span-1 bg-white">
-            <img 
-              src="https://pbs.twimg.com/media/FYuBDEzVUAAvfRf.jpg" 
+            <img loading="lazy" src="https://pbs.twimg.com/media/FYuBDEzVUAAvfRf.jpg" 
               alt="Gau Shala" 
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
             />
@@ -34,8 +33,7 @@ export default function ExploreTemple() {
 
           {/* Hare Krishna Movement Dehradun (Center Large Image) */}
           <div className="relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border-[6px] border-white group col-span-1 md:col-span-2 lg:col-span-2 lg:row-span-2 row-span-2 bg-white">
-            <img 
-              src="/Photo from Vishwas Murthy (2).jpg" 
+            <img loading="lazy" src="/Photo from Vishwas Murthy (2).jpg" 
               alt="Hare Krishna Movement Dehradun" 
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
             />
@@ -49,8 +47,7 @@ export default function ExploreTemple() {
 
           {/* Hare Krishna Gifts */}
           <div className="relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border-[6px] border-white group col-span-1 lg:col-span-1 lg:row-span-2 row-span-1 bg-white">
-            <img 
-              src="/image_925ffe24.webp" 
+            <img loading="lazy" src="/image_925ffe24.webp" 
               alt="Hare Krishna Gifts" 
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
             />
@@ -60,8 +57,7 @@ export default function ExploreTemple() {
 
           {/* Vrindavan Garden */}
           <div className="relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border-[6px] border-white group col-span-1 lg:col-span-1 lg:row-span-1 row-span-1 bg-white">
-            <img 
-              src="https://www.indiasinvitation.com/wp-content/uploads/2016/09/Brindavan-Garden.jpg" 
+            <img loading="lazy" src="https://www.indiasinvitation.com/wp-content/uploads/2016/09/Brindavan-Garden.jpg" 
               alt="Vrindavan Garden" 
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
             />

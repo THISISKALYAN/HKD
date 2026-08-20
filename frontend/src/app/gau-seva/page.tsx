@@ -134,8 +134,8 @@ export default function GauSevaPage() {
       rzp.open();
     } catch (error) {
       console.error(error);
-      if (error.response && error.response.data && error.response.data.error) {
-        alert(error.response.data.error);
+      if ((error as any).response && (error as any).response.data && (error as any).response.data.error) {
+        alert((error as any).response.data.error);
       } else {
         alert("Failed to initiate payment. Please try again.");
       }
@@ -178,8 +178,7 @@ export default function GauSevaPage() {
             transition={{ duration: 1, delay: 0.2 }}
             className="w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#eae4d5]"
           >
-            <img 
-              src="https://hkmdehradun.org/live-site/assets/12/gau-home.png" 
+            <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/12/gau-home.png" 
               alt="Gau Seva Banner" 
               className="w-full h-auto object-cover max-h-[350px] sm:max-h-[440px] md:max-h-[500px]"
             />
@@ -218,8 +217,7 @@ export default function GauSevaPage() {
           {/* Facility 1 */}
           <div className="bg-white rounded-[32px] overflow-hidden border border-[#eee8d7] shadow-[0_6px_30px_rgba(0,0,0,0.04)] hover:shadow-2xl transition-all duration-300 group flex flex-col justify-between">
             <div className="h-56 sm:h-60 lg:h-64 overflow-hidden relative">
-              <img 
-                src="https://hkmdehradun.org/live-site/assets/12/gau-1.png" 
+              <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/12/gau-1.png" 
                 alt="Care & Medical" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
               />
@@ -238,8 +236,7 @@ export default function GauSevaPage() {
           {/* Facility 2 */}
           <div className="bg-white rounded-[32px] overflow-hidden border border-[#eee8d7] shadow-[0_6px_30px_rgba(0,0,0,0.04)] hover:shadow-2xl transition-all duration-300 group flex flex-col justify-between">
             <div className="h-56 sm:h-60 lg:h-64 overflow-hidden relative">
-              <img 
-                src="https://hkmdehradun.org/live-site/assets/12/gau-2.png" 
+              <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/12/gau-2.png" 
                 alt="Nutritious Food" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
               />
@@ -258,8 +255,7 @@ export default function GauSevaPage() {
           {/* Facility 3 */}
           <div className="bg-white rounded-[32px] overflow-hidden border border-[#eee8d7] shadow-[0_6px_30px_rgba(0,0,0,0.04)] hover:shadow-2xl transition-all duration-300 group flex flex-col justify-between">
             <div className="h-56 sm:h-60 lg:h-64 overflow-hidden relative">
-              <img 
-                src="https://hkmdehradun.org/live-site/assets/12/gau-3.png" 
+              <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/12/gau-3.png" 
                 alt="Herbs & Supplements" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
               />
@@ -278,8 +274,7 @@ export default function GauSevaPage() {
           {/* Facility 4 */}
           <div className="bg-white rounded-[32px] overflow-hidden border border-[#eee8d7] shadow-[0_6px_30px_rgba(0,0,0,0.04)] hover:shadow-2xl transition-all duration-300 group flex flex-col justify-between">
             <div className="h-56 sm:h-60 lg:h-64 overflow-hidden relative">
-              <img 
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx2cjjqXE7kvsFEhYuU76OiETX4bm_DEsePebiLAtghNIXsmBSgk5lDvo&s=10" 
+              <img loading="lazy" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx2cjjqXE7kvsFEhYuU76OiETX4bm_DEsePebiLAtghNIXsmBSgk5lDvo&s=10" 
                 alt="Modern Infrastructure" 
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
               />
@@ -554,8 +549,7 @@ export default function GauSevaPage() {
               </div>
             </div>
             <div className="relative overflow-hidden rounded-2xl border border-[#e8dfc8] bg-[#fbf9f4] flex-grow flex items-center justify-center">
-              <img 
-                src="/gav-deta.png" 
+              <img loading="lazy" src="/gav-deta.png" 
                 alt="Sponsorship Details" 
                 className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]"
               />
@@ -589,8 +583,7 @@ export default function GauSevaPage() {
               </div>
             </div>
             <div className="relative overflow-hidden rounded-2xl border border-[#e8dfc8] bg-[#fbf9f4] flex-grow flex items-center justify-center">
-              <img 
-                src="/gmed.png" 
+              <img loading="lazy" src="/gmed.png" 
                 alt="Medical Care Details" 
                 className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]"
               />
@@ -627,7 +620,7 @@ export default function GauSevaPage() {
             onClick={() => setActiveImage("https://hkmdehradun.org/live-site/assets/12/gau-1.png")}
             className="overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer"
           >
-            <img src="https://hkmdehradun.org/live-site/assets/12/gau-1.png" alt="Gau Seva" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+            <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/12/gau-1.png" alt="Gau Seva" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -637,7 +630,7 @@ export default function GauSevaPage() {
             onClick={() => setActiveImage("https://hkmdehradun.org/live-site/assets/12/gau-2.png")}
             className="overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer"
           >
-            <img src="https://hkmdehradun.org/live-site/assets/12/gau-2.png" alt="Gau Seva" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+            <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/12/gau-2.png" alt="Gau Seva" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -647,7 +640,7 @@ export default function GauSevaPage() {
             onClick={() => setActiveImage("https://hkmdehradun.org/live-site/assets/12/gau-3.png")}
             className="overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer"
           >
-            <img src="https://hkmdehradun.org/live-site/assets/12/gau-3.png" alt="Gau Seva" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+            <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/12/gau-3.png" alt="Gau Seva" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
           </motion.div>
         </div>
       </section>
@@ -683,8 +676,7 @@ export default function GauSevaPage() {
               onClick={(e) => e.stopPropagation()}
               className="relative max-w-6xl max-h-[92vh] overflow-hidden rounded-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] bg-white p-2.5 sm:p-3 border border-white/20 cursor-default flex items-center justify-center"
             >
-              <img 
-                src={activeImage} 
+              <img loading="lazy" src={activeImage} 
                 alt="Full View" 
                 className="w-full h-auto max-h-[85vh] object-contain rounded-2xl" 
               />

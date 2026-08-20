@@ -154,7 +154,7 @@ export default function DailyDarshanCmsPage() {
  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
  {gallery.map((url, idx) => (
  <div key={idx} className="relative group rounded-[16px] overflow-hidden aspect-square border border-gray-200 shadow-sm">
- <img src={url} alt={`Gallery ${idx}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+ <img loading="lazy" src={url} alt={`Gallery ${idx}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 backdrop-blur-[2px]">
  <label className="w-10 h-10 rounded-full bg-white text-gray-900 flex items-center justify-center transition-colors cursor-pointer shadow-lg border border-gray-200/20">
  <UploadCloud className="w-4 h-4" />

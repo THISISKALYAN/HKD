@@ -8,15 +8,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useCms } from '@/components/CmsContext';
 
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
-import CoverflowGallery from '@/components/CoverflowGallery';
+import dynamic from 'next/dynamic';
 import FeatureCard from '@/components/FeatureCard';
-import GuptVrindavanDhamSection from '@/components/GuptVrindavanDhamSection';
-import ExploreTemple from '@/components/ExploreTemple';
-import FolkYouthPrograms from '@/components/FolkYouthPrograms';
-import UpcomingFestivals from '@/components/UpcomingFestivals';
-import MusicWaves from '@/components/MusicWaves';
-import FaqSection from '@/components/FaqSection';
-import VolunteerBanner from '@/components/VolunteerBanner';
+
+const CoverflowGallery = dynamic(() => import('@/components/CoverflowGallery'), { ssr: true });
+const GuptVrindavanDhamSection = dynamic(() => import('@/components/GuptVrindavanDhamSection'), { ssr: true });
+const ExploreTemple = dynamic(() => import('@/components/ExploreTemple'), { ssr: true });
+const FolkYouthPrograms = dynamic(() => import('@/components/FolkYouthPrograms'), { ssr: true });
+const UpcomingFestivals = dynamic(() => import('@/components/UpcomingFestivals'), { ssr: true });
+const MusicWaves = dynamic(() => import('@/components/MusicWaves'), { ssr: false });
+const FaqSection = dynamic(() => import('@/components/FaqSection'), { ssr: true });
+const VolunteerBanner = dynamic(() => import('@/components/VolunteerBanner'), { ssr: true });
 
 
 

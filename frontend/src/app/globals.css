@@ -37,14 +37,17 @@
 @layer utilities {
   .animate-fade-rise {
     animation: fade-rise 0.8s ease-out forwards;
+    will-change: transform, opacity;
   }
   .animate-fade-rise-delay {
     animation: fade-rise 0.8s ease-out 0.2s forwards;
     opacity: 0;
+    will-change: transform, opacity;
   }
   .animate-fade-rise-delay-2 {
     animation: fade-rise 0.8s ease-out 0.4s forwards;
     opacity: 0;
+    will-change: transform, opacity;
   }
   .font-instrument {
     font-family: 'TC EN', sans-serif;
