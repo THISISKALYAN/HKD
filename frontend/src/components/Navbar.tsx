@@ -201,6 +201,7 @@ export const Navbar: React.FC = () => {
                 Donate
               </Link>
               <button
+                aria-label="Toggle Menu"
                 onClick={() => setIsOpen(!isOpen)}
                 className={`${isHome && !scrolled ? 'text-white hover:text-saffron drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]' : 'text-gray-800 hover:text-[#0B5DB7]'} p-1 focus:outline-none`}
               >

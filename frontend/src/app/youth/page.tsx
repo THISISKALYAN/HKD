@@ -268,7 +268,7 @@ export default function YouthFOLKPage() {
       <section className="px-4 sm:px-6 max-w-7xl mx-auto pt-0 pb-8 md:pt-2 md:pb-12">
         <div className="relative rounded-[2.5rem] overflow-hidden bg-black/90 shadow-[0_25px_60px_rgba(4,35,95,0.2)] border border-amber-500/20 group">
           {/* Autoplay Video Container with Uncropped Ratio */}
-          <div className="relative w-full aspect-video flex items-center justify-center bg-black">
+          <div className="relative w-full min-h-[450px] md:min-h-0 md:aspect-video flex items-center justify-center bg-black">
             {currentIframeUrl && (
               <iframe
                 ref={iframeRef}
@@ -277,13 +277,14 @@ export default function YouthFOLKPage() {
                 frameBorder="0"
                 allow="autoplay; picture-in-picture; clipboard-write; encrypted-media; web-share"
                 className="w-full h-full"
+                loading="lazy"
                 title={videos[currentVideoIndex].title}
               ></iframe>
             )}
           </div>
 
           {/* Overlay Floating Info Text */}
-          <div className="absolute left-4 bottom-12 sm:left-6 sm:bottom-16 md:left-8 md:bottom-20 max-w-2xl p-4 sm:p-6 flex flex-col gap-4 pointer-events-none z-10 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
+          <div className="absolute left-0 top-0 w-full md:w-auto md:bottom-20 md:top-auto md:left-8 max-w-2xl p-4 sm:p-6 flex flex-col gap-4 pointer-events-none z-10 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] bg-gradient-to-b from-black/80 via-black/30 to-transparent md:bg-none">
             <div className="w-full">
               <span className="text-xs uppercase font-bold tracking-widest text-[#f5c518] mb-1 block">
                 Featured Video {currentVideoIndex + 1} of {videos.length}
@@ -338,6 +339,7 @@ export default function YouthFOLKPage() {
           {videos.map((vid, idx) => (
             <button
               key={idx}
+              aria-label={`Select video ${idx + 1}`}
               onClick={() => setCurrentVideoIndex(idx)}
               className={`h-2.5 rounded-full transition-all duration-300 ${
                 currentVideoIndex === idx ? 'w-8 bg-[#d99500]' : 'w-2.5 bg-gray-300 hover:bg-gray-400'

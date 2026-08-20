@@ -277,6 +277,7 @@ export default function Home() {
 
         {/* Liquid Glass Navigation Left Arrow */}
         <button
+          aria-label="Previous Slide"
           onClick={prevSlide}
           className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center rounded-full w-10 h-10 sm:w-12 sm:h-12 bg-white/75 hover:bg-white text-gray-800 hover:scale-110 shadow-lg active:scale-95 transition-all duration-300"
           title="Previous Slide"
@@ -286,6 +287,7 @@ export default function Home() {
 
         {/* Liquid Glass Navigation Right Arrow */}
         <button
+          aria-label="Next Slide"
           onClick={nextSlide}
           className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center rounded-full w-10 h-10 sm:w-12 sm:h-12 bg-white/75 hover:bg-white text-gray-800 hover:scale-110 shadow-lg active:scale-95 transition-all duration-300"
           title="Next Slide"
@@ -357,13 +359,27 @@ export default function Home() {
                     boxShadow: "0 20px 50px -12px rgba(0,0,0,0.3)",
                   }}
                 >
+                  {/* Static Image for Mobile, hidden on md+ */}
+                  <div className="w-full h-full md:hidden relative">
+                    <Image
+                      src="/hero-deity-1.jpg"
+                      alt="Hare Krishna Movement Dehradun"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 460px"
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      loading="lazy"
+                    />
+                  </div>
+                  {/* Video for Desktop, hidden on mobile */}
                   <video
                     src="/index page.mp4"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="hidden md:block w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     autoPlay
                     loop
                     muted
                     playsInline
+                    preload="none"
+                    poster="/hero-deity-1.jpg"
                   />
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
                 </div>
@@ -373,7 +389,7 @@ export default function Home() {
               <motion.div
                 className="absolute z-20 bottom-[10%] sm:bottom-16 right-[15%] sm:right-[10%]"
               >
-                <button className="cursor-pointer" onClick={() => setIsVideoModalOpen(true)}>
+                <button aria-label="Play About Us Video" className="cursor-pointer" onClick={() => setIsVideoModalOpen(true)}>
                   <div className="w-[83px] h-[83px] bg-blue-50 rounded-full relative shadow-[inset_0px_0px_1px_1px_rgba(0,0,0,0.3),_2px_3px_5px_rgba(0,0,0,0.1)] flex items-center justify-center">
                     <div className="absolute w-[72px] h-[72px] z-10 bg-black rounded-full left-1/2 -translate-x-1/2 top-[5px] blur-[1px]" />
                     <label className="group cursor-pointer absolute w-[72px] h-[72px] bg-gradient-to-b from-blue-600 to-blue-400 rounded-full left-1/2 -translate-x-1/2 top-[5px] shadow-[inset_0px_4px_2px_#60a5fa,inset_0px_-4px_0px_#1e3a8a,0px_0px_2px_rgba(0,0,0,10)] active:shadow-[inset_0px_4px_2px_rgba(96,165,250,0.5),inset_0px_-4px_2px_rgba(37,99,235,0.5),0px_0px_2px_rgba(0,0,0,10)] z-20 flex items-center justify-center">
@@ -436,6 +452,7 @@ export default function Home() {
             >
               <button
                 onClick={() => setIsVideoModalOpen(false)}
+                aria-label="Close Video Modal"
                 className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white backdrop-blur-md transition-colors cursor-pointer"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
