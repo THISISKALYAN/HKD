@@ -65,47 +65,21 @@ export default function AboutDonationSection() {
             </div>
           </div>
 
-          {/* Right Column: Your Support, Divine Impact */}
-          <div className="lg:col-span-5 bg-gradient-to-b from-[#f5f3ff] to-[#ede9fe] rounded-[32px] p-8 sm:p-10 shadow-[0_4px_30px_rgb(0,0,0,0.04)] border border-indigo-50 relative overflow-hidden flex flex-col justify-center">
-            
-            <div className="text-center mb-10 relative z-10">
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#4c1d95] leading-tight mb-4 tracking-tight">
-                Your Support, <br />
-                Divine Impact
-              </h2>
-              <p className="text-[#5b21b6]/80 font-medium text-sm sm:text-base leading-relaxed px-4">
-                Your Contribution helps us build the temple and sustain life-changing initiatives.
-              </p>
+          {/* Right Column: Only Video */}
+          <div className="lg:col-span-5 relative flex flex-col justify-center items-center h-full min-h-[400px]">
+            {/* Video */}
+            <div className="w-full max-w-sm mx-auto relative z-10 overflow-hidden rounded-[24px] shadow-2xl border-[6px] border-white">
+              <div style={{ padding: '177.78% 0 0 0', position: 'relative' }}>
+                <iframe 
+                  src="https://player.vimeo.com/video/1219812587?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
+                  frameBorder="0" 
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} 
+                  title="donation-video"
+                ></iframe>
+              </div>
             </div>
-
-            <div className="space-y-4 relative z-10">
-              {donationSevas.map((seva, idx) => (
-                <Link
-                  key={idx}
-                  href={seva.link}
-                  className={`group relative block w-full overflow-hidden rounded-[20px] bg-gradient-to-r ${seva.bgClass} shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1`}
-                >
-                  <div className="absolute inset-0 opacity-40 group-hover:opacity-50 transition-opacity duration-300 mix-blend-overlay">
-                    <img 
-                      src={seva.image} 
-                      alt={seva.title} 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="relative px-6 py-5 flex items-center justify-between">
-                    <span className="text-white font-bold text-lg sm:text-xl tracking-tight z-10">
-                      {seva.title}
-                    </span>
-                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-gray-900 group-hover:scale-110 transition-transform duration-300 z-10 shadow-sm">
-                      <ChevronRight className="w-5 h-5" />
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-
-            {/* Subtle bottom graphic/pattern for temple silhouette effect */}
-            <div className="absolute bottom-0 left-0 w-full h-32 opacity-10 pointer-events-none bg-[url('/mandir_nitya_seva.webp')] bg-cover bg-bottom mix-blend-luminosity"></div>
           </div>
 
         </div>

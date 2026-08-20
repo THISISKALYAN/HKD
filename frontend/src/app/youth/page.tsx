@@ -127,31 +127,30 @@ export default function YouthFOLKPage() {
 
   const [activeMedia, setActiveMedia] = useState<string | null>(null);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [isMuted, setIsMuted] = useState(true);
 
   const videos = [
     {
-      url: '/folk%20event%20video.mp4',
+      url: 'https://player.vimeo.com/video/1219812601?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&controls=1',
       title: 'FOLK Youth Festival & Kirtan Night',
       desc: 'Immerse in high-energy youth celebrations, uplifting kirtans, and transformative wisdom sessions with FOLK Dehradun.',
     },
     {
-      url: '/Residency.mp4',
+      url: 'https://player.vimeo.com/video/1219812678?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&controls=1',
       title: 'FOLK Leadership & Residential Camp',
       desc: 'A peek into our life-changing residential retreats—mastering focus, character, and spiritual leadership.',
     },
     {
-      url: '/Vrindavan%20trip.mp4',
+      url: 'https://player.vimeo.com/video/1219812681?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&controls=1',
       title: 'Sacred Vrindavan Heritage Yatra',
       desc: 'Unforgettable spiritual expeditions with youth exploring ancient temples, wisdom satsangs, and sacred culture.',
     },
     {
-      url: '/New%20year%20video.mp4',
+      url: 'https://player.vimeo.com/video/1219812642?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&controls=1',
       title: 'FOLK New Year Spiritual Celebration',
       desc: 'Welcoming the new year with soul-stirring kirtan, mantra meditation, and joyous spiritual fellowship.',
     },
     {
-      url: '/Holi.mp4',
+      url: 'https://player.vimeo.com/video/1219812614?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&controls=1',
       title: 'Ecstatic Holi & Gaura Purnima Utsav',
       desc: 'Vibrant colors of devotion, ecstatic dancing, and blissful floral Holi celebrations with the youth community.',
     },
@@ -192,78 +191,48 @@ export default function YouthFOLKPage() {
       <FolkNavbar />
 
       {/* ── FEATURED VIDEO HERO SHOWCASE ── */}
-      <section className="px-4 sm:px-6 max-w-7xl mx-auto py-8 md:py-12">
+      <section className="px-4 sm:px-6 max-w-7xl mx-auto pt-0 pb-8 md:pt-2 md:pb-12">
         <div className="relative rounded-[2.5rem] overflow-hidden bg-black/90 shadow-[0_25px_60px_rgba(4,35,95,0.2)] border border-amber-500/20 group">
-          {/* Top Control Bar (Mute/Unmute & Status) */}
-          <div className="absolute top-4 right-4 z-20 flex items-center gap-3">
-            <button
-              onClick={() => setIsMuted(!isMuted)}
-              className="pointer-events-auto flex items-center gap-2 px-4 py-2 rounded-full bg-black/60 hover:bg-[#d99500] text-white font-semibold text-xs backdrop-blur-md border border-white/20 transition-all duration-300 shadow-md"
-              title={isMuted ? "Unmute Audio" : "Mute Audio"}
-            >
-              {isMuted ? (
-                <>
-                  <VolumeX className="w-4 h-4 text-amber-400" />
-                  <span>Unmute</span>
-                </>
-              ) : (
-                <>
-                  <Volume2 className="w-4 h-4 text-emerald-400 animate-pulse" />
-                  <span>Sound On</span>
-                </>
-              )}
-            </button>
-          </div>
-
           {/* Autoplay Video Container with Uncropped Ratio */}
           <div className="relative w-full aspect-video flex items-center justify-center bg-black">
-            <video
+            <iframe
               key={videos[currentVideoIndex].url}
               src={videos[currentVideoIndex].url}
-              autoPlay
-              loop
-              muted={isMuted}
-              playsInline
-              className="w-full h-full object-contain"
-            />
+              frameBorder="0"
+              allow="autoplay; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              className="w-full h-full"
+              title={videos[currentVideoIndex].title}
+            ></iframe>
           </div>
 
-          {/* Overlay Info Bar */}
-          <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 bg-gradient-to-t from-black/95 via-black/60 to-transparent flex flex-col md:flex-row md:items-end justify-between pointer-events-none gap-4">
-            <div className="max-w-xl pr-4">
+          {/* Overlay Floating Info Text */}
+          <div className="absolute left-4 bottom-12 sm:left-6 sm:bottom-16 md:left-8 md:bottom-20 max-w-2xl p-4 sm:p-6 flex flex-col gap-4 pointer-events-none z-10 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
+            <div className="w-full">
               <span className="text-xs uppercase font-bold tracking-widest text-[#f5c518] mb-1 block">
                 Featured Video {currentVideoIndex + 1} of {videos.length}
               </span>
               <h3 className="text-xl sm:text-3xl font-bold text-white tracking-tight leading-tight">
                 {videos[currentVideoIndex].title}
               </h3>
-              <p className="text-xs sm:text-sm md:text-base text-gray-300 mt-2 leading-relaxed max-w-lg">
+              <p className="text-xs sm:text-sm md:text-base text-gray-300 mt-2 mb-4 leading-relaxed max-w-lg">
                 {videos[currentVideoIndex].desc}
               </p>
-            </div>
-            
-            <div className="flex flex-wrap items-center gap-3 w-full md:w-auto pointer-events-auto mt-2 md:mt-0">
-              <a
-                href="#contact"
-                className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-xs sm:text-sm flex items-center gap-2 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:shadow-white/10 hover:-translate-y-0.5 active:scale-95 shrink-0"
-              >
-                <BadgeCheck className="w-5 h-5 text-emerald-400" /> Register Now
-              </a>
-
-              <a
-                href="#contact"
-                onClick={() => setProgram('LifeCoach')}
-                className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-xs sm:text-sm flex items-center gap-2 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:shadow-white/10 hover:-translate-y-0.5 active:scale-95 shrink-0"
-              >
-                <UserSearch className="w-4 h-4 text-[#f5c518]" /> Explore
-              </a>
               
-              <button
-                onClick={() => setActiveMedia(videos[currentVideoIndex].url)}
-                className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[#d99500] to-amber-600 hover:from-amber-600 hover:to-[#d99500] text-white font-bold text-xs sm:text-sm flex items-center gap-2 transition-all duration-300 shadow-lg hover:shadow-amber-500/25 hover:-translate-y-0.5 active:scale-95 shrink-0"
-              >
-                <Maximize2 className="w-4 h-4" /> Full Screen
-              </button>
+              <div className="flex flex-wrap items-center gap-3 w-full md:w-auto pointer-events-auto">
+                <a
+                  href="#contact"
+                  className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-xs sm:text-sm flex items-center gap-2 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:shadow-white/10 hover:-translate-y-0.5 active:scale-95 shrink-0"
+                >
+                  <BadgeCheck className="w-5 h-5 text-emerald-400" /> Register Now
+                </a>
+                <a
+                  href="#contact"
+                  onClick={() => setProgram('LifeCoach')}
+                  className="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-xs sm:text-sm flex items-center gap-2 transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.1)] hover:shadow-white/10 hover:-translate-y-0.5 active:scale-95 shrink-0"
+                >
+                  <UserSearch className="w-4 h-4 text-[#f5c518]" /> Explore
+                </a>
+              </div>
             </div>
           </div>
 
