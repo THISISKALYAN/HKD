@@ -33,7 +33,7 @@ try {
  * POST /api/payments/create-order
  */
 router.post('/create-order', paymentLimiter, async (req, res) => {
-  const { amount, donorName, email, phone, sevaCategory, panNumber } = req.body;
+  const { amount, donorName, email, phone, sevaCategory, panNumber, receivePrasadam, deliveryAddress } = req.body;
 
   if (!amount || !donorName || !email || !phone || !sevaCategory) {
     return res.status(400).json({ error: 'Required donor fields are missing.' });
@@ -44,8 +44,8 @@ router.post('/create-order', paymentLimiter, async (req, res) => {
     return res.status(400).json({ error: 'Invalid email address.' });
   }
 
-  if (typeof amount !== 'number' || amount < 1 || amount > 10000000) {
-    return res.status(400).json({ error: 'Invalid donation amount.' });
+  if (typeof amount !== 'number' || amount < 1 || amount > 500000) {
+    return res.status(400).json({ error: 'Invalid donation amount. Allowed range is ₹1 to ₹5,00,000.' });
   }
 
   // Convert to paise for Razorpay
@@ -77,7 +77,8 @@ router.post('/create-order', paymentLimiter, async (req, res) => {
       razorpayOrderId: orderId,
       status: 'created',
       createdAt: new Date(),
-      isSimulated: mockPayment
+      isSimulated: mockPayment,
+      ...(receivePrasadam && { receivePrasadam, deliveryAddress, deliveryStatus: 'Pending' })
     };
 
     // Save to Firestore

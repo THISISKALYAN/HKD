@@ -266,6 +266,11 @@ router.get('/pages/:pageId', async (req, res) => {
         dailyDarshan: { imageUrl: '/h2.webp', date: new Date().toISOString() },
         templeGallery: []
       };
+    } else if (targetId === 'prasadam') {
+      defaultContent = {
+        deliveryAddress: 'Sri Radha Krishna Dham, Dehradun',
+        phoneNumber: '+91-9876543210'
+      };
     } else {
       defaultContent = {
         title: `Visual Content Section for ${targetId}`,
@@ -605,11 +610,48 @@ router.delete('/leads/:id', authenticateCms(['superadmin', 'staff']), async (req
  */
 router.get('/dashboard-stats', authenticateCms(['superadmin', 'staff']), async (req, res) => {
   try {
+    const { startDate, endDate } = req.query;
+
+    const applyDateFilter = (docs) => {
+      if (!startDate && !endDate) return docs;
+      const start = startDate ? new Date(startDate).getTime() : 0;
+      const end = endDate ? new Date(endDate).getTime() : Infinity;
+
+      return docs.filter(doc => {
+        const data = doc.data();
+        if (!data.createdAt) return false; // Or true if we want to include items with no date? Let's say false.
+        const createdAtTime = data.createdAt.toDate ? data.createdAt.toDate().getTime() : 
+                              (data.createdAt._seconds ? data.createdAt._seconds * 1000 : new Date(data.createdAt).getTime());
+        return createdAtTime >= start && createdAtTime <= end;
+      });
+    };
+
     const leadsSnapshot = await db.collection('leads').get();
     const blogsSnapshot = await db.collection('blogs').get();
-    const paymentsSnapshot = await db.collection('payments').where('status', '==', 'captured').get();
     const usersSnapshot = await db.collection('users').where('role', 'in', ['staff', 'superadmin']).get();
     
+    const filteredLeads = applyDateFilter(leadsSnapshot.docs);
+    const filteredBlogs = applyDateFilter(blogsSnapshot.docs);
+    
+    // Prasadam metrics
+    const prasadamSnapshot = await db.collection('donations')
+      .where('receivePrasadam', '==', true)
+      .where('status', 'in', ['successful', 'paid'])
+      .get();
+    const filteredPrasadam = applyDateFilter(prasadamSnapshot.docs);
+      
+    let totalPrasadamRequests = 0;
+    let pendingDeliveries = 0;
+    let outForDelivery = 0;
+    let delivered = 0;
+    
+    filteredPrasadam.forEach(doc => {
+      totalPrasadamRequests++;
+      const data = doc.data();
+      if (data.deliveryStatus === 'Out for Delivery') outForDelivery++;
+      else if (data.deliveryStatus === 'Delivered') delivered++;
+      else pendingDeliveries++;
+    });
     // Get CMS pages
     const homeDoc = await db.collection('cms_pages').doc('home').get();
     const dailyDarshanDoc = await db.collection('cms_pages').doc('daily-darshan').get();
@@ -643,10 +685,9 @@ router.get('/dashboard-stats', authenticateCms(['superadmin', 'staff']), async (
     }
     
     res.json({
-      totalLeads: leadsSnapshot.size || leadsSnapshot.docs?.length || 0,
-      totalInquiries: leadsSnapshot.size || leadsSnapshot.docs?.length || 0, // Using leads as proxy for inquiries unless split later
-      totalBlogs: blogsSnapshot.size || blogsSnapshot.docs?.length || 0,
-      totalDonations: paymentsSnapshot.size || paymentsSnapshot.docs?.length || 0,
+      totalLeads: filteredLeads.length,
+      totalInquiries: filteredLeads.length, 
+      totalBlogs: filteredBlogs.length,
       totalStaff: usersSnapshot.size || usersSnapshot.docs?.length || 0,
       totalHeroImages,
       totalTempleGallery,
@@ -654,6 +695,10 @@ router.get('/dashboard-stats', authenticateCms(['superadmin', 'staff']), async (
       totalFolkGallery,
       totalImagesUploaded,
       storageUsed,
+      totalPrasadamRequests,
+      pendingDeliveries,
+      outForDelivery,
+      delivered,
     });
   } catch (error) {
     console.error('Error fetching dashboard stats:', error);
@@ -715,5 +760,71 @@ router.post('/upload', authenticateCms(['superadmin', 'staff']), upload.single('
 });
 
 
+
+/**
+ * GET /api/cms/prasadam-requests
+ * Retrieve all customer prasadam delivery requests
+ */
+router.get('/prasadam-requests', authenticateCms(['superadmin', 'staff']), async (req, res) => {
+  try {
+    const snapshot = await db.collection('donations')
+      .where('receivePrasadam', '==', true)
+      .where('status', 'in', ['successful', 'paid'])
+      .get();
+      
+    if (snapshot.empty) {
+      return res.json([]);
+    }
+
+    const requests = [];
+    snapshot.forEach(doc => {
+      requests.push({ id: doc.id, ...doc.data() });
+    });
+
+    // Sort descending by createdAt (or equivalent) in memory because of potential missing composite index
+    requests.sort((a, b) => {
+      const timeA = a.createdAt ? (a.createdAt._seconds ? a.createdAt._seconds : new Date(a.createdAt).getTime()) : 0;
+      const timeB = b.createdAt ? (b.createdAt._seconds ? b.createdAt._seconds : new Date(b.createdAt).getTime()) : 0;
+      return timeB - timeA;
+    });
+
+    res.json(requests);
+  } catch (error) {
+    console.error('Error fetching prasadam requests:', error);
+    res.status(500).json({ error: 'Failed to retrieve prasadam requests.' });
+  }
+});
+
+/**
+ * PUT /api/cms/prasadam-requests/:orderId/status
+ * Update the delivery status of a prasadam request
+ */
+router.put('/prasadam-requests/:orderId/status', authenticateCms(['superadmin', 'staff']), async (req, res) => {
+  const { orderId } = req.params;
+  const { deliveryStatus } = req.body;
+
+  if (!['Pending', 'Out for Delivery', 'Delivered'].includes(deliveryStatus)) {
+    return res.status(400).json({ error: 'Invalid delivery status.' });
+  }
+
+  try {
+    const docRef = db.collection('donations').doc(orderId);
+    const doc = await docRef.get();
+
+    if (!doc.exists) {
+      return res.status(404).json({ error: 'Donation record not found.' });
+    }
+
+    await docRef.update({
+      deliveryStatus,
+      updatedAt: new Date()
+    });
+
+    res.json({ success: true, deliveryStatus });
+  } catch (error) {
+    console.error('Error updating prasadam delivery status:', error);
+    res.status(500).json({ error: 'Failed to update delivery status.' });
+  }
+});
 
 module.exports = router;

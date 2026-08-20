@@ -15,6 +15,7 @@ import {
   Users, 
   FileText, 
   Settings, 
+  Truck,
   LogOut,
   Flower2,
   Search,
@@ -53,6 +54,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: 'Homepage', id: 'home', href: '/admin/home', icon: Home, category: 'TOOLS' },
     { name: 'Daily Darshan', id: 'daily-darshan', href: '/admin/daily-darshan', icon: Flower2, category: 'TOOLS' },
     { name: 'Folk Gallery', id: 'folk-gallery', href: '/admin/folk-gallery', icon: ImageIcon, category: 'TOOLS' },
+    { name: 'Prasadam Delivery', id: 'prasadam', href: '/admin/prasadam', icon: Truck, category: 'TOOLS' },
     { name: 'Settings & Users', id: 'settings', href: '/admin/settings', icon: Settings, category: 'SUPPORT', superadminOnly: true },
   ];
 

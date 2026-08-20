@@ -128,6 +128,11 @@ export default function YouthFOLKPage() {
   const [activeMedia, setActiveMedia] = useState<string | null>(null);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
 
+  const globalMutedRef = React.useRef(true);
+  const globalPlayingRef = React.useRef(true);
+  const iframeRef = React.useRef<HTMLIFrameElement>(null);
+  const [currentIframeUrl, setCurrentIframeUrl] = useState('');
+
   const videos = [
     {
       url: 'https://player.vimeo.com/video/1219812601?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&controls=1',
@@ -164,6 +169,75 @@ export default function YouthFOLKPage() {
     setCurrentVideoIndex((prev) => (prev === videos.length - 1 ? 0 : prev + 1));
   };
 
+  // Compute URL when index changes
+  useEffect(() => {
+    let url = videos[currentVideoIndex].url;
+    // Remove loop, muted, and autoplay so we can control them dynamically
+    url = url.replace('&loop=1', '').replace('&muted=1', '').replace('&muted=0', '').replace('&autoplay=1', '').replace('&autoplay=0', '');
+    // Append the correct muted and autoplay state based on global refs
+    url += `&muted=${globalMutedRef.current ? '1' : '0'}&autoplay=${globalPlayingRef.current ? '1' : '0'}`;
+    setCurrentIframeUrl(url);
+  }, [currentVideoIndex]);
+
+  // Load Vimeo Script
+  useEffect(() => {
+    if (!(window as any).Vimeo) {
+      const script = document.createElement('script');
+      script.src = 'https://player.vimeo.com/api/player.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  // Attach Vimeo Player Listeners
+  useEffect(() => {
+    if (!currentIframeUrl || !iframeRef.current) return;
+
+    let player: any = null;
+    let initInterval: any = null;
+
+    const tryInitPlayer = () => {
+      if ((window as any).Vimeo && (window as any).Vimeo.Player) {
+        clearInterval(initInterval);
+        try {
+          player = new (window as any).Vimeo.Player(iframeRef.current);
+          
+          player.on('volumechange', (data: any) => {
+            globalMutedRef.current = (data.volume === 0);
+          });
+          
+          player.on('play', () => {
+            globalPlayingRef.current = true;
+          });
+
+          player.on('pause', () => {
+            globalPlayingRef.current = false;
+          });
+
+          player.on('ended', () => {
+            globalPlayingRef.current = true; // Auto-moving means it should continue playing
+            nextVideo();
+          });
+        } catch(e) {
+          console.error("Vimeo Player init error", e);
+        }
+      }
+    };
+
+    initInterval = setInterval(tryInitPlayer, 500);
+    tryInitPlayer();
+
+    return () => {
+      clearInterval(initInterval);
+      if (player && player.off) {
+        player.off('volumechange');
+        player.off('play');
+        player.off('pause');
+        player.off('ended');
+      }
+    };
+  }, [currentIframeUrl]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !phone) return;
@@ -195,14 +269,17 @@ export default function YouthFOLKPage() {
         <div className="relative rounded-[2.5rem] overflow-hidden bg-black/90 shadow-[0_25px_60px_rgba(4,35,95,0.2)] border border-amber-500/20 group">
           {/* Autoplay Video Container with Uncropped Ratio */}
           <div className="relative w-full aspect-video flex items-center justify-center bg-black">
-            <iframe
-              key={videos[currentVideoIndex].url}
-              src={videos[currentVideoIndex].url}
-              frameBorder="0"
-              allow="autoplay; picture-in-picture; clipboard-write; encrypted-media; web-share"
-              className="w-full h-full"
-              title={videos[currentVideoIndex].title}
-            ></iframe>
+            {currentIframeUrl && (
+              <iframe
+                ref={iframeRef}
+                key={currentVideoIndex}
+                src={currentIframeUrl}
+                frameBorder="0"
+                allow="autoplay; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                className="w-full h-full"
+                title={videos[currentVideoIndex].title}
+              ></iframe>
+            )}
           </div>
 
           {/* Overlay Floating Info Text */}

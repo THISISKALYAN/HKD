@@ -2,15 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { useCms } from '@/components/CmsContext';
-import { Loader2, ArrowUpRight, ArrowDownRight, MoreHorizontal, Filter, Download, Calendar, Mail, FileText, HardDrive, Users, Activity } from 'lucide-react';
+import { Loader2, ArrowUpRight, ArrowDownRight, MoreHorizontal, Filter, Download, Calendar, Mail, FileText, HardDrive, Users, Activity, Truck, Package, Clock, Send, CheckCircle2, ChevronDown, X } from 'lucide-react';
 import axios from '@/lib/axios';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
-import dynamic from 'next/dynamic';
-
-const AdminDashboardChart = dynamic(() => import('./AdminDashboardChart'), { 
-  ssr: false,
-  loading: () => <div className="w-full h-full flex items-center justify-center text-gray-400">Loading chart...</div>
-});
 
 type DashboardStats = {
   totalLeads: number;
@@ -25,6 +21,10 @@ type DashboardStats = {
   totalReels: number;
   totalImagesUploaded: number;
   storageUsed: number;
+  totalPrasadamRequests?: number;
+  pendingDeliveries?: number;
+  outForDelivery?: number;
+  delivered?: number;
 };
 
 type Log = {
@@ -51,14 +51,49 @@ export default function AdminDashboard() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  
+  const [timeframe, setTimeframe] = useState('All Time');
+  const [customStartDate, setCustomStartDate] = useState('');
+  const [customEndDate, setCustomEndDate] = useState('');
+  const [isTimeframeOpen, setIsTimeframeOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const getQueryDates = () => {
+    let start = '';
+    let end = '';
+    const now = new Date();
+    
+    if (timeframe === 'Today') {
+      start = new Date(now.setHours(0,0,0,0)).toISOString();
+      end = new Date(now.setHours(23,59,59,999)).toISOString();
+    } else if (timeframe === 'This Week') {
+      const first = now.getDate() - now.getDay();
+      start = new Date(new Date(now.setDate(first)).setHours(0,0,0,0)).toISOString();
+      end = new Date(new Date(now.setDate(first + 6)).setHours(23,59,59,999)).toISOString();
+    } else if (timeframe === 'This Month') {
+      start = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+      end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999).toISOString();
+    } else if (timeframe === 'Custom') {
+      start = customStartDate ? new Date(customStartDate).toISOString() : '';
+      end = customEndDate ? new Date(customEndDate + 'T23:59:59.999Z').toISOString() : '';
+    }
+    
+    return { start, end };
+  };
 
   const fetchData = React.useCallback(async () => {
     if (!token) return;
     try {
+      const { start, end } = getQueryDates();
+      let query = '';
+      if (start || end) {
+        query = `?startDate=${start}&endDate=${end}`;
+      }
+      
       const [statsRes, logsRes, leadsRes] = await Promise.all([
-        axios.get(`/api/cms/dashboard-stats`, { headers: { Authorization: `Bearer ${token}` } }),
-        axios.get(`/api/cms/logs`, { headers: { Authorization: `Bearer ${token}` } }).catch(() => ({ data: [] })),
-        axios.get(`/api/cms/leads`, { headers: { Authorization: `Bearer ${token}` } }).catch(() => ({ data: [] }))
+        axios.get(`/api/cms/dashboard-stats${query}`, { headers: { Authorization: `Bearer ${token}` } }),
+        axios.get(`/api/cms/logs${query}`, { headers: { Authorization: `Bearer ${token}` } }).catch(() => ({ data: [] })),
+        axios.get(`/api/cms/leads${query}`, { headers: { Authorization: `Bearer ${token}` } }).catch(() => ({ data: [] }))
       ]);
       
       setStats(statsRes.data);
@@ -71,14 +106,14 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  }, [token]);
+  }, [token, timeframe, customStartDate, customEndDate]);
 
   useEffect(() => {
     fetchData();
     // Auto refresh every 30 seconds
     const interval = setInterval(fetchData, 30000);
     return () => clearInterval(interval);
-  }, [token, fetchData]);
+  }, [fetchData]);
 
   if (loading && !stats) {
     return (
@@ -104,14 +139,41 @@ export default function AdminDashboard() {
     return 'N/A';
   };
 
-  // Mock chart data derived from stats for the main BarChart
-  const contentData = [
-    { name: 'Oct', Hero: stats?.totalHeroImages ?? 0, Temple: stats?.totalTempleGallery ?? 0, Darshan: stats?.totalDailyDarshan ?? 0 },
-    { name: 'Nov', Hero: 3, Temple: 35, Darshan: 15 },
-    { name: 'Dec', Hero: 3, Temple: 40, Darshan: 20 },
-  ];
-  
-  const totalItems = (stats?.totalHeroImages ?? 0) + (stats?.totalTempleGallery ?? 0) + (stats?.totalDailyDarshan ?? 0);
+  const handleExportData = () => {
+    const doc = new jsPDF();
+    doc.setFontSize(20);
+    doc.text('Dashboard Overview Report', 14, 22);
+    doc.setFontSize(11);
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 14, 30);
+    doc.text(`Timeframe: ${timeframe}`, 14, 36);
+
+    autoTable(doc, {
+      startY: 45,
+      head: [['Metric', 'Value']],
+      body: [
+        ['Total Inquiries', stats?.totalInquiries || 0],
+        ['Total Blogs', stats?.totalBlogs || 0],
+        ['Prasadam Orders', stats?.totalPrasadamRequests || 0],
+        ['Pending Deliveries', stats?.pendingDeliveries || 0],
+        ['Dispatched Deliveries', stats?.outForDelivery || 0],
+        ['Delivered', stats?.delivered || 0],
+        ['Storage Used', formatBytes(stats?.storageUsed || 0)],
+      ],
+      theme: 'grid',
+      headStyles: { fillColor: [0, 75, 44] }
+    });
+
+    doc.save(`dashboard_report_${new Date().toISOString().split('T')[0]}.pdf`);
+  };
+
+  const getDateDisplay = () => {
+    if (timeframe === 'All Time') return 'All Time';
+    if (timeframe === 'Custom') {
+      if (customStartDate && customEndDate) return `${new Date(customStartDate).toLocaleDateString()} - ${new Date(customEndDate).toLocaleDateString()}`;
+      return 'Custom Range';
+    }
+    return timeframe;
+  };
 
   return (
     <div className="px-4 sm:px-6 max-w-[1600px] mx-auto pb-20 font-sans pt-4">
@@ -123,29 +185,91 @@ export default function AdminDashboard() {
           <p className="text-base font-medium text-gray-500 mt-1">Hare Krishna, {user?.name}</p>
         </div>
         
-        <div className="flex flex-wrap items-center gap-3">
-          <button className="flex items-center gap-2 bg-white border border-gray-200 shadow-sm hover:bg-gray-50 hover:-translate-y-0.5 transition-all rounded-[12px] px-4 py-2 text-sm font-bold text-gray-700">
+        <div className="flex flex-wrap items-center gap-3 relative">
+          <button className="flex items-center gap-2 bg-white border border-gray-200 shadow-sm hover:bg-gray-50 transition-all rounded-[12px] px-4 py-2 text-sm font-bold text-gray-700 cursor-default">
             <Calendar className="w-4 h-4 text-gray-400" />
-            Oct 18 - Nov 18
+            {getDateDisplay()}
           </button>
           
-          <button className="flex items-center gap-2 bg-white border border-gray-200 shadow-sm hover:bg-gray-50 hover:-translate-y-0.5 transition-all rounded-[12px] px-4 py-2 text-sm font-bold text-gray-700">
-            Monthly
-          </button>
+          <div className="relative">
+            <button 
+              onClick={() => setIsTimeframeOpen(!isTimeframeOpen)}
+              className="flex items-center gap-2 bg-white border border-gray-200 shadow-sm hover:bg-gray-50 transition-all rounded-[12px] px-4 py-2 text-sm font-bold text-gray-700"
+            >
+              {timeframe}
+              <ChevronDown className="w-4 h-4 text-gray-400" />
+            </button>
+            {isTimeframeOpen && (
+              <div className="absolute top-full mt-2 right-0 w-40 bg-white border border-gray-200 shadow-lg rounded-xl z-50 py-2">
+                {['All Time', 'Today', 'This Week', 'This Month', 'Custom'].map(t => (
+                  <button 
+                    key={t}
+                    onClick={() => { setTimeframe(t); setIsTimeframeOpen(false); if (t !== 'Custom') { setCustomStartDate(''); setCustomEndDate(''); } }}
+                    className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 ${timeframe === t ? 'font-bold text-[#004B2C] bg-green-50' : 'text-gray-700'}`}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           
           <div className="h-6 w-px bg-gray-200 mx-1"></div>
           
-          <button className="flex items-center gap-2 bg-white border border-gray-200 shadow-sm hover:bg-gray-50 transition-all rounded-[12px] px-4 py-2 text-sm font-bold text-gray-700">
+          <button 
+            onClick={() => setIsFilterOpen(true)}
+            className="flex items-center gap-2 bg-white border border-gray-200 shadow-sm hover:bg-gray-50 transition-all rounded-[12px] px-4 py-2 text-sm font-bold text-gray-700"
+          >
             <Filter className="w-4 h-4" />
             Filter
           </button>
           
-          <button className="flex items-center gap-2 bg-white border border-gray-200 shadow-sm hover:bg-gray-50 transition-all rounded-[12px] px-4 py-2 text-sm font-bold text-gray-700">
+          <button 
+            onClick={handleExportData}
+            className="flex items-center gap-2 bg-white border border-gray-200 shadow-sm hover:bg-gray-50 transition-all rounded-[12px] px-4 py-2 text-sm font-bold text-gray-700"
+          >
             <Download className="w-4 h-4" />
             Export Data
           </button>
         </div>
       </div>
+      
+      {isFilterOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl relative">
+            <button onClick={() => setIsFilterOpen(false)} className="absolute top-6 right-6 p-2 rounded-full hover:bg-gray-100 text-gray-500">
+              <X className="w-5 h-5" />
+            </button>
+            <h3 className="text-xl font-bold mb-6">Custom Date Range</h3>
+            <div className="space-y-4 mb-8">
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-1">Start Date</label>
+                <input 
+                  type="date" 
+                  value={customStartDate} 
+                  onChange={e => setCustomStartDate(e.target.value)} 
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2" 
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-1">End Date</label>
+                <input 
+                  type="date" 
+                  value={customEndDate} 
+                  onChange={e => setCustomEndDate(e.target.value)} 
+                  className="w-full border border-gray-300 rounded-xl px-4 py-2" 
+                />
+              </div>
+            </div>
+            <button 
+              onClick={() => { setTimeframe('Custom'); setIsFilterOpen(false); }}
+              className="w-full bg-[#004B2C] text-white font-bold py-3 rounded-xl hover:bg-[#003B22] transition-colors"
+            >
+              Apply Filter
+            </button>
+          </div>
+        </div>
+      )}
       
       {error && (
         <div className="bg-red-50 text-red-600 p-4 rounded-[16px] border border-red-200 mb-6 shadow-sm font-medium text-sm">
@@ -156,9 +280,9 @@ export default function AdminDashboard() {
       {/* Quick Shortcuts Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         {[
+          { label: 'Prasadam Delivery', href: '/admin/prasadam', icon: Truck, color: 'bg-orange-50/80 text-orange-700 border-orange-200/60 hover:bg-orange-100/80' },
           { label: 'Manage Blogs', href: '/admin/blogs', icon: FileText, color: 'bg-blue-50/80 text-blue-700 border-blue-200/60 hover:bg-blue-100/80' },
           { label: 'View Inquiries', href: '/admin/leads', icon: Users, color: 'bg-emerald-50/80 text-emerald-700 border-emerald-200/60 hover:bg-emerald-100/80' },
-          { label: 'Daily Darshan', href: '/admin/daily-darshan', icon: Activity, color: 'bg-amber-50/80 text-amber-700 border-amber-200/60 hover:bg-amber-100/80' },
           { label: 'Folk Gallery', href: '/admin/folk-gallery', icon: HardDrive, color: 'bg-purple-50/80 text-purple-700 border-purple-200/60 hover:bg-purple-100/80' }
         ].map((action, i) => (
           <a
@@ -175,6 +299,70 @@ export default function AdminDashboard() {
       </div>
 
       {/* KPI Cards Row */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        
+        {/* Total Prasadam Requests */}
+        <div className="bg-white/90 backdrop-blur-xl border border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg hover:border-gray-300 transition-all duration-300 rounded-3xl p-6 relative overflow-hidden group">
+          <div className="flex items-center justify-between mb-4 relative z-10">
+            <div className="flex items-center gap-3 text-gray-600">
+              <div className="p-2.5 bg-orange-100/80 rounded-2xl border border-orange-200/60 text-orange-700">
+                <Package className="w-4 h-4" />
+              </div>
+              <span className="text-xs font-black tracking-widest uppercase text-gray-500">Prasadam Orders</span>
+            </div>
+          </div>
+          <div className="flex items-end justify-between mt-3 relative z-10">
+            <h2 className="text-4xl font-black text-gray-900 tracking-tight">{stats?.totalPrasadamRequests || 0}</h2>
+          </div>
+        </div>
+
+        {/* Pending Deliveries */}
+        <div className="bg-white/90 backdrop-blur-xl border border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg hover:border-gray-300 transition-all duration-300 rounded-3xl p-6 relative overflow-hidden group">
+          <div className="flex items-center justify-between mb-4 relative z-10">
+            <div className="flex items-center gap-3 text-gray-600">
+              <div className="p-2.5 bg-yellow-100/80 rounded-2xl border border-yellow-200/60 text-yellow-700">
+                <Clock className="w-4 h-4" />
+              </div>
+              <span className="text-xs font-black tracking-widest uppercase text-gray-500">Pending</span>
+            </div>
+          </div>
+          <div className="flex items-end justify-between mt-3 relative z-10">
+            <h2 className="text-4xl font-black text-gray-900 tracking-tight">{stats?.pendingDeliveries || 0}</h2>
+          </div>
+        </div>
+
+        {/* Out for Delivery */}
+        <div className="bg-white/90 backdrop-blur-xl border border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg hover:border-gray-300 transition-all duration-300 rounded-3xl p-6 relative overflow-hidden group">
+          <div className="flex items-center justify-between mb-4 relative z-10">
+            <div className="flex items-center gap-3 text-gray-600">
+              <div className="p-2.5 bg-blue-100/80 rounded-2xl border border-blue-200/60 text-blue-700">
+                <Send className="w-4 h-4" />
+              </div>
+              <span className="text-xs font-black tracking-widest uppercase text-gray-500">Dispatched</span>
+            </div>
+          </div>
+          <div className="flex items-end justify-between mt-3 relative z-10">
+            <h2 className="text-4xl font-black text-gray-900 tracking-tight">{stats?.outForDelivery || 0}</h2>
+          </div>
+        </div>
+
+        {/* Delivered */}
+        <div className="bg-white/90 backdrop-blur-xl border border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg hover:border-gray-300 transition-all duration-300 rounded-3xl p-6 relative overflow-hidden group">
+          <div className="flex items-center justify-between mb-4 relative z-10">
+            <div className="flex items-center gap-3 text-gray-600">
+              <div className="p-2.5 bg-green-100/80 rounded-2xl border border-green-200/60 text-green-700">
+                <CheckCircle2 className="w-4 h-4" />
+              </div>
+              <span className="text-xs font-black tracking-widest uppercase text-gray-500">Delivered</span>
+            </div>
+          </div>
+          <div className="flex items-end justify-between mt-3 relative z-10">
+            <h2 className="text-4xl font-black text-gray-900 tracking-tight">{stats?.delivered || 0}</h2>
+          </div>
+        </div>
+
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         
         <div className="bg-white/90 backdrop-blur-xl border border-gray-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-lg hover:border-gray-300 transition-all duration-300 rounded-3xl p-6 relative overflow-hidden group">
@@ -185,15 +373,9 @@ export default function AdminDashboard() {
               </div>
               <span className="text-xs font-black tracking-widest uppercase text-gray-500">Total Inquiries</span>
             </div>
-            <button className="text-gray-400 hover:text-gray-900 transition-colors p-1.5 rounded-xl hover:bg-gray-100">
-              <MoreHorizontal className="w-4 h-4" />
-            </button>
           </div>
           <div className="flex items-end justify-between mt-3 relative z-10">
             <h2 className="text-4xl font-black text-gray-900 tracking-tight">{stats?.totalInquiries || 0}</h2>
-            <div className="flex items-center gap-1 bg-emerald-50/80 text-emerald-700 border border-emerald-200/60 px-2.5 py-1 rounded-xl text-xs font-bold mb-1">
-              15.8% <ArrowUpRight className="w-3.5 h-3.5" />
-            </div>
           </div>
         </div>
 
@@ -205,15 +387,9 @@ export default function AdminDashboard() {
               </div>
               <span className="text-xs font-black tracking-widest uppercase text-gray-500">Total Blogs</span>
             </div>
-            <button className="text-gray-400 hover:text-gray-900 transition-colors p-1.5 rounded-xl hover:bg-gray-100">
-              <MoreHorizontal className="w-4 h-4" />
-            </button>
           </div>
           <div className="flex items-end justify-between mt-3 relative z-10">
             <h2 className="text-4xl font-black text-gray-900 tracking-tight">{stats?.totalBlogs || 0}</h2>
-            <div className="flex items-center gap-1 bg-amber-50/80 text-amber-700 border border-amber-200/60 px-2.5 py-1 rounded-xl text-xs font-bold mb-1">
-              34.0% <ArrowDownRight className="w-3.5 h-3.5" />
-            </div>
           </div>
         </div>
 
@@ -225,59 +401,14 @@ export default function AdminDashboard() {
               </div>
               <span className="text-xs font-black tracking-widest uppercase text-gray-500">Storage Used</span>
             </div>
-            <button className="text-gray-400 hover:text-gray-900 transition-colors p-1.5 rounded-xl hover:bg-gray-100">
-              <MoreHorizontal className="w-4 h-4" />
-            </button>
           </div>
           <div className="flex items-end justify-between mt-3 relative z-10">
             <h2 className="text-4xl font-black text-gray-900 tracking-tight">{formatBytes(stats?.storageUsed || 0)}</h2>
-            <div className="flex items-center gap-1 bg-emerald-50/80 text-emerald-700 border border-emerald-200/60 px-2.5 py-1 rounded-xl text-xs font-bold mb-1">
-              24.2% <ArrowUpRight className="w-3.5 h-3.5" />
-            </div>
           </div>
         </div>
 
       </div>
 
-      {/* Charts Row */}
-      <div className="mb-8">
-        {/* Main Bar Chart */}
-        <div className="bg-white border border-gray-200 shadow-sm rounded-[24px] p-6 w-full flex flex-col">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-3 text-gray-900">
-              <div className="p-1.5 bg-gray-50 border border-gray-100 rounded-[8px]">
-                <Activity className="w-4 h-4 text-gray-500" />
-              </div>
-              <span className="text-base font-bold">Content Overview</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <button className="flex items-center gap-2 bg-white border border-gray-200 shadow-sm hover:bg-gray-50 transition-all rounded-[10px] px-3 py-1.5 text-sm font-bold text-gray-700">
-                <Filter className="w-3.5 h-3.5" /> Filter
-              </button>
-            </div>
-          </div>
-          
-          <div className="mb-6">
-            <h3 className="text-3xl font-black text-gray-900 tracking-tight">+{totalItems} items</h3>
-            <div className="flex items-center gap-2 mt-1">
-              <span className="flex items-center gap-1 text-green-700 text-sm font-bold bg-green-50 px-2 py-0.5 rounded-[6px]">
-                15.8% <ArrowUpRight className="w-3 h-3" />
-              </span>
-              <span className="text-gray-500 text-sm font-medium">+14 items increased</span>
-            </div>
-          </div>
-
-          <div className="flex-1 min-h-[350px] w-full">
-            <AdminDashboardChart contentData={contentData} />
-          </div>
-          
-          <div className="flex items-center justify-center gap-6 mt-6 pt-6 border-t border-gray-100">
-            <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#76bb76]"></div><span className="text-sm text-gray-500 font-bold">Hero Images</span></div>
-            <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#274724]"></div><span className="text-sm text-gray-500 font-bold">Temple Gallery</span></div>
-            <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full border-2 border-[#8b9b82] overflow-hidden relative"><div className="absolute inset-0" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 2px, #8b9b82 2px, #8b9b82 3px)' }}></div></div><span className="text-sm text-gray-500 font-bold">Daily Darshan</span></div>
-          </div>
-        </div>
-      </div>
 
       {/* Bottom Row */}
       <div>

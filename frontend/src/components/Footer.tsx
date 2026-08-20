@@ -96,8 +96,8 @@ export function Footer() {
               mixBlendMode: 'multiply',
               opacity: 0.85,
               filter: 'sepia(0.5) saturate(1.4) brightness(0.95)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%), linear-gradient(to top, transparent 0%, black 10%)',
-              maskImage: 'linear-gradient(to right, transparent 0%, black 15%), linear-gradient(to top, transparent 0%, black 10%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 25%)',
+              maskImage: 'linear-gradient(to right, transparent 0%, black 25%)',
             }}
           />
         </div>
@@ -127,7 +127,8 @@ export function Footer() {
                 alt="Srila Prabhupada's Hare Krishna Movement Dehradun Logo" 
                 width={300}
                 height={96}
-                className="h-24 w-auto object-contain block"
+                className="h-24 w-auto object-contain block opacity-85 hover:opacity-100 transition-opacity duration-300"
+                style={{ mixBlendMode: 'multiply' }}
               />
             </div>
             

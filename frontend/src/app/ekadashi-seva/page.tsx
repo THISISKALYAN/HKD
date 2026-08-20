@@ -16,10 +16,24 @@ export default function EkadashiSevaPage() {
   });
   const [claim80G, setClaim80G] = useState(false);
   const [receivePrasadam, setReceivePrasadam] = useState(false);
+  const [deliveryAddress, setDeliveryAddress] = useState({
+    line1: "",
+    line2: "",
+    city: "",
+    state: "",
+    pincode: ""
+  });
+  const [prasadamInfo, setPrasadamInfo] = useState({ address: "", phone: "" });
   const [loading, setLoading] = useState(false);
   const [activeImage, setActiveImage] = useState<string | null>(null);
 
   useEffect(() => {
+    // Fetch prasadam info
+    axios.get('/api/cms/pages/prasadam').then(res => {
+      if (res.data) {
+        setPrasadamInfo({ address: res.data.deliveryAddress || '', phone: res.data.phoneNumber || '' });
+      }
+    }).catch(console.error);
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setActiveImage(null);
@@ -72,11 +86,24 @@ export default function EkadashiSevaPage() {
 
     const finalAmount = totalAmount;
 
+    if (finalAmount < 1 || finalAmount > 500000) {
+      alert("Please enter a donation amount between ₹1 and ₹5,00,000");
+      setLoading(false);
+      return;
+    }
+
     try {
       const orderRes = await axios.post(`/api/payments/create-order`, {
         amount: finalAmount,
         currency: "INR",
-        receipt: `receipt_ekadashi_${Date.now()}`
+        receipt: `receipt_ekadashi_${Date.now()}`,
+        donorName: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        panNumber: formData.pan,
+        sevaCategory: getSelectedSevaLabel(),
+        receivePrasadam,
+        deliveryAddress: receivePrasadam ? deliveryAddress : null
       });
 
       const options = {
@@ -100,6 +127,7 @@ export default function EkadashiSevaPage() {
             });
             alert("Payment Successful! Thank you for your Ekadashi Seva.");
             setFormData({ name: "", email: "", phone: "", pan: "" });
+            setDeliveryAddress({ line1: "", line2: "", city: "", state: "", pincode: "" });
             setCustomAmount("");
             setQuantities({});
           } catch (err) {
@@ -121,7 +149,11 @@ export default function EkadashiSevaPage() {
       rzp.open();
     } catch (error) {
       console.error(error);
-      alert("Failed to initiate payment. Please try again.");
+      if (error.response && error.response.data && error.response.data.error) {
+        alert(error.response.data.error);
+      } else {
+        alert("Failed to initiate payment. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -338,9 +370,30 @@ export default function EkadashiSevaPage() {
                 {/* Custom Amount Input */}
                 <input
                   type="number"
+                    min="1"
+                    max="500000"
+                    onKeyDown={(e) => {
+                      if (e.key === "-" || e.key === "e" || e.key === "E" || e.key === "+" || e.key === ".") {
+                        e.preventDefault();
+                      }
+                    }}
                   placeholder="Enter Custom / Additional Amount"
                   value={customAmount}
-                  onChange={(e) => setCustomAmount(e.target.value)}
+                  onChange={(e) => {
+                      const val = e.target.value;
+                      if (val === "") {
+                        setCustomAmount("");
+                        return;
+                      }
+                      const num = parseInt(val, 10);
+                      if (num < 1) {
+                        setCustomAmount("1");
+                      } else if (num > 500000) {
+                        setCustomAmount("500000");
+                      } else {
+                        setCustomAmount(num.toString());
+                      }
+                    }}
                   className="w-full bg-[#fbf9f4] border border-[#e8dfc8] rounded-2xl px-5 py-3.5 text-[#051937] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#c89b27]"
                 />
 
@@ -409,11 +462,76 @@ export default function EkadashiSevaPage() {
                   </label>
                 </div>
 
+
+                {/* Delivery Address Form */}
+                <AnimatePresence>
+                  {receivePrasadam && (
+                    <motion.div 
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="overflow-hidden space-y-4 pt-2 border-t border-[#e8dfc8]"
+                    >
+                      <h4 className="font-bold text-[#051937] text-sm">Delivery Address</h4>
+                      <input
+                        type="text"
+                        required={receivePrasadam}
+                        placeholder="Address Line 1"
+                        value={deliveryAddress.line1}
+                        onChange={(e) => setDeliveryAddress({ ...deliveryAddress, line1: e.target.value })}
+                        className="w-full bg-[#fbf9f4] border border-[#e8dfc8] rounded-2xl px-5 py-3 text-[#051937] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#c89b27] text-sm"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Address Line 2 (Optional)"
+                        value={deliveryAddress.line2}
+                        onChange={(e) => setDeliveryAddress({ ...deliveryAddress, line2: e.target.value })}
+                        className="w-full bg-[#fbf9f4] border border-[#e8dfc8] rounded-2xl px-5 py-3 text-[#051937] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#c89b27] text-sm"
+                      />
+                      <div className="grid grid-cols-2 gap-4">
+                        <input
+                          type="text"
+                          required={receivePrasadam}
+                          placeholder="City"
+                          value={deliveryAddress.city}
+                          onChange={(e) => setDeliveryAddress({ ...deliveryAddress, city: e.target.value })}
+                          className="w-full bg-[#fbf9f4] border border-[#e8dfc8] rounded-2xl px-5 py-3 text-[#051937] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#c89b27] text-sm"
+                        />
+                        <input
+                          type="text"
+                          required={receivePrasadam}
+                          placeholder="State"
+                          value={deliveryAddress.state}
+                          onChange={(e) => setDeliveryAddress({ ...deliveryAddress, state: e.target.value })}
+                          className="w-full bg-[#fbf9f4] border border-[#e8dfc8] rounded-2xl px-5 py-3 text-[#051937] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#c89b27] text-sm"
+                        />
+                      </div>
+                      <input
+                        type="text"
+                        required={receivePrasadam}
+                        placeholder="Pincode"
+                        value={deliveryAddress.pincode}
+                        onChange={(e) => setDeliveryAddress({ ...deliveryAddress, pincode: e.target.value })}
+                        className="w-full bg-[#fbf9f4] border border-[#e8dfc8] rounded-2xl px-5 py-3 text-[#051937] placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#c89b27] text-sm"
+                      />
+                      
+                      {/* CMS Prasadam Info */}
+                      {(prasadamInfo.address || prasadamInfo.phone) && (
+                        <div className="bg-[#fffcf5] border border-[#f0e4c8] p-3 rounded-xl text-xs text-gray-600 leading-relaxed mt-2">
+                          <p className="font-semibold text-[#c89b27] mb-1">Prasadam Support Details</p>
+                          {prasadamInfo.address && <p><span className="font-medium text-gray-700">Dispatch Location:</span> {prasadamInfo.address}</p>}
+                          {prasadamInfo.phone && <p><span className="font-medium text-gray-700">Support Phone:</span> {prasadamInfo.phone}</p>}
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
                 {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={loading || totalAmount === 0}
-                  className="w-full py-4 mt-4 rounded-full bg-[#c89b27] hover:bg-[#b0871e] text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-50 flex items-center justify-center"
+                  className="w-full py-4 mt-4 rounded-full bg-[#f38312] hover:bg-[#d9710b] text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-50 flex items-center justify-center"
                 >
                   {loading ? (
                     <span className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>

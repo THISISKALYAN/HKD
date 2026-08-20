@@ -21,6 +21,7 @@ const MODULES = [
  { id: 'folk-gallery', label: 'Folk Gallery' },
  { id: 'leads', label: 'Inquiries' },
  { id: 'blogs', label: 'Blogs' },
+ { id: 'prasadam', label: 'Prasadam' },
 ];
 
  export default function SettingsPage() {
