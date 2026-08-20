@@ -19,7 +19,6 @@ const MODULES = [
  { id: 'home', label: 'Homepage' },
  { id: 'daily-darshan', label: 'Daily Darshan' },
  { id: 'folk-gallery', label: 'Folk Gallery' },
- { id: 'reels', label: 'HKM Reels' },
  { id: 'leads', label: 'Inquiries' },
  { id: 'blogs', label: 'Blogs' },
 ];

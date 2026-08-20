@@ -26,8 +26,7 @@ export const Navbar: React.FC = () => {
       pathname.startsWith('/happiness-workshops') ||
       pathname.startsWith('/self-empowerment-workshops') ||
       pathname.startsWith('/life-coach') ||
-      pathname.startsWith('/gallery') ||
-      pathname.startsWith('/reels'))
+      pathname.startsWith('/gallery'))
   ) {
     return null;
   }
@@ -70,7 +69,6 @@ export const Navbar: React.FC = () => {
     },
     { name: 'Youth Programs', href: '/youth', hasDropdown: false },
     { name: 'Blogs', href: '/blogs', hasDropdown: false },
-    { name: 'Reels', href: '/reels', hasDropdown: false },
     { name: 'Donate', href: '/donate', hasDropdown: false },
   ];
 
@@ -151,13 +149,6 @@ export const Navbar: React.FC = () => {
                           isHome && !scrolled ? '!text-white !font-black tracking-wider hover:!text-[#FF9933] drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]' : ''
                         }`}
                       >
-                        {link.name === 'Reels' && (
-                          <img 
-                            src="https://img.icons8.com/?size=100&id=YoIaSvIehcuI&format=png&color=000000" 
-                            alt="Reels" 
-                            className={`w-5 h-5 object-contain ${isHome && !scrolled ? 'brightness-0 invert' : ''}`}
-                          />
-                        )}
                         <span>{link.name}</span>
                         {hasDropdown && (
                           <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 ${
@@ -266,29 +257,6 @@ export const Navbar: React.FC = () => {
               );
             }
             
-
-
-            if (link.name === 'Reels') {
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => {
-                    setIsOpen(false);
-                    setOpenMobileDropdown(null);
-                  }}
-                  className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-[16px] font-semibold tracking-wide transition-colors ${
-                    isActive 
-                      ? 'bg-[#0B5DB7]/10 text-[#0B5DB7]' 
-                      : 'text-gray-800 hover:bg-gray-100'
-                  }`}
-                >
-                  <img src="https://img.icons8.com/?size=100&id=YoIaSvIehcuI&format=png&color=000000" alt="Reels" className="w-5 h-5 object-contain" />
-                  {link.name}
-                </Link>
-              );
-            }
-
             return (
               <Link
                 key={link.name}

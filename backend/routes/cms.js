@@ -264,8 +264,7 @@ router.get('/pages/:pageId', async (req, res) => {
         bannerText: 'Upcoming Auspicious Ekadashi and Child Annadana Seva Festivals. Participate Online!',
         heroSlides: ['/h1.webp', '/h2.webp', '/h3.webp'],
         dailyDarshan: { imageUrl: '/h2.webp', date: new Date().toISOString() },
-        templeGallery: [],
-        reels: []
+        templeGallery: []
       };
     } else {
       defaultContent = {
@@ -615,18 +614,15 @@ router.get('/dashboard-stats', authenticateCms(['superadmin', 'staff']), async (
     const homeDoc = await db.collection('cms_pages').doc('home').get();
     const dailyDarshanDoc = await db.collection('cms_pages').doc('daily-darshan').get();
     const folkGalleryDoc = await db.collection('cms_pages').doc('folk-gallery').get();
-    const reelsDoc = await db.collection('cms_pages').doc('reels').get();
     
     const homeData = homeDoc.exists ? homeDoc.data() : {};
     const dailyDarshanData = dailyDarshanDoc.exists ? dailyDarshanDoc.data() : {};
     const folkGalleryData = folkGalleryDoc.exists ? folkGalleryDoc.data() : {};
-    const reelsData = reelsDoc.exists ? reelsDoc.data() : {};
 
     const totalHeroImages = homeData.heroImages?.length || 3;
     const totalTempleGallery = homeData.templeGallery?.length || 29;
     const totalDailyDarshan = dailyDarshanData.gallery?.length || 10;
     const totalFolkGallery = folkGalleryData.gallery?.length || 0;
-    const totalReels = reelsData.reels?.length || 3;
 
     let storageUsed = 0;
     let totalImagesUploaded = 0;
@@ -656,7 +652,6 @@ router.get('/dashboard-stats', authenticateCms(['superadmin', 'staff']), async (
       totalTempleGallery,
       totalDailyDarshan,
       totalFolkGallery,
-      totalReels,
       totalImagesUploaded,
       storageUsed,
     });
@@ -719,37 +714,6 @@ router.post('/upload', authenticateCms(['superadmin', 'staff']), upload.single('
   });
 });
 
-// Public route for liking reels
-router.post('/reels/:index/like', async (req, res) => {
-  const { index } = req.params;
-  const { action } = req.body; // 'like', 'unlike', or 'reset'
 
-  if (!['like', 'unlike', 'reset'].includes(action)) {
-    return res.status(400).json({ error: 'Invalid action. Must be like, unlike, or reset.' });
-  }
-
-  try {
-    const targetRef = db.collection('pages_content').doc('reels');
-    
-    if (action === 'reset') {
-      await targetRef.set({
-        [`reelLikes.${index}`]: 0
-      }, { merge: true });
-    } else {
-      const incrementValue = action === 'like' ? 1 : -1;
-      await targetRef.set({
-        [`reelLikes.${index}`]: admin.firestore.FieldValue.increment(incrementValue)
-      }, { merge: true });
-    }
-
-    // Clear cache so frontend gets the fresh data
-    await cache.del('page:reels');
-
-    res.json({ success: true, message: `Reel ${index} ${action}d successfully` });
-  } catch (error) {
-    console.error(`Error processing reel like for index ${index}:`, error);
-    res.status(500).json({ error: 'Failed to update like count.' });
-  }
-});
 
 module.exports = router;
