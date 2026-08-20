@@ -82,7 +82,7 @@ export default function Home() {
 
   const [selectedBlog, setSelectedBlog] = useState<any>(null);
 
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);  // Fetch latest ashram blog posts for "Latest Updates"
+  // Fetch latest ashram blog posts for "Latest Updates"
 
   const heroImagesData = pageContent['home']?.heroImages;
   const currentHeroSlides = (heroImagesData && heroImagesData.length > 0) ? heroImagesData : heroSlides;
@@ -328,8 +328,20 @@ export default function Home() {
 
         <div className="container mx-auto px-4 sm:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-[1200px] mx-auto">
-            {/* Left: Circular Video Preview */}
-            <div className="flex justify-center items-center order-2 lg:order-1 relative min-h-[320px] sm:min-h-[500px]">
+            {/* Left: Video Embed */}
+            <div className="flex justify-center items-center order-2 lg:order-1 relative w-full lg:w-full min-h-[300px] sm:min-h-[400px]">
+              <div className="w-full max-w-xl mx-auto rounded-2xl overflow-hidden shadow-[0_20px_50px_-12px_rgba(0,0,0,0.3)] border-[4px] sm:border-[8px] border-white relative z-10 bg-black">
+                <div style={{ padding: "56.63% 0 0 0", position: "relative" }}>
+                  <iframe 
+                    src="https://player.vimeo.com/video/1219812622?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
+                    frameBorder="0" 
+                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+                    style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} 
+                    title="index page"
+                  ></iframe>
+                </div>
+              </div>
+              
               {/* MusicWaves WebGL Background */}
               <div
                 className="absolute pointer-events-none"
@@ -342,48 +354,6 @@ export default function Home() {
               >
                 <MusicWaves />
               </div>
-
-              {/* Main Circle */}
-              <motion.div
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="relative z-10"
-              >
-                <div className="w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] md:w-[460px] md:h-[460px] rounded-full overflow-hidden relative group cursor-pointer shadow-2xl"
-                  style={{
-                    border: "8px solid white",
-                    boxShadow: "0 20px 50px -12px rgba(0,0,0,0.3)",
-                  }}
-                >
-                  <video
-                    src="/index page.mp4"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                  />
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
-                </div>
-              </motion.div>
-
-              {/* Play Button */}
-              <motion.div
-                className="absolute z-20 bottom-[10%] sm:bottom-16 right-[15%] sm:right-[10%]"
-              >
-                <button className="cursor-pointer" onClick={() => setIsVideoModalOpen(true)}>
-                  <div className="w-[83px] h-[83px] bg-blue-50 rounded-full relative shadow-[inset_0px_0px_1px_1px_rgba(0,0,0,0.3),_2px_3px_5px_rgba(0,0,0,0.1)] flex items-center justify-center">
-                    <div className="absolute w-[72px] h-[72px] z-10 bg-black rounded-full left-1/2 -translate-x-1/2 top-[5px] blur-[1px]" />
-                    <label className="group cursor-pointer absolute w-[72px] h-[72px] bg-gradient-to-b from-blue-600 to-blue-400 rounded-full left-1/2 -translate-x-1/2 top-[5px] shadow-[inset_0px_4px_2px_#60a5fa,inset_0px_-4px_0px_#1e3a8a,0px_0px_2px_rgba(0,0,0,10)] active:shadow-[inset_0px_4px_2px_rgba(96,165,250,0.5),inset_0px_-4px_2px_rgba(37,99,235,0.5),0px_0px_2px_rgba(0,0,0,10)] z-20 flex items-center justify-center">
-                      <div className="w-8 group-active:w-[31px] fill-blue-100 drop-shadow-[0px_2px_2px_rgba(0,0,0,0.5)]">
-                        <svg xmlns="http://www.w3.org/2000/svg" id="Filled" viewBox="0 0 24 24">
-                          <path d="M20.492,7.969,10.954.975A5,5,0,0,0,3,5.005V19a4.994,4.994,0,0,0,7.954,4.03l9.538-6.994a5,5,0,0,0,0-8.062Z" />
-                        </svg>
-                      </div>
-                    </label>
-                  </div>
-                </button>
-              </motion.div>
             </div>
 
             {/* Right: The Matter */}
@@ -414,42 +384,6 @@ export default function Home() {
         </div>
 
       </section>
-
-      {/* Video Modal */}
-      <AnimatePresence>
-        {isVideoModalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
-            onClick={() => setIsVideoModalOpen(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() => setIsVideoModalOpen(false)}
-                className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white backdrop-blur-md transition-colors cursor-pointer"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-              <video
-                src="/index page.mp4"
-                className="w-full h-full object-contain"
-                controls
-                autoPlay
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <UpcomingFestivals isHomePage={true} />
 
