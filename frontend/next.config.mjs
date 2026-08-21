@@ -33,6 +33,10 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'pbs.twimg.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'recovered.sfo3.cdn.digitaloceanspaces.com',
       },
     ],

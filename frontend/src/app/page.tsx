@@ -79,6 +79,7 @@ export default function Home() {
   const [isHovered, setIsHovered] = useState(false);
 
   const cardRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const [latestBlogs, setLatestBlogs] = useState<any[]>([]);
 
@@ -123,6 +124,26 @@ export default function Home() {
     fetchLatestBlogs();
 
   }, []);
+
+  // Lazy load the heavy 24MB video when it scrolls into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          videoRef.current?.play().catch(() => {});
+        } else {
+          videoRef.current?.pause();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    const currentVideo = videoRef.current;
+    if (currentVideo) observer.observe(currentVideo);
+    return () => {
+      if (currentVideo) observer.unobserve(currentVideo);
+    };
+  }, []);
+
 
 
 
@@ -249,10 +270,14 @@ export default function Home() {
               }}
               className={`absolute top-0 h-full w-full rounded transition-all duration-700 ease-out shadow-2xl overflow-hidden flex items-center justify-center ${getSlidePositionClass(idx)}`}
             >
-              {/* Blurred Background to fill space */}
-              <div
-                className="absolute inset-0 bg-cover bg-center opacity-40 blur-3xl pointer-events-none scale-110"
-                style={{ backgroundImage: `url('${slide}')` }}
+              {/* Blurred Background to fill space, using next/image for optimization instead of CSS background */}
+              <Image
+                src={slide}
+                alt="Background"
+                fill
+                priority={idx === 0}
+                sizes="100vw"
+                className="object-cover opacity-40 blur-3xl pointer-events-none scale-110"
               />
               {/* Actual Image with Correct Aspect Ratio */}
               <Image
@@ -320,7 +345,7 @@ export default function Home() {
 
       {/* 2. ABOUT US SECTION (HKM Dehradun) */}
 
-      <section id="about" className="relative w-full bg-[#fbf6f0] overflow-hidden text-gray-800 flex items-center justify-center py-8 md:py-12">
+      <section id="about" className="relative w-full bg-[#fbf6f0] overflow-hidden text-gray-800 flex items-center justify-center pt-12 pb-32 md:py-12">
 
         {/* Subtle decorative background elements */}
 
@@ -331,7 +356,7 @@ export default function Home() {
 
 
         <div className="container mx-auto px-4 sm:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-[1200px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 md:gap-16 lg:gap-20 items-center max-w-[1200px] mx-auto">
             {/* Left: Circular Video Preview */}
             <div className="flex justify-center items-center order-2 lg:order-1 relative min-h-[320px] sm:min-h-[500px]">
               {/* MusicWaves WebGL Background */}
@@ -359,22 +384,11 @@ export default function Home() {
                     boxShadow: "0 20px 50px -12px rgba(0,0,0,0.3)",
                   }}
                 >
-                  {/* Static Image for Mobile, hidden on md+ */}
-                  <div className="w-full h-full md:hidden relative">
-                    <Image
-                      src="/hero-deity-1.jpg"
-                      alt="Hare Krishna Movement Dehradun"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 460px"
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
-                      loading="lazy"
-                    />
-                  </div>
-                  {/* Video for Desktop, hidden on mobile */}
+                  {/* Unified Lazy Video for Mobile & Desktop */}
                   <video
+                    ref={videoRef}
                     src="/index page.mp4"
-                    className="hidden md:block w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    autoPlay
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     loop
                     muted
                     playsInline
@@ -504,13 +518,13 @@ export default function Home() {
               },
               {
                 title: "Khichdi Prasadam Seva",
-                image: "https://hkmdehradun.org/live-site/assets/12/khichdi-home.png",
+                image: "/khich%20pras.png?v=2",
                 desc: "Every week, more than 10,000 visitors receive sacred khichdi prasadam at Hare Krishna Movement Dehradun. This seva ensures that no one goes hungry.",
                 link: "/khichdi-prasadam-seva"
               },
               {
                 title: "Ekadashi Seva",
-                image: "https://hkmdehradun.org/live-site/assets/12/ekadashi-home.png",
+                image: "https://harekrishnamandir.org/uploads/festival_banner/thumbnail9587256.webp",
                 desc: "Celebrate the holy day of Ekadashi by supporting divine sevas at Hare Krishna Mandir. Donations on this day carry special spiritual merit.",
                 link: "/ekadashi-seva"
               }
@@ -522,7 +536,7 @@ export default function Home() {
                     alt={seva.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                    className="object-cover transform group-hover:scale-105 transition-transform duration-700"
+                    className={`${(seva as any).objectFit === 'contain' ? 'object-contain' : 'object-cover'} transform group-hover:scale-105 transition-transform duration-700`}
                   />
                 </div>
 
@@ -716,11 +730,12 @@ export default function Home() {
             {[
               {
                 id: 1,
-                titleLines: ["AMALAKI", "EKADASHI"],
+                titleLines: ["AMALA", "EKADASHI"],
                 category: "FESTIVAL",
                 description: "Amalaki Ekadashi, also known as Amala Ekadashi...",
                 fullContent: `# Amalaki Ekadashi\n\nAmalaki Ekadashi, also known as Amala Ekadashi, is observed in the month of Phalguna and is glorified in the Brahmanda Purana. Sage Vasishtha told King Mandhata that observing this Ekadashi destroys sins, grants prosperity, and leads to liberation.\n\nIn the kingdom of Vaidisha, King Chitraratha and his citizens faithfully observed Amalaki Ekadashi by worshipping Lord Vishnu and the sacred Amalaki (Amla) tree. A hunter, who lived by killing animals, unknowingly participated by staying awake all night, hearing the Lord's glories, and fasting.\n\nBy the merit of this observance, the hunter was reborn as the righteous King Vasuratha. Later, when enemies attempted to kill him, Lord Vishnu protected him through a divine manifestation. Realizing the Lord's mercy, he devoted his life to devotional service.\n\nBenefit: Anyone who sincerely observes Amalaki Ekadashi attains Lord Vishnu's blessings, freedom from sins, and ultimately His eternal abode.`,
                 image: "/amala.jpeg",
+                objectFit: "contain"
               },
               {
                 id: 2,
@@ -750,7 +765,7 @@ export default function Home() {
                   alt={blog.titleLines.join(" ")} 
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
+                  className={`${(blog as any).objectFit === 'contain' ? 'object-contain' : 'object-cover'} transition-transform duration-1000 group-hover:scale-[1.03]`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/70 pointer-events-none z-0"></div>
 

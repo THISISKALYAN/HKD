@@ -266,9 +266,9 @@ export default function YouthFOLKPage() {
 
       {/* ── FEATURED VIDEO HERO SHOWCASE ── */}
       <section className="px-4 sm:px-6 max-w-7xl mx-auto pt-0 pb-8 md:pt-2 md:pb-12">
-        <div className="relative rounded-[2.5rem] overflow-hidden bg-black/90 shadow-[0_25px_60px_rgba(4,35,95,0.2)] border border-amber-500/20 group">
-          {/* Autoplay Video Container with Uncropped Ratio */}
-          <div className="relative w-full min-h-[450px] md:min-h-0 md:aspect-video flex items-center justify-center bg-black">
+        <div className="relative rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden bg-[#0a0a0a] shadow-[0_25px_60px_rgba(4,35,95,0.2)] border border-amber-500/20 group flex flex-col md:block">
+          {/* Autoplay Video Container with Correct Ratio */}
+          <div className="relative w-full aspect-video flex items-center justify-center bg-black shrink-0">
             {currentIframeUrl && (
               <iframe
                 ref={iframeRef}
@@ -281,10 +281,27 @@ export default function YouthFOLKPage() {
                 title={videos[currentVideoIndex].title}
               ></iframe>
             )}
+            
+            {/* Navigation Arrows (Inside Video Container to align correctly on mobile) */}
+            <button
+              onClick={prevVideo}
+              aria-label="Previous Video"
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/40 md:bg-white/10 hover:bg-[#d99500] text-white backdrop-blur-sm flex items-center justify-center border border-white/20 transition-all duration-300 shadow-xl opacity-100 md:opacity-0 group-hover:opacity-100 focus:opacity-100 pointer-events-auto"
+            >
+              <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 -translate-x-[1px] md:-translate-x-0 transition-transform" />
+            </button>
+
+            <button
+              onClick={nextVideo}
+              aria-label="Next Video"
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-black/40 md:bg-white/10 hover:bg-[#d99500] text-white backdrop-blur-sm flex items-center justify-center border border-white/20 transition-all duration-300 shadow-xl opacity-100 md:opacity-0 group-hover:opacity-100 focus:opacity-100 pointer-events-auto"
+            >
+              <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 translate-x-[1px] md:translate-x-0 transition-transform" />
+            </button>
           </div>
 
-          {/* Overlay Floating Info Text */}
-          <div className="absolute left-0 top-0 w-full md:w-auto md:bottom-20 md:top-auto md:left-8 max-w-2xl p-4 sm:p-6 flex flex-col gap-4 pointer-events-none z-10 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] bg-gradient-to-b from-black/80 via-black/30 to-transparent md:bg-none">
+          {/* Text Container (Below on mobile, Overlaid on desktop) */}
+          <div className="relative md:absolute left-0 md:left-8 bottom-0 md:bottom-20 w-full md:w-auto max-w-2xl p-5 md:p-6 flex flex-col gap-4 pointer-events-none z-10 md:drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] bg-[#0a0a0a] md:bg-transparent">
             <div className="w-full">
               <span className="text-xs uppercase font-bold tracking-widest text-[#f5c518] mb-1 block">
                 Featured Video {currentVideoIndex + 1} of {videos.length}
@@ -313,23 +330,6 @@ export default function YouthFOLKPage() {
               </div>
             </div>
           </div>
-
-          {/* Navigation Arrows (Inside Video Container) */}
-          <button
-            onClick={prevVideo}
-            aria-label="Previous Video"
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-[#d99500] text-white backdrop-blur-sm flex items-center justify-center border border-white/20 transition-all duration-300 shadow-xl group opacity-0 group-hover:opacity-100 focus:opacity-100 pointer-events-auto"
-          >
-            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 group-hover:-translate-x-0.5 transition-transform" />
-          </button>
-
-          <button
-            onClick={nextVideo}
-            aria-label="Next Video"
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-[#d99500] text-white backdrop-blur-sm flex items-center justify-center border border-white/20 transition-all duration-300 shadow-xl group opacity-0 group-hover:opacity-100 focus:opacity-100 pointer-events-auto"
-          >
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-0.5 transition-transform" />
-          </button>
         </div>
 
 

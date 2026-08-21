@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { ChevronLeft } from 'lucide-react';
 
 export default function UpcomingFestivals({ isHomePage = false }: { isHomePage?: boolean }) {
   // trigger recompile
@@ -590,10 +591,17 @@ export default function UpcomingFestivals({ isHomePage = false }: { isHomePage?:
                     Janmashtami
                   </h3>
                   
-                  <div className="flex gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <Link
-                      href="/festivals/janmashtami#donate"
-                      className="flex-1 flex items-center justify-center bg-white/20 backdrop-blur-md hover:bg-white/30 border border-white/30 text-white rounded-[24px] py-3.5 font-semibold text-[16px] transition-colors shadow-lg no-underline"
+                      href="/janmashtami"
+                      className="flex-1 flex items-center justify-center bg-white/20 backdrop-blur-md hover:bg-white/30 border border-white/30 text-white rounded-[24px] py-3.5 font-semibold text-[16px] transition-colors shadow-lg no-underline gap-1.5 group/btn"
+                    >
+                      Explore
+                      <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 -rotate-90 group-hover/btn:translate-y-1 transition-transform" />
+                    </Link>
+                    <Link
+                      href="/janmashtami#donate"
+                      className="flex-1 flex items-center justify-center btn-custom-donate !m-0 !py-3.5 !rounded-[24px] !text-[16px] shadow-xl no-underline"
                     >
                       Donate
                     </Link>

@@ -57,14 +57,14 @@ const sevaCards = [
   },
   {
     title: "Khichdi Prasadam",
-    image: "https://hkmdehradun.org/live-site/assets/12/khichdi-seva-banner.png",
+    image: "/khich%20pras.png?v=2",
     desc: "Every week, more than 10,000 visitors receive sacred khichdi prasadam at Hare Krishna Movement Dehradun. This seva ensures that no one goes hungry.",
     label: "Khichdi Prasadam Seva",
     link: "/khichdi-prasadam-seva"
   },
   {
     title: "Ekadashi Seva",
-    image: "https://hkmdehradun.org/live-site/assets/12/ekadashi-banner.png",
+    image: "https://harekrishnamandir.org/uploads/festival_banner/thumbnail9587256.webp",
     desc: "Celebrate the holy day of Ekadashi by supporting divine sevas at Hare Krishna Mandir. Donations on this day carry special spiritual merit.",
     label: "Ekadashi Seva",
     link: "/ekadashi-seva"

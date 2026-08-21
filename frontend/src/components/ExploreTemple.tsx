@@ -1,5 +1,6 @@
 import React from "react";
 import { Utensils, TreePine } from "lucide-react";
+import Image from "next/image";
 
 export default function ExploreTemple() {
   return (
@@ -19,13 +20,16 @@ export default function ExploreTemple() {
         </div>
 
         {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-[repeat(3,220px)] lg:grid-rows-[repeat(3,200px)] gap-5 sm:gap-6 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-rows-[220px] lg:auto-rows-[200px] gap-5 sm:gap-6 w-full">
           
           {/* Gau Shala */}
           <div className="relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border-[6px] border-white group col-span-1 lg:col-span-1 lg:row-span-2 row-span-1 bg-white">
-            <img loading="lazy" src="https://pbs.twimg.com/media/FYuBDEzVUAAvfRf.jpg" 
-              alt="Gau Shala" 
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+            <Image 
+              src="https://pbs.twimg.com/media/FYuBDEzVUAAvfRf.jpg" 
+              alt="Gau Shala"
+              fill
+              sizes="(max-width: 768px) 100vw, 25vw"
+              className="object-cover transition-transform duration-1000 group-hover:scale-110"
             />
             {/* Subtle Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-amber-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
@@ -33,9 +37,12 @@ export default function ExploreTemple() {
 
           {/* Hare Krishna Movement Dehradun (Center Large Image) */}
           <div className="relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border-[6px] border-white group col-span-1 md:col-span-2 lg:col-span-2 lg:row-span-2 row-span-2 bg-white">
-            <img loading="lazy" src="/Photo from Vishwas Murthy (2).jpg" 
+            <Image 
+              src="/Photo%20from%20Vishwas%20Murthy%20(2).jpg" 
               alt="Hare Krishna Movement Dehradun" 
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-amber-900/90 via-amber-900/20 to-transparent pointer-events-none z-10"></div>
             <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10 flex flex-col justify-end z-20 h-full">
@@ -47,9 +54,12 @@ export default function ExploreTemple() {
 
           {/* Hare Krishna Gifts */}
           <div className="relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border-[6px] border-white group col-span-1 lg:col-span-1 lg:row-span-2 row-span-1 bg-white">
-            <img loading="lazy" src="/image_925ffe24.webp" 
+            <Image 
+              src="/image_925ffe24.webp" 
               alt="Hare Krishna Gifts" 
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              fill
+              sizes="(max-width: 768px) 100vw, 25vw"
+              className="object-cover transition-transform duration-1000 group-hover:scale-110"
             />
             {/* Subtle Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-amber-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
@@ -57,9 +67,12 @@ export default function ExploreTemple() {
 
           {/* Vrindavan Garden */}
           <div className="relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border-[6px] border-white group col-span-1 lg:col-span-1 lg:row-span-1 row-span-1 bg-white">
-            <img loading="lazy" src="https://www.indiasinvitation.com/wp-content/uploads/2016/09/Brindavan-Garden.jpg" 
+            <Image 
+              src="/Vrn1.jpg" 
               alt="Vrindavan Garden" 
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              fill
+              sizes="(max-width: 768px) 100vw, 25vw"
+              className="object-cover transition-transform duration-1000 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 pointer-events-none z-10"></div>
           </div>

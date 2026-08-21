@@ -104,7 +104,7 @@ export function Footer() {
       </div>
 
       {/* ── Realistic Birds flying near temple spire ── */}
-      <div className="absolute top-0 right-0 bottom-0 z-0 pointer-events-none select-none" style={{ width: '500px' }}>
+      <div className="hidden md:block absolute top-0 right-0 bottom-0 z-0 pointer-events-none select-none" style={{ width: '500px' }}>
         <div className="absolute bird-1" style={{ right: '12%', top: '18%', width: '45px' }}>
           <BirdSVG className="w-full h-auto" />
         </div>
