@@ -82,7 +82,7 @@ const TaxIcon = () => (
 const privileges = [
   {
     title: "Receive Maha Prasadam",
-    desc: "Sanctified Maha Prasadam sent from Gupt Vrindavan Dham to your home - a divine gift of the Lord's mercy.",
+    desc: "Sanctified Maha Prasadam sent from Hare Krishna Movement Dehradun to your home - a divine gift of the Lord's mercy.",
     icon: <LadduIcon />
   },
   {

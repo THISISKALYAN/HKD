@@ -81,21 +81,21 @@ Join us on this highly auspicious day to receive the limitless blessings of Sri 
   },
   {
     slug: "daily-annadana-seva",
-    title: "Daily Annadana Seva: Nourishing the Pilgrims in Vrindavan",
+    title: "Daily Annadana Seva: Nourishing the Pilgrims in Hare Krishna Movement Dehradun",
     category: "Devotion",
     readTime: "4 min read",
     authorName: "HKM Admin",
     createdAt: "June 10, 2026",
     excerpt: "Learn about the spiritual significance of Anna Daan and our daily initiative to feed hot, nutritious prasadam to sadhus and visitors.",
-    coverImage: "/fh.webp",
+    coverImage: "https://hkmdehradun.org/live-site/assets/12/annadaan-seva-banner1.png",
     published: true,
-    content: `DAILY ANNADANA SEVA: NOURISHING PILGRIMS IN VRINDAVAN
+    content: `DAILY ANNADANA SEVA: NOURISHING PILGRIMS IN HARE KRISHNA MOVEMENT DEHRADUN
 
 The Supreme Charity
 In Vedic tradition, 'Anna Daan' (the donation of food) is glorified as the highest form of charity (Maha Daan). When food is first offered to the Supreme Lord, it becomes 'Prasadam'—sanctified food that nourishes not only the physical body but also purifies the soul.
 
 Our Daily Commitment
-At Hare Krishna Movement, we are committed to ensuring that no one goes hungry in the holy land of Vrindavan. Every single day, thousands of plates of hot, nutritious, and delicious Khichdi prasadam are distributed free of cost to sadhus (monks), pilgrims, visitors, and locals.
+At Hare Krishna Movement Dehradun, we are committed to ensuring that no one goes hungry. Every single day, thousands of plates of hot, nutritious, and delicious Khichdi prasadam are distributed free of cost to sadhus (monks), pilgrims, visitors, and locals.
 
 The Spiritual Benefits of Distributing Prasadam
 The act of distributing and honoring prasadam is a deeply spiritual exchange. It breaks down barriers, cultivates compassion, and invokes the boundless blessings of the Lord. As described in the Bhagavad-gita, food offered in sacrifice (yajna) frees one from all karmic reactions.
