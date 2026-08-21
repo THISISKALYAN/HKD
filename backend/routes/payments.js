@@ -243,6 +243,88 @@ router.post('/verify-webhook', async (req, res) => {
 });
 
 /**
+ * Route: Verify Razorpay Payment from Frontend
+ * POST /api/payments/verify-payment
+ */
+router.post('/verify-payment', async (req, res) => {
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature, donorData } = req.body;
+
+  if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+    return res.status(400).json({ error: 'Invalid payment payload.' });
+  }
+
+  try {
+    const secret = process.env.RAZORPAY_KEY_SECRET || 'rzp_test_secret';
+    const generatedSignature = crypto
+      .createHmac('sha256', secret)
+      .update(razorpay_order_id + '|' + razorpay_payment_id)
+      .digest('hex');
+
+    if (generatedSignature !== razorpay_signature) {
+      console.warn(`[Payment Verification] Invalid signature for Order ID: ${razorpay_order_id}`);
+      return res.status(400).json({ error: 'Payment verification failed: Invalid signature.' });
+    }
+
+    const docRef = db.collection('donations').doc(razorpay_order_id);
+    const doc = await docRef.get();
+
+    if (!doc.exists) {
+      console.warn(`[Payment Verification] Donation record not found for Order ID: ${razorpay_order_id}`);
+      return res.status(404).json({ error: 'Donation record not found.' });
+    }
+
+    const donation = doc.data();
+
+    if (donation.status === 'paid') {
+      console.log(`[Payment Verification] Order ${razorpay_order_id} already marked as paid.`);
+      return res.json({ success: true, status: 'paid', alreadyProcessed: true });
+    }
+
+    // Update database record to Paid state
+    await docRef.update({
+      status: 'paid',
+      razorpayPaymentId: razorpay_payment_id,
+      completedAt: new Date()
+    });
+
+    const updatedDoc = await docRef.get();
+    const freshDonation = updatedDoc.data();
+    freshDonation.id = razorpay_order_id;
+
+    // Generate local PDF and trigger dispatch pipelines
+    const tempReceiptsDir = path.join(require('os').tmpdir(), 'receipts');
+    if (!fs.existsSync(tempReceiptsDir)) {
+      fs.mkdirSync(tempReceiptsDir, { recursive: true });
+    }
+    const pdfPath = path.join(tempReceiptsDir, `receipt_${razorpay_order_id}.pdf`);
+    
+    await generateReceiptPdf(freshDonation, pdfPath);
+    console.log(`[Payment Verification PDF] Successfully generated donation certificate PDF: ${pdfPath}`);
+
+    // Dispatch Notifications asynchronously
+    sendDonationEmailReceipt(freshDonation, pdfPath).catch(err => 
+      console.error('[Payment Verification Email Error]:', err.message)
+    );
+
+    sendDonationConfirmation(
+      freshDonation.phone,
+      freshDonation.donorName,
+      freshDonation.amount,
+      freshDonation.sevaCategory,
+      freshDonation.receiptUrl || ''
+    ).catch(err => 
+      console.error('[Payment Verification WhatsApp Error]:', err.message)
+    );
+
+    res.json({ success: true, status: 'paid' });
+
+  } catch (error) {
+    console.error('Payment verification error:', error);
+    res.status(500).json({ error: 'Failed to verify transaction.' });
+  }
+});
+
+/**
  * Route: Manual checkout verification bypass for dev clients (Test Mode)
  * POST /api/payments/verify-simulated
  */

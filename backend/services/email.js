@@ -68,6 +68,11 @@ async function sendDonationEmailReceipt(donation, pdfPath) {
           <div class="cta-box">
             <h3 style="margin: 0; color: #e65100;">Seva details:</h3>
             <p style="margin: 8px 0; font-size: 18px;"><strong>${seva}</strong></p>
+            <div style="text-align: left; margin: 15px auto; max-width: 300px; font-size: 14px; background: #fff; padding: 15px; border-radius: 4px; border: 1px solid #e2e8f0;">
+              <p style="margin: 5px 0;"><strong>Payment ID:</strong> ${donation.id}</p>
+              <p style="margin: 5px 0;"><strong>Date:</strong> ${new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+              <p style="margin: 5px 0;"><strong>Status:</strong> <span style="color: green; font-weight: bold;">Verified (Paid)</span></p>
+            </div>
             <p style="margin: 0; font-size: 20px; color: #2d3748;"><strong>₹${amount.toLocaleString('en-IN')}.00 Paid Successfully</strong></p>
           </div>
 

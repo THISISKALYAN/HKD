@@ -425,6 +425,13 @@ export default function FestivalDetail({ slug }: { slug: string }) {
         amount: totalAmount,
         currency: "INR",
         receipt: `receipt_${festival.slug}_${Date.now()}`,
+        donorName: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        panNumber: formData.pan,
+        sevaCategory: getSelectedSevasSummary(),
+        receivePrasadam,
+        deliveryAddress: receivePrasadam ? address : null
       });
 
       const options = {
@@ -788,10 +795,21 @@ export default function FestivalDetail({ slug }: { slug: string }) {
                     <input
                       type="number"
                       min="1"
+                      max="500000"
                       placeholder="Enter Custom Amount (₹)"
                       autoFocus
                       value={generalCustomAmount}
-                      onChange={(e) => setGeneralCustomAmount(e.target.value)}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === '') {
+                          setGeneralCustomAmount('');
+                          return;
+                        }
+                        const num = parseInt(val, 10);
+                        if (!isNaN(num) && num > 0 && num <= 500000) {
+                          setGeneralCustomAmount(num.toString());
+                        }
+                      }}
                       className="w-full bg-white rounded-2xl px-5 py-3.5 text-gray-800 placeholder-gray-400 text-base sm:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-[#1c7bcf] shadow-sm border border-blue-200 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     />
                   </div>
