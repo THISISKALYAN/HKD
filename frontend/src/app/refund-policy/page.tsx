@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { constructMetadata } from "@/config/seo";
+import { EMAIL_ADDRESS, CONTACT_NUMBERS } from "@/config/constants";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = constructMetadata({
   title: "Refund & Cancellation Policy | Hare Krishna Movement Dehradun",
-  description:
-    "Read the Refund & Cancellation Policy of Hare Krishna Movement Dehradun at www.hkmdehradun.org.",
-};
+  description: "Read the Refund & Cancellation Policy of Hare Krishna Movement Dehradun at www.hkmdehradun.org.",
+});
 
 export default function RefundPolicyPage() {
   return (
@@ -148,16 +149,16 @@ export default function RefundPolicyPage() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm">
             <a
-              href="mailto:contact@hkmdehradun.org"
+              href={`mailto:${EMAIL_ADDRESS}`}
               className="inline-flex items-center gap-2 bg-[#0f4c81] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#1a6eb5] transition-colors"
             >
-              📧 contact@hkmdehradun.org
+              📧 {EMAIL_ADDRESS}
             </a>
             <a
-              href="tel:+918296875074"
+              href={`tel:${CONTACT_NUMBERS[0].unformatted}`}
               className="inline-flex items-center gap-2 border-2 border-[#0f4c81] text-[#0f4c81] px-6 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors"
             >
-              📞 +91 82968 75074
+              📞 {CONTACT_NUMBERS[0].number}
             </a>
           </div>
         </div>

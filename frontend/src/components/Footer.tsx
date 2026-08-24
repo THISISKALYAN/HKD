@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { ADDRESS_SHORT, CONTACT_NUMBERS, EMAIL_ADDRESS } from '@/config/constants';
 
 /* ─────────────────────────────────────────────
    Animated birds (Subtle gliding near spire)
@@ -135,26 +136,24 @@ export function Footer() {
             <div className="text-gray-500 text-[16.5px] leading-relaxed mb-4 max-w-full font-medium space-y-3">
               <p>
                 <strong>Address:</strong><br />
-                Near LP Villas, Suddhowala,<br />
-                Dehradun
+                {ADDRESS_SHORT.split(', ').map((part, index, array) => (
+                  <React.Fragment key={index}>
+                    {part}{index < array.length - 1 ? ',' : ''}{index === 0 && <br />}
+                  </React.Fragment>
+                ))}
               </p>
               <div>
                 <strong>Phone / Contacts:</strong>
                 <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[14.5px] mt-1.5">
-                  <span className="font-medium">Hari Krishna Prabhu:</span>
-                  <a href="tel:+918296875074" className="hover:text-[#0f4c81] transition-colors whitespace-nowrap">+91 82968 75074</a>
-                  
-                  <span className="font-medium">Anand Narthak Prabhu:</span>
-                  <a href="tel:+917895068399" className="hover:text-[#0f4c81] transition-colors whitespace-nowrap">+91 78950 68399</a>
-                  
-                  <span className="font-medium">Janeshwar Prabhu:</span>
-                  <a href="tel:+918121151508" className="hover:text-[#0f4c81] transition-colors whitespace-nowrap">+91 81211 51508</a>
-                  
-                  <span className="font-medium">Vasta vardhana Dasa:</span>
-                  <a href="tel:+919762243256" className="hover:text-[#0f4c81] transition-colors whitespace-nowrap">+91 97622 43256</a>
+                  {CONTACT_NUMBERS.map((contact, index) => (
+                    <React.Fragment key={index}>
+                      <span className="font-medium">{contact.name}:</span>
+                      <a href={`tel:${contact.unformatted}`} className="hover:text-[#0f4c81] transition-colors whitespace-nowrap">{contact.number}</a>
+                    </React.Fragment>
+                  ))}
 
                   <span className="font-bold text-gray-700 pt-1">Email:</span>
-                  <a href="mailto:contact@hkmdehradun.org" className="hover:text-[#0f4c81] transition-colors pt-1">contact@hkmdehradun.org</a>
+                  <a href={`mailto:${EMAIL_ADDRESS}`} className="hover:text-[#0f4c81] transition-colors pt-1">{EMAIL_ADDRESS}</a>
                 </div>
               </div>
             </div>

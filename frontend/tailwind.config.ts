@@ -17,6 +17,12 @@ const config: Config = {
         serif: ['"TC EN"', 'sans-serif'],
       },
       colors: {
+        brand: {
+          blue: '#0B5DB7',
+          darkBlue: '#072149',
+          gold: '#d4af37',
+          yellow: '#f5c518'
+        },
         saffron: {
           light: '#FFB84D',
           DEFAULT: '#FF9933',

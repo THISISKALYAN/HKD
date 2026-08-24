@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { constructMetadata } from "@/config/seo";
+import { EMAIL_ADDRESS, ADDRESS_FULL } from "@/config/constants";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = constructMetadata({
   title: "Terms & Conditions | Hare Krishna Movement Dehradun",
-  description:
-    "Read the Terms & Conditions of Hare Krishna Movement Dehradun. Understand your rights and responsibilities when using our website and services.",
-};
+  description: "Read the Terms & Conditions of Hare Krishna Movement Dehradun. Understand your rights and responsibilities when using our website and services.",
+});
 
 const sections = [
   {
@@ -27,7 +28,7 @@ const sections = [
       },
       {
         heading: "How do I withdraw my consent?",
-        text: "If after you opt-in, you change your mind, you may withdraw your consent for us to contact you, for the continued collection, use or disclosure of your information, at anytime, by contacting us at contact@hkmdehradun.org or mailing us at: Plot No.33 Vasant Vihar, Phase II, DVOCHSL, Dehradun, 248006, Uttarakhand.",
+        text: `If after you opt-in, you change your mind, you may withdraw your consent for us to contact you, for the continued collection, use or disclosure of your information, at anytime, by contacting us at ${EMAIL_ADDRESS} or mailing us at: ${ADDRESS_FULL}.`,
       },
     ],
   },
@@ -185,11 +186,11 @@ export default function TermsPage() {
           <div className="space-y-2 text-sm">
             <p>
               📧{" "}
-              <a href="mailto:contact@hkmdehradun.org" className="text-[#eab308] hover:underline font-semibold">
-                contact@hkmdehradun.org
+              <a href={`mailto:${EMAIL_ADDRESS}`} className="text-[#eab308] hover:underline font-semibold">
+                {EMAIL_ADDRESS}
               </a>
             </p>
-            <p>📍 Plot No.33 Vasant Vihar, Phase II, DVOCHSL, Dehradun, Uttarakhand – 248006</p>
+            <p>📍 {ADDRESS_FULL}</p>
           </div>
         </div>
 
