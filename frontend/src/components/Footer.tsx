@@ -51,7 +51,6 @@ const NAV_COLS = [
     title: 'Gallery & Events',
     links: [
       { label: 'Daily Darshan',  href: '/daily-darshan' },
-      { label: 'Mandir Nirman', href: '/mandir-nirman' },
       { label: 'Latest Blogs',  href: '/blog' },
       { label: 'Latest Events', href: '/events' },
     ],

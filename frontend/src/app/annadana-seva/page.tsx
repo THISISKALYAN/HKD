@@ -202,7 +202,7 @@ export default function AnnadanaSevaPage() {
             transition={{ duration: 1, delay: 0.2 }}
             className="w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#eae4d5]"
           >
-            <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/12/annadanam.jpeg"
+            <img loading="lazy" src="/annadana_seva_banner_1787222223399.jpg"
               alt="Annadana Seva Banner"
               className="w-full h-auto object-cover max-h-[350px] sm:max-h-[440px] md:max-h-[500px]"
             />
