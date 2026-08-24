@@ -16,19 +16,19 @@ export default function AboutDonationSection() {
       title: "Gau Seva",
       link: "/gau-seva",
       bgClass: "from-blue-600 to-blue-800",
-      image: "https://hkmdehradun.org/live-site/assets/12/gau-seva-banner.png"
+      image: "/gau_seva_banner_1787222206981.jpg"
     },
     {
       title: "Annadana Seva",
       link: "/annadana-seva",
       bgClass: "from-purple-600 to-purple-800",
-      image: "https://hkmdehradun.org/live-site/assets/12/annadaan-seva-banner1.png"
+      image: "/annadana_seva_banner_1787222223399.jpg"
     },
     {
       title: "Khichdi Prasadam",
       link: "/khichdi-prasadam-seva",
       bgClass: "from-slate-800 to-slate-900",
-      image: "https://hkmdehradun.org/live-site/assets/12/khichdi-seva-banner.png"
+      image: "/khichdi_prasadam_banner_1787222244321.jpg"
     }
   ];
 
