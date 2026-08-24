@@ -104,7 +104,7 @@ export default function KhichdiPrasadamSevaPage() {
         currency: orderData.currency,
         name: "Hare Krishna Movement Dehradun",
         description: "Khichdi Prasadam Seva Donation",
-        order_id: orderData.id,
+        order_id: orderData.orderId,
         handler: async function (response: any) {
           try {
             await apiService.verifyPayment({
