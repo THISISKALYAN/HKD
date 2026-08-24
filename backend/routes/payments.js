@@ -231,6 +231,39 @@ router.post('/verify-webhook', async (req, res) => {
       ).catch(err => 
         console.error('[Webhook WhatsApp Trigger Error]:', err.message)
       );
+    } else if (event === 'payment.failed') {
+      const paymentEntity = payload.payload.payment.entity;
+      const orderId = paymentEntity.order_id;
+      const paymentId = paymentEntity.id;
+      const errorDescription = paymentEntity.error_description || 'Payment failed';
+      const errorCode = paymentEntity.error_code || 'UNKNOWN_ERROR';
+
+      if (!orderId) {
+        return res.status(200).send('Failed event processed without order tracking');
+      }
+
+      const docRef = db.collection('donations').doc(orderId);
+      const doc = await docRef.get();
+
+      if (doc.exists) {
+        const donation = doc.data();
+        if (donation.status === 'paid') {
+          console.log(`[Webhook Alert] Order ${orderId} already marked as paid. Ignoring failure webhook.`);
+          return res.status(200).send('Payment already successful');
+        }
+
+        // Update database record to Failed state
+        await docRef.update({
+          status: 'failed',
+          razorpayPaymentId: paymentId,
+          failureReason: errorDescription,
+          failureCode: errorCode,
+          failedAt: new Date()
+        });
+        console.log(`[Webhook Alert] Order ${orderId} marked as failed: ${errorDescription}`);
+      } else {
+        console.warn(`[Webhook Warning] No donation record found matching Order ID: ${orderId} for failure webhook.`);
+      }
     }
 
     // Acknowledge event successfully received
