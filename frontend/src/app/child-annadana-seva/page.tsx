@@ -104,7 +104,7 @@ export default function ChildAnnadanaSevaPage() {
         currency: orderData.currency,
         name: "Hare Krishna Movement Dehradun",
         description: "Child Annadana Seva Donation",
-        order_id: orderData.id,
+        order_id: orderData.orderId,
         handler: async function (response: any) {
           try {
             await apiService.verifyPayment({

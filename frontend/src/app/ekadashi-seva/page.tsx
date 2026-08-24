@@ -119,7 +119,7 @@ export default function EkadashiSevaPage() {
         currency: orderData.currency,
         name: "Hare Krishna Movement Dehradun",
         description: "Ekadashi Seva Donation",
-        order_id: orderData.id,
+        order_id: orderData.orderId,
         handler: async function (response: any) {
           try {
             await apiService.verifyPayment({
