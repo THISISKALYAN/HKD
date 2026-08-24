@@ -202,7 +202,7 @@ export default function AnnadanaSevaPage() {
             transition={{ duration: 1, delay: 0.2 }}
             className="w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#eae4d5]"
           >
-            <img loading="lazy" src="/annadana_seva_banner_1787222223399.jpg"
+            <img loading="lazy" src="/annadanam.jpeg"
               alt="Annadana Seva Banner"
               className="w-full h-auto object-cover max-h-[350px] sm:max-h-[440px] md:max-h-[500px]"
             />
@@ -535,91 +535,6 @@ export default function AnnadanaSevaPage() {
         </div>
       </section>
 
-      {/* ── IMAGE GALLERY ───────────────────────────────────── */}
-      <section className="px-6 sm:px-10 max-w-[1440px] mx-auto py-8 md:py-12">
-        <div className="flex items-center justify-center gap-3.5 mb-3 text-center">
-          <span className="h-8 w-1.5 bg-[#c89b27] rounded-full"></span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#051937] tracking-tight">
-            Gallery of <span className="text-[#c89b27]">Annadana-Seva</span>
-          </h2>
-        </div>
-        <p className="text-[#556377] text-sm sm:text-base mb-10 text-center max-w-2xl mx-auto font-normal leading-relaxed">
-          Glimpses of daily prasad distribution, joyful smiles, and food relief services.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {[
-            "https://hkmdehradun.org/live-site/assets/12/annadaan-1.png",
-            "https://hkmdehradun.org/live-site/assets/12/annadaan-2.png",
-            "https://hkmdehradun.org/live-site/assets/12/annadaan-3.png",
-            "https://hkmdehradun.org/live-site/assets/12/annadaan-4.png",
-            "https://hkmdehradun.org/live-site/assets/12/annadaan-5.png",
-            "https://hkmdehradun.org/live-site/assets/12/annadaan-6.png"
-          ].map((src, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.08 }}
-              onClick={() => setActiveImage(src)}
-              className="relative overflow-hidden rounded-2xl aspect-[16/9] shadow-sm cursor-pointer group border border-[#e8dfc8] bg-[#fffcf5] p-2 flex items-center justify-center"
-            >
-              <img loading="lazy" src={src} 
-                alt={`Annadana Seva ${idx + 1}`} 
-                className="w-full h-full object-contain rounded-xl group-hover:scale-105 transition-transform duration-500" 
-              />
-              <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-2xl">
-                <div className="bg-[#051937]/80 text-white p-3 rounded-full shadow-lg">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                  </svg>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── FULL SCREEN IMAGE LIGHTBOX MODAL ────────────────── */}
-      <AnimatePresence>
-        {activeImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActiveImage(null)}
-            className="fixed inset-0 z-[99999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 cursor-zoom-out select-none"
-          >
-            {/* Top Right Floating Close Button */}
-            <button
-              onClick={() => setActiveImage(null)}
-              className="fixed top-5 right-5 sm:top-8 sm:right-8 text-white bg-black/60 hover:bg-black/90 border border-white/20 rounded-full p-3.5 transition-all z-[100000] shadow-2xl hover:scale-110 active:scale-95 flex items-center gap-2 cursor-pointer"
-              aria-label="Close full screen image"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-              <span className="hidden sm:inline text-xs font-bold uppercase tracking-wider pr-1">Close</span>
-            </button>
-
-            {/* Image Wrapper */}
-            <motion.div
-              initial={{ scale: 0.92, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.92, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-6xl max-h-[92vh] overflow-hidden rounded-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] bg-white p-2.5 sm:p-3 border border-white/20 cursor-default flex items-center justify-center"
-            >
-              <img loading="lazy" src={activeImage} 
-                alt="Full View" 
-                className="w-full h-auto max-h-[85vh] object-contain rounded-2xl" 
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </main>
   );
 }
