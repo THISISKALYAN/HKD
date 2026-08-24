@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { apiService } from "@/services/api";
 import { isValidEmail, isValidPhone, isValidName } from "@/lib/validation";
@@ -365,6 +365,7 @@ export default function FestivalDetail({ slug }: { slug: string }) {
   });
 
   const [loading, setLoading] = useState(false);
+  const isProcessingPayment = useRef(false);
 
   const selectSeva = (id: string) => {
     setIsOtherSelected(false);
@@ -443,6 +444,7 @@ export default function FestivalDetail({ slug }: { slug: string }) {
         description: `${festival.title} Donation`,
         order_id: orderData.orderId,
         handler: async function (response: any) {
+          isProcessingPayment.current = true;
           try {
             await apiService.verifyPayment({
               razorpay_order_id: response.razorpay_order_id,
@@ -462,6 +464,9 @@ export default function FestivalDetail({ slug }: { slug: string }) {
           } catch (err) {
             console.error("Payment verification failed:", err);
             alert("Payment verified partially. Our team will contact you.");
+          } finally {
+            isProcessingPayment.current = false;
+            setLoading(false);
           }
         },
         prefill: {
@@ -474,7 +479,9 @@ export default function FestivalDetail({ slug }: { slug: string }) {
         },
         modal: {
           ondismiss: function () {
-            setLoading(false);
+            if (!isProcessingPayment.current) {
+              setLoading(false);
+            }
           },
         },
       };

@@ -12,9 +12,9 @@ function getTransporter() {
   const port = process.env.SMTP_PORT || 587;
   const secure = process.env.SMTP_SECURE === 'true'; // true for port 465, false for other ports
   const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS;
+  const pass = process.env.SMTP_PASS || process.env.SMTP_APP_PASSWORD;
 
-  if (!host || !user || !pass) {
+  if (!host || !user || !pass || user === 'your_email@gmail.com') {
     return null; // SMTP is not configured
   }
 
@@ -116,7 +116,10 @@ async function sendDonationEmailReceipt(donation, pdfPath) {
     console.log(`[Email Service] Receipt sent to ${recipient}. Message ID: ${info.messageId}`);
     return info;
   } catch (error) {
-    console.error('[Email Service Error]:', error);
+    console.error('[Email Service Error]: SMTP sending failed.', error.message);
+    if (error.code === 'EAUTH' || error.responseCode === 535) {
+        console.error('>> HINT: Authentication failed. Please verify your SMTP_USER and SMTP_PASS/SMTP_APP_PASSWORD in the backend .env file are correct and valid.');
+    }
     throw new Error('Failed to dispatch receipt email');
   }
 }

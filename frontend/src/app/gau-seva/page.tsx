@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Script from "next/script";
 import { apiService } from "@/services/api";
@@ -9,6 +9,10 @@ import { isValidEmail, isValidPhone, isValidName } from "@/lib/validation";
 export default function GauSevaPage() {
   const [amount, setAmount] = useState<number>(500);
   const [customAmount, setCustomAmount] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  const isProcessingPayment = useRef(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -107,6 +111,7 @@ export default function GauSevaPage() {
         description: "Gau Seva Donation",
         order_id: orderData.orderId,
         handler: async function (response: any) {
+          isProcessingPayment.current = true;
           try {
             await apiService.verifyPayment({
               razorpay_order_id: response.razorpay_order_id,
@@ -127,6 +132,9 @@ export default function GauSevaPage() {
           } catch (err) {
             console.error(err);
             alert("Payment verification failed.");
+          } finally {
+            isProcessingPayment.current = false;
+            setLoading(false);
           }
         },
         prefill: {
@@ -139,7 +147,9 @@ export default function GauSevaPage() {
         },
         modal: {
           ondismiss: function () {
-            setLoading(false);
+            if (!isProcessingPayment.current) {
+              setLoading(false);
+            }
           },
         },
       };
