@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Script from "next/script";
 import { apiService } from "@/services/api";
@@ -9,6 +9,10 @@ import { isValidEmail, isValidPhone, isValidName } from "@/lib/validation";
 export default function ChildAnnadanaSevaPage() {
   const [amount, setAmount] = useState<number>(1000);
   const [customAmount, setCustomAmount] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  const isProcessingPayment = useRef(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -68,6 +72,7 @@ export default function ChildAnnadanaSevaPage() {
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
     setLoading(true);
 
     const finalAmount = customAmount ? parseInt(customAmount) : amount;
@@ -106,6 +111,7 @@ export default function ChildAnnadanaSevaPage() {
         description: "Child Annadana Seva Donation",
         order_id: orderData.orderId,
         handler: async function (response: any) {
+          isProcessingPayment.current = true;
           try {
             await apiService.verifyPayment({
               razorpay_order_id: response.razorpay_order_id,
@@ -126,6 +132,9 @@ export default function ChildAnnadanaSevaPage() {
           } catch (err) {
             console.error(err);
             alert("Payment verification failed.");
+          } finally {
+            isProcessingPayment.current = false;
+            setLoading(false);
           }
         },
         prefill: {
@@ -138,14 +147,17 @@ export default function ChildAnnadanaSevaPage() {
         },
         modal: {
           ondismiss: function () {
-            setLoading(false);
+            if (!isProcessingPayment.current) {
+              setLoading(false);
+            }
           },
         },
       };
 
       const rzp = new (window as any).Razorpay(options);
       rzp.on("payment.failed", function (response: any) {
-        alert("Payment Failed: " + (response.error?.description || "Unknown error"));
+        setLoading(false);
+        setError("Payment Failed: " + (response.error?.description || "Unknown error"));
       });
       rzp.open();
     } catch (error) {
@@ -497,6 +509,13 @@ export default function ChildAnnadanaSevaPage() {
                     </motion.div>
                   )}
                 </AnimatePresence>
+
+                {/* Error Message Display */}
+                {error && (
+                  <div className="bg-red-50 border border-red-200 text-red-600 rounded-xl p-3 text-sm font-medium text-center">
+                    {error}
+                  </div>
+                )}
 
                 {/* Submit Button */}
                 <button

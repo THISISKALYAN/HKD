@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Script from "next/script";
 import { apiService } from "@/services/api";
@@ -9,6 +9,9 @@ import { isValidEmail, isValidPhone, isValidName } from "@/lib/validation";
 export default function EkadashiSevaPage() {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [customAmount, setCustomAmount] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const isProcessingPayment = useRef(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -83,6 +86,7 @@ export default function EkadashiSevaPage() {
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
     setLoading(true);
 
     const finalAmount = totalAmount;
@@ -121,6 +125,7 @@ export default function EkadashiSevaPage() {
         description: "Ekadashi Seva Donation",
         order_id: orderData.orderId,
         handler: async function (response: any) {
+          isProcessingPayment.current = true;
           try {
             await apiService.verifyPayment({
               razorpay_order_id: response.razorpay_order_id,
@@ -142,6 +147,9 @@ export default function EkadashiSevaPage() {
           } catch (err) {
             console.error(err);
             alert("Payment verification failed.");
+          } finally {
+            isProcessingPayment.current = false;
+            setLoading(false);
           }
         },
         prefill: {
@@ -154,14 +162,17 @@ export default function EkadashiSevaPage() {
         },
         modal: {
           ondismiss: function () {
-            setLoading(false);
+            if (!isProcessingPayment.current) {
+              setLoading(false);
+            }
           },
         },
       };
 
       const rzp = new (window as any).Razorpay(options);
       rzp.on("payment.failed", function (response: any) {
-        alert("Payment Failed: " + (response.error?.description || "Unknown error"));
+        setLoading(false);
+        setError("Payment Failed: " + (response.error?.description || "Unknown error"));
       });
       rzp.open();
     } catch (error) {
@@ -538,6 +549,13 @@ export default function EkadashiSevaPage() {
                     </motion.div>
                   )}
                 </AnimatePresence>
+
+                {/* Error Message Display */}
+                {error && (
+                  <div className="bg-red-50 border border-red-200 text-red-600 rounded-xl p-3 text-sm font-medium text-center">
+                    {error}
+                  </div>
+                )}
 
                 {/* Submit Button */}
                 <button
