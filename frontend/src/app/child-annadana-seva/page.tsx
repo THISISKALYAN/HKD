@@ -136,9 +136,17 @@ export default function ChildAnnadanaSevaPage() {
         theme: {
           color: "#0A0A0A",
         },
+        modal: {
+          ondismiss: function () {
+            setLoading(false);
+          },
+        },
       };
 
       const rzp = new (window as any).Razorpay(options);
+      rzp.on("payment.failed", function (response: any) {
+        alert("Payment Failed: " + (response.error?.description || "Unknown error"));
+      });
       rzp.open();
     } catch (error) {
       console.error(error);
@@ -147,7 +155,6 @@ export default function ChildAnnadanaSevaPage() {
       } else {
         alert("Failed to initiate payment. Please try again.");
       }
-    } finally {
       setLoading(false);
     }
   };

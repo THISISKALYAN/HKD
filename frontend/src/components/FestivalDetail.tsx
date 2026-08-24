@@ -472,14 +472,21 @@ export default function FestivalDetail({ slug }: { slug: string }) {
         theme: {
           color: "#1c7bcf",
         },
+        modal: {
+          ondismiss: function () {
+            setLoading(false);
+          },
+        },
       };
 
       const rzp = new (window as any).Razorpay(options);
+      rzp.on("payment.failed", function (response: any) {
+        alert("Payment Failed: " + (response.error?.description || "Unknown error"));
+      });
       rzp.open();
     } catch (err) {
       console.error("Error creating order:", err);
       alert("Could not initiate payment. Please verify your connection or try again.");
-    } finally {
       setLoading(false);
     }
   };
