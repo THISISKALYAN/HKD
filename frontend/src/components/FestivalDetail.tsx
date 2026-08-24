@@ -364,6 +364,8 @@ export default function FestivalDetail({ slug }: { slug: string }) {
     pan: "",
   });
 
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const isProcessingPayment = useRef(false);
 
@@ -411,6 +413,8 @@ export default function FestivalDetail({ slug }: { slug: string }) {
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
     if (!isValidName(formData.name) || !isValidEmail(formData.email) || !isValidPhone(formData.phone)) {
       alert("Please provide a valid name, email, and phone number.");
       return;
@@ -488,7 +492,8 @@ export default function FestivalDetail({ slug }: { slug: string }) {
 
       const rzp = new (window as any).Razorpay(options);
       rzp.on("payment.failed", function (response: any) {
-        alert("Payment Failed: " + (response.error?.description || "Unknown error"));
+        setLoading(false);
+        setError("Payment Failed: " + (response.error?.description || "Unknown error"));
       });
       rzp.open();
     } catch (err) {
@@ -991,6 +996,13 @@ export default function FestivalDetail({ slug }: { slug: string }) {
                       </div>
                     )}
                   </div>
+
+                  {/* Error Message Display */}
+                  {error && (
+                    <div className="bg-red-50 border border-red-200 text-red-600 rounded-xl p-3 text-sm font-medium text-center">
+                      {error}
+                    </div>
+                  )}
 
                   {/* Donate Button */}
                   <div className="pt-5">

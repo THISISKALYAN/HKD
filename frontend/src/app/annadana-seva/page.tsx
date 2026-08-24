@@ -71,6 +71,7 @@ export default function AnnadanaSevaPage() {
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
     setLoading(true);
 
     const finalAmount = customAmount ? parseInt(customAmount) : amount;
@@ -153,7 +154,8 @@ export default function AnnadanaSevaPage() {
 
       const rzp = new (window as any).Razorpay(options);
       rzp.on("payment.failed", function (response: any) {
-        alert("Payment Failed: " + (response.error?.description || "Unknown error"));
+        setLoading(false);
+        setError("Payment Failed: " + (response.error?.description || "Unknown error"));
       });
       rzp.open();
     } catch (error) {
@@ -379,6 +381,13 @@ export default function AnnadanaSevaPage() {
                 <div className="text-gray-600 text-sm font-medium px-1">
                   Selected Seva: <span className="font-bold text-[#c89b27]">{getSelectedSevaLabel()}</span>
                 </div>
+
+                {/* Error Message Display */}
+                {error && (
+                  <div className="bg-red-50 border border-red-200 text-red-600 rounded-xl p-3 text-sm font-medium text-center">
+                    {error}
+                  </div>
+                )}
 
                 {/* User Details */}
                 <div className="space-y-4">
