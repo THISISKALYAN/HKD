@@ -2,7 +2,9 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from 'next/link';
 import FolkNavbar from "@/components/FolkNavbar";
+import { isValidEmail, isValidPhone, isValidName } from '@/lib/validation';
 import {
   Hourglass,
   Users,
@@ -29,7 +31,7 @@ import {
   CheckCircle2,
   UserCheck
 } from "lucide-react";
-import axios from "@/lib/axios";
+import { apiService } from "@/services/api";
 
 const TRANSFORMATION_AREAS = [
   { title: "Time Management", icon: Hourglass, desc: "Organize priorities, eliminate procrastination, and master your daily schedules." },
@@ -138,12 +140,15 @@ export default function LifeCoachPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isValidName(formData.name) || !isValidEmail(formData.email) || !isValidPhone(formData.phone)) {
+      setError("Please provide a valid name, email, and phone number.");
+      return;
+    }
     setLoading(true);
     setError("");
 
     try {
-      const backendUrl = "";
-      await axios.post(`${backendUrl}/api/cms/leads`, {
+      await apiService.submitLead({
         name: formData.name,
         email: formData.email,
         phone: formData.phone,

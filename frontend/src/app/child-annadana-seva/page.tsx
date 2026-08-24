@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Script from "next/script";
-import axios from "@/lib/axios";
+import { apiService } from "@/services/api";
+import { isValidEmail, isValidPhone, isValidName } from "@/lib/validation";
 
 export default function ChildAnnadanaSevaPage() {
   const [amount, setAmount] = useState<number>(1000);
@@ -29,9 +30,9 @@ export default function ChildAnnadanaSevaPage() {
 
   useEffect(() => {
     // Fetch prasadam info
-    axios.get('/api/cms/pages/prasadam').then(res => {
-      if (res.data) {
-        setPrasadamInfo({ address: res.data.deliveryAddress || '', phone: res.data.phoneNumber || '' });
+    apiService.fetchCmsPage('prasadam').then(res => {
+      if (res) {
+        setPrasadamInfo({ address: res.deliveryAddress || '', phone: res.phoneNumber || '' });
       }
     }).catch(console.error);
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -77,8 +78,14 @@ export default function ChildAnnadanaSevaPage() {
       return;
     }
 
+    if (!isValidName(formData.name) || !isValidEmail(formData.email) || !isValidPhone(formData.phone)) {
+      alert("Please provide a valid name, email, and phone number.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const orderRes = await axios.post(`/api/payments/create-order`, {
+      const orderData = await apiService.createPaymentOrder({
         amount: finalAmount,
         currency: "INR",
         receipt: `receipt_child_anna_${Date.now()}`,
@@ -92,22 +99,24 @@ export default function ChildAnnadanaSevaPage() {
       });
 
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_1DP5mmOlF5G5ag",
-        amount: orderRes.data.amount,
-        currency: orderRes.data.currency,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // No hardcoded fallback
+        amount: orderData.amount,
+        currency: orderData.currency,
         name: "Hare Krishna Movement Dehradun",
         description: "Child Annadana Seva Donation",
-        order_id: orderRes.data.id,
+        order_id: orderData.id,
         handler: async function (response: any) {
           try {
-            await axios.post(`/api/payments/verify-payment`, {
+            await apiService.verifyPayment({
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
               donorData: {
                 ...formData,
                 amount: finalAmount,
-                seva: getSelectedSevaLabel()
+                sevaCategory: getSelectedSevaLabel(),
+                receivePrasadam,
+                deliveryAddress: receivePrasadam ? deliveryAddress : null
               }
             });
             alert("Payment Successful! Thank you for your Child Annadana Seva.");

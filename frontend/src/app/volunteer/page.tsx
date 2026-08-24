@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import axios from "@/lib/axios";
+import { apiService } from "@/services/api";
+import { isValidEmail, isValidPhone, isValidName } from "@/lib/validation";
 
 /* ── Scroll-triggered reveal ──────────────────────────── */
 function Reveal({
@@ -135,15 +136,14 @@ export default function VolunteerPage() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !phone) {
-      setErrorMsg("Please fill out name, email, and phone.");
+    if (!isValidName(name) || !isValidEmail(email) || !isValidPhone(phone)) {
+      setErrorMsg("Please provide a valid name, email, and phone number.");
       return;
     }
     setErrorMsg("");
     setIsLoading(true);
     try {
-      const backendUrl = "";
-      await axios.post(`${backendUrl}/api/cms/leads`, {
+      await apiService.submitLead({
         name, email, phone,
         interestType: "volunteer_registration",
         targetId: areaOfInterest,

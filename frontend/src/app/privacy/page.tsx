@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { constructMetadata } from "@/config/seo";
+import { EMAIL_ADDRESS, ADDRESS_FULL } from "@/config/constants";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = constructMetadata({
   title: "Privacy Policy | Hare Krishna Movement Dehradun",
-  description:
-    "Read the Privacy Policy of Hare Krishna Movement Dehradun. Learn how we collect, use, and protect your personal information.",
-};
+  description: "Read the Privacy Policy of Hare Krishna Movement Dehradun. Learn how we collect, use, and protect your personal information.",
+});
 
 const sections = [
   {
@@ -96,14 +97,14 @@ const sections = [
     id: "5",
     title: "Opting Out",
     intro:
-      "Users are provided an opportunity to \"opt-out\" of having their information used for purposes not directly related to the services they request. Users who no longer wish to receive our newsletter or promotional materials may opt-out by replying and typing \"unsubscribe\" in the subject line or emailing your request to contact@hkmdehradun.org.",
+      `Users are provided an opportunity to "opt-out" of having their information used for purposes not directly related to the services they request. Users who no longer wish to receive our newsletter or promotional materials may opt-out by replying and typing "unsubscribe" in the subject line or emailing your request to ${EMAIL_ADDRESS}.`,
     subsections: [],
   },
   {
     id: "6",
     title: "Use of the Website by Persons Under Age 18",
     intro:
-      "This website is not intended for use by anyone under the age of eighteen (18), and any individual under such age should not provide us with Personally Identifiable Information. We do not knowingly contact, market to, solicit, collect or use Personally Identifiable Information from or about any individual under the age of 18. If you want to notify us of our receipt of information by children under 18, please email us at contact@hkmdehradun.org.",
+      `This website is not intended for use by anyone under the age of eighteen (18), and any individual under such age should not provide us with Personally Identifiable Information. We do not knowingly contact, market to, solicit, collect or use Personally Identifiable Information from or about any individual under the age of 18. If you want to notify us of our receipt of information by children under 18, please email us at ${EMAIL_ADDRESS}.`,
     subsections: [],
   },
   {
@@ -131,7 +132,7 @@ const sections = [
     id: "10",
     title: "Final Statement",
     intro:
-      "Hare Krishna Movement, Dehradun will use your information in accordance with the Privacy Statement that is currently in effect. If you have any questions about the security at our website, you can send an email to contact@hkmdehradun.org.",
+      `Hare Krishna Movement, Dehradun will use your information in accordance with the Privacy Statement that is currently in effect. If you have any questions about the security at our website, you can send an email to ${EMAIL_ADDRESS}.`,
     subsections: [],
   },
 ];
@@ -287,13 +288,13 @@ export default function PrivacyPage() {
             <p>
               📧{" "}
               <a
-                href="mailto:contact@hkmdehradun.org"
+                href={`mailto:${EMAIL_ADDRESS}`}
                 className="text-[#eab308] hover:underline font-semibold"
               >
-                contact@hkmdehradun.org
+                {EMAIL_ADDRESS}
               </a>
             </p>
-            <p>📍 Plot No.33 Vasant Vihar, Phase II, DVOCHSL, Dehradun, Uttarakhand – 248006</p>
+            <p>📍 {ADDRESS_FULL}</p>
           </div>
         </div>
 

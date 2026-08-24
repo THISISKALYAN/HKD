@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Bot, X, Send, Sparkles } from "lucide-react";
+import { ADDRESS_SHORT, CONTACT_NUMBERS, EMAIL_ADDRESS } from "@/config/constants";
 
 interface Message {
   id: string;
@@ -24,7 +25,7 @@ const KNOWLEDGE_BASE: { keywords: string[]; answer: string; links?: { label: str
   },
   {
     keywords: ["contact", "contact info", "info", "phone", "mobile", "number", "prabhu", "call", "reach", "talk", "speak", "address", "location", "email", "mail"],
-    answer: "📍 Address:\nNear LP Villas, Suddhowala, Dehradun\n\n📞 Contact Numbers:\n• Hari Krishna Prabhu: +91 82968 75074\n• Anand Narthak Prabhu: +91 78950 68399\n• Janeshwar Prabhu: +91 81211 51508\n• Vasta vardhana Dasa: +91 97622 43256\n\n✉️ Email: contact@hkmdehradun.org"
+    answer: `📍 Address:\n${ADDRESS_SHORT}\n\n📞 Contact Numbers:\n${CONTACT_NUMBERS.map(c => `• ${c.name}: ${c.number}`).join('\\n')}\n\n✉️ Email: ${EMAIL_ADDRESS}`
   },
   {
     keywords: ["timing", "darshan", "time", "open", "schedule", "aarti", "timings"],
@@ -179,9 +180,9 @@ export default function AiChatbotWidget() {
   const SYSTEM_PROMPT = `You are Hare Krishna Dehradun Movement AI, an official spiritual assistant and temple guide for Hare Krishna Movement Dehradun.
 Always begin your answer with 'Hare Krishna! 🙏'.
 Key Temple Info:
-- Address: Near LP Villas, Suddhowala, Dehradun
-- Contacts: Hari Krishna Prabhu (+91 82968 75074), Anand Narthak Prabhu (+91 78950 68399), Janeshwar Prabhu (+91 81211 51508), Vasta vardhana Dasa (+91 97622 43256)
-- Email: contact@hkmdehradun.org
+- Address: ${ADDRESS_SHORT}
+- Contacts: ${CONTACT_NUMBERS.map(c => `${c.name} (${c.number})`).join(', ')}
+- Email: ${EMAIL_ADDRESS}
 - Programs: Gau Seva (Gaushala), Annadana Seva, Child Annadana Seva, Ekadashi Seva, Book Distribution (Bhagavad-gita), 80G Tax Exemption, Youth Programs (FOLK), Monkhood Program.
 - Temple Timings: Currently being updated.
 Answer concise, warm, and uplifting responses (2-4 sentences) based on Srila Prabhupada's teachings and Vedic wisdom.`;

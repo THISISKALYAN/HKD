@@ -25,9 +25,8 @@ const { initRedis } = require('./services/cache');
 
 const app = express();
 
-// Ensure uploads directory exists (use /tmp in serverless environments like Vercel)
-const isVercel = process.env.VERCEL === '1';
-const uploadsDir = isVercel ? path.join('/tmp', 'uploads') : path.join(__dirname, 'uploads');
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
@@ -93,7 +92,7 @@ const allowedOrigins = [
 app.use(cors({
   origin: (origin, callback) => {
     const isDev = process.env.NODE_ENV !== 'production';
-    if (!origin || isDev || allowedOrigins.includes(origin) || (origin && origin.endsWith('.vercel.app'))) {
+    if (!origin || isDev || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -185,12 +184,10 @@ app.use(async (req, res, next) => {
   next();
 });
 
-if (!process.env.VERCEL) {
-  initialize().then(() => {
-    app.listen(PORT, () => {
-      console.log(`[HKD Backend] Running on port ${PORT} | env: ${process.env.NODE_ENV || 'development'}`);
-    });
+initialize().then(() => {
+  app.listen(PORT, () => {
+    console.log(`[HKD Backend] Running on port ${PORT} | env: ${process.env.NODE_ENV || 'development'}`);
   });
-}
+});
 
 module.exports = app;

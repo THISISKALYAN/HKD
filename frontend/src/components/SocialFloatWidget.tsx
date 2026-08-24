@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import { WHATSAPP_NUMBER } from '@/config/constants';
 
 export default function SocialFloatWidget() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -26,7 +27,7 @@ export default function SocialFloatWidget() {
 
       {/* WhatsApp Expanding Button */}
       <a
-        href="https://api.whatsapp.com/send?phone=+919999999999&text=Hare%20Krishna!%20I%20would%20like%20to%20know%20more%20about%20Gau%20Seva%20and%20Annadana%20Seva."
+        href={`https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=Hare%20Krishna!%20I%20would%20like%20to%20know%20more%20about%20Gau%20Seva%20and%20Annadana%20Seva.`}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="WhatsApp"

@@ -9,8 +9,9 @@ import {
   Compass, Zap, Apple, Filter
 } from "lucide-react";
 import Link from "next/link";
-import axios from "@/lib/axios";
+import { apiService } from "@/services/api";
 import FolkNavbar from "@/components/FolkNavbar";
+import { isValidEmail, isValidPhone, isValidName } from "@/lib/validation";
 
 /* ── Animated counter widget ────────────────────────────────── */
 function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
@@ -292,11 +293,10 @@ export default function HappinessWorkshopsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !phone) return;
+    if (!isValidName(name) || !isValidEmail(email) || !isValidPhone(phone)) return;
     setSending(true);
     try {
-      const backendUrl = "";
-      await axios.post(`${backendUrl}/api/cms/leads`, {
+      await apiService.submitLead({
         name,
         email,
         phone,

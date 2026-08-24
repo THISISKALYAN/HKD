@@ -4,8 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Menu, X, ChevronLeft, ChevronRight, Pause, Play, BookOpen, Mic, Music, Utensils, Sparkles, User, Mail, Phone, Calendar, CheckCircle2, ShieldCheck, Volume2, VolumeX, Maximize2, BadgeCheck, UserSearch } from 'lucide-react';
 import Link from 'next/link';
-import axios from '@/lib/axios';
+import { apiService } from '@/services/api';
 import FolkNavbar from '@/components/FolkNavbar';
+import { isValidEmail, isValidPhone, isValidName } from '@/lib/validation';
 
 
 const Reveal = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
@@ -240,12 +241,11 @@ export default function YouthFOLKPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !phone) return;
+    if (!isValidName(name) || !isValidEmail(email) || !isValidPhone(phone)) return;
     setSending(true);
     const finalTargetId = program === 'Workshop' ? `Workshop: ${workshopType}` : program;
     try {
-      const backendUrl = "";
-      await axios.post(`${backendUrl}/api/cms/leads`, {
+      await apiService.submitLead({
         name, email, phone,
         interestType: 'folk_registration',
         targetId: finalTargetId,

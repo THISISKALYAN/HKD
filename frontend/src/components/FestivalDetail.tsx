@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import axios from "@/lib/axios";
+import { apiService } from "@/services/api";
+import { isValidEmail, isValidPhone, isValidName } from "@/lib/validation";
 import Link from "next/link";
 import { ChevronLeft, Check, ShieldCheck, Heart } from "lucide-react";
 
@@ -409,8 +410,8 @@ export default function FestivalDetail({ slug }: { slug: string }) {
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.phone) {
-      alert("Please fill in Name, Email, and Mobile Number.");
+    if (!isValidName(formData.name) || !isValidEmail(formData.email) || !isValidPhone(formData.phone)) {
+      alert("Please provide a valid name, email, and phone number.");
       return;
     }
     if (totalAmount <= 0) {
@@ -421,7 +422,7 @@ export default function FestivalDetail({ slug }: { slug: string }) {
     setLoading(true);
 
     try {
-      const orderRes = await axios.post(`/api/payments/create-order`, {
+      const orderData = await apiService.createPaymentOrder({
         amount: totalAmount,
         currency: "INR",
         receipt: `receipt_${festival.slug}_${Date.now()}`,
@@ -435,15 +436,15 @@ export default function FestivalDetail({ slug }: { slug: string }) {
       });
 
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_1DP5mmOlF5G5ag",
-        amount: orderRes.data.amount,
-        currency: orderRes.data.currency,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // No hardcoded fallback
+        amount: orderData.amount,
+        currency: orderData.currency,
         name: "Hare Krishna Movement Dehradun",
         description: `${festival.title} Donation`,
-        order_id: orderRes.data.id,
+        order_id: orderData.id,
         handler: async function (response: any) {
           try {
-            await axios.post(`/api/payments/verify-payment`, {
+            await apiService.verifyPayment({
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
@@ -454,7 +455,7 @@ export default function FestivalDetail({ slug }: { slug: string }) {
                 claim80G,
                 receivePrasadam,
                 amount: totalAmount,
-                seva: getSelectedSevasSummary(),
+                sevaCategory: getSelectedSevasSummary(),
               },
             });
             alert("Thank you for your generous contribution! Your payment was successful.");

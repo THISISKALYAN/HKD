@@ -732,8 +732,7 @@ router.get('/logs', authenticateCms(['superadmin', 'staff']), async (req, res) =
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const isVercel = process.env.VERCEL === '1';
-    const uploadsDir = isVercel ? path.join('/tmp', 'uploads') : path.join(__dirname, '..', 'uploads');
+    const uploadsDir = path.join(__dirname, '..', 'uploads');
     cb(null, uploadsDir);
   },
   filename: (req, file, cb) => {
