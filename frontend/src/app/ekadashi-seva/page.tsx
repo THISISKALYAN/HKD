@@ -56,12 +56,12 @@ export default function EkadashiSevaPage() {
   }, [activeImage]);
 
   const predefinedAmounts = [
-    { id: "gauPoshana", label: "Gau Poshana Seva", value: 501, img: "https://hkmdehradun.org/live-site/assets/12/gau-home.png" },
+    { id: "gauPoshana", label: "Gau Poshana Seva", value: 501, img: "/gau_seva_banner_1787222206981.jpg" },
     { id: "cowMedicines", label: "Cow Medicines", value: 2501, img: "https://hkmdehradun.org/live-site/assets/12/gau-3.png" },
-    { id: "annadaan", label: "Annadaan Seva", value: 551, img: "https://hkmdehradun.org/live-site/assets/12/annadanam.jpeg" },
-    { id: "brahmanBhojan", label: "Brahman Bhojan", value: 1001, img: "https://hkmdehradun.org/live-site/assets/12/annadaan-1.png" },
+    { id: "annadaan", label: "Annadaan Seva", value: 551, img: "/annadanam.jpeg" },
+    { id: "brahmanBhojan", label: "Brahman Bhojan", value: 1001, img: "/annadana_seva_banner_1787222223399.jpg" },
     { id: "havan", label: "Nitya Narasimha Havan", value: 1501, img: "https://hkmdehradun.org/live-site/assets/12/ekadashi-home.png" },
-    { id: "aradhana", label: "Sri Vigraha Aradhana", value: 2101, img: "https://hkmdehradun.org/live-site/assets/12/annadaan-2.png" },
+    { id: "aradhana", label: "Sri Vigraha Aradhana", value: 2101, img: "/annadana_seva_banner_1787222223399.jpg" },
   ];
 
   const updateQuantity = (id: string, delta: number) => {

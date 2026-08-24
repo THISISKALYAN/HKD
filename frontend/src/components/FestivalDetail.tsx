@@ -69,7 +69,7 @@ export const FESTIVALS_DATA: Record<string, FestivalData> = {
         title: "Vishesha Naivedya Seva",
         description: "Contribute towards the special naivedya offering made to Lord Jagannatha on this day.",
         defaultAmount: 1100,
-        image: "https://hkmdehradun.org/live-site/assets/12/annadanam.jpeg",
+        image: "/annadanam.jpeg",
       },
       {
         id: "annadana",
