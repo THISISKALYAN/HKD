@@ -206,7 +206,7 @@ export default function GauSevaPage() {
             transition={{ duration: 1, delay: 0.2 }}
             className="w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#eae4d5]"
           >
-            <img loading="lazy" src="/gau_seva_banner_1787222206981.jpg" 
+            <img loading="lazy" src="/gauseva.webp" 
               alt="Gau Seva Banner" 
               className="w-full h-auto object-cover max-h-[350px] sm:max-h-[440px] md:max-h-[500px]"
             />
@@ -635,90 +635,7 @@ export default function GauSevaPage() {
         </div>
       </section>
 
-      {/* ── IMAGE GALLERY ───────────────────────────────────── */}
-      <section className="px-6 sm:px-10 max-w-[1440px] mx-auto py-8 md:py-12">
-        <div className="flex items-center justify-center gap-3.5 mb-3 text-center">
-          <span className="h-8 w-1.5 bg-[#c89b27] rounded-full"></span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#051937] tracking-tight">
-            Gallery of <span className="text-[#c89b27]">Gau-Seva</span>
-          </h2>
-        </div>
-        <p className="text-[#556377] text-sm sm:text-base mb-10 text-center max-w-2xl mx-auto font-normal leading-relaxed">
-          Glimpses of daily cow protection, joyful feeding, and peaceful moments at our Gaushala.
-        </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            onClick={() => setActiveImage("https://hkmdehradun.org/live-site/assets/12/gau-1.png")}
-            className="overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer"
-          >
-            <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/12/gau-1.png" alt="Gau Seva" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            onClick={() => setActiveImage("https://hkmdehradun.org/live-site/assets/12/gau-2.png")}
-            className="overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer"
-          >
-            <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/12/gau-2.png" alt="Gau Seva" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            onClick={() => setActiveImage("https://hkmdehradun.org/live-site/assets/12/gau-3.png")}
-            className="overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer"
-          >
-            <img loading="lazy" src="https://hkmdehradun.org/live-site/assets/12/gau-3.png" alt="Gau Seva" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── FULL SCREEN IMAGE LIGHTBOX MODAL ────────────────── */}
-      <AnimatePresence>
-        {activeImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActiveImage(null)}
-            className="fixed inset-0 z-[99999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 cursor-zoom-out select-none"
-          >
-            {/* Top Right Floating Close Button */}
-            <button
-              onClick={() => setActiveImage(null)}
-              className="fixed top-5 right-5 sm:top-8 sm:right-8 text-white bg-black/60 hover:bg-black/90 border border-white/20 rounded-full p-3.5 transition-all z-[100000] shadow-2xl hover:scale-110 active:scale-95 flex items-center gap-2 cursor-pointer"
-              aria-label="Close full screen image"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-              <span className="hidden sm:inline text-xs font-bold uppercase tracking-wider pr-1">Close</span>
-            </button>
-
-            {/* Image Wrapper */}
-            <motion.div
-              initial={{ scale: 0.92, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.92, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-6xl max-h-[92vh] overflow-hidden rounded-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] bg-white p-2.5 sm:p-3 border border-white/20 cursor-default flex items-center justify-center"
-            >
-              <img loading="lazy" src={activeImage} 
-                alt="Full View" 
-                className="w-full h-auto max-h-[85vh] object-contain rounded-2xl" 
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </main>
   );
 }
