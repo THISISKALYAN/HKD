@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { apiService } from "@/services/api";
 import { isValidEmail, isValidPhone, isValidName } from "@/lib/validation";
 import Link from "next/link";
+import Script from "next/script";
 import { ChevronLeft, Check, ShieldCheck, Heart } from "lucide-react";
 
 export interface SevaItem {
@@ -505,6 +506,7 @@ export default function FestivalDetail({ slug }: { slug: string }) {
 
   return (
     <div className="min-h-screen bg-[#faf8f5] text-gray-800 pt-0 pb-16 font-sans">
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       {/* Hero Banner */}
       {festival.heroImage ? (
         <div className="w-full relative bg-[#0a0f1c] flex flex-col items-center justify-center pt-10 sm:pt-16 overflow-hidden">
