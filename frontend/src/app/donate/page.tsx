@@ -43,7 +43,7 @@ function Reveal({
 const sevaCards = [
   {
     title: "Gau Seva",
-    image: "/gau_seva_banner_1787222206981.jpg",
+    image: "/gavseva%20cover.png",
     desc: "Support Hare Krishna Movement Dehradun's Gaushala and be a part of this noble mission. Your contribution helps provide daily cow care, feeding, and shelter.",
     label: "Gau Seva",
     link: "/gau-seva"
