@@ -5,9 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next build && next start",
-    "lint": "next lint",
-    "postinstall": "next build"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@types/three": "^0.185.1",
