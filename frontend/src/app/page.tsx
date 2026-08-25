@@ -506,7 +506,7 @@ export default function Home() {
             {[
               {
                 title: "Gau Seva",
-                image: "https://hkmdehradun.org/live-site/assets/12/gau-seva-banner.png",
+                image: "/gavseva%20cover.png",
                 desc: "Support Hare Krishna Movement Dehradun's Gaushala and be a part of this noble mission. Your contribution helps provide daily cow care, feeding, and shelter.",
                 link: "/gau-seva"
               },
