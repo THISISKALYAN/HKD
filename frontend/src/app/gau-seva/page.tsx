@@ -206,7 +206,7 @@ export default function GauSevaPage() {
             transition={{ duration: 1, delay: 0.2 }}
             className="w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#eae4d5]"
           >
-            <img loading="lazy" src="/gauseva.webp" 
+            <img loading="lazy" src="/gavseva%20cover.png" 
               alt="Gau Seva Banner" 
               className="w-full h-auto object-cover max-h-[350px] sm:max-h-[440px] md:max-h-[500px]"
             />
