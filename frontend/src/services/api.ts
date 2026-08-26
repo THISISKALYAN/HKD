@@ -61,5 +61,15 @@ export const apiService = {
   fetchCmsPage: async (pageId: string) => {
     const response = await axios.get(`/api/cms/pages/${pageId}`);
     return response.data;
+  },
+
+  // Thank You Page
+  getDonationDetails: async (orderId: string) => {
+    const response = await axios.get(`/api/payments/donation/${orderId}`);
+    return response.data;
+  },
+  
+  getReceiptUrl: (orderId: string) => {
+    return `${axios.defaults.baseURL}/api/payments/receipt/${orderId}`;
   }
 };

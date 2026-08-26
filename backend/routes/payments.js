@@ -207,30 +207,34 @@ router.post('/verify-webhook', async (req, res) => {
       }
 
       // Generate receipt PDF file in temporary system directory
-      const os = require('os');
-      const tempReceiptsDir = path.join(os.tmpdir(), 'receipts');
-      if (!fs.existsSync(tempReceiptsDir)) {
-        fs.mkdirSync(tempReceiptsDir, { recursive: true });
+      try {
+        const os = require('os');
+        const tempReceiptsDir = path.join(os.tmpdir(), 'receipts');
+        if (!fs.existsSync(tempReceiptsDir)) {
+          fs.mkdirSync(tempReceiptsDir, { recursive: true });
+        }
+        const pdfPath = path.join(tempReceiptsDir, `receipt_${orderId}.pdf`);
+        
+        await generateReceiptPdf(freshDonation, pdfPath);
+        console.log(`[Webhook PDF] Successfully generated donation certificate PDF: ${pdfPath}`);
+
+        // Dispatch Notifications asynchronously
+        sendDonationEmailReceipt(freshDonation, pdfPath).catch(err => 
+          console.error('[Webhook Email Trigger Error]:', err.message)
+        );
+
+        sendDonationConfirmation(
+          freshDonation.phone, 
+          freshDonation.donorName, 
+          freshDonation.amount, 
+          freshDonation.sevaCategory,
+          freshDonation.receiptUrl || ''
+        ).catch(err => 
+          console.error('[Webhook WhatsApp Trigger Error]:', err.message)
+        );
+      } catch (err) {
+        console.error('[Webhook Non-Fatal Error]: PDF/Email generation failed:', err.message);
       }
-      const pdfPath = path.join(tempReceiptsDir, `receipt_${orderId}.pdf`);
-      
-      await generateReceiptPdf(freshDonation, pdfPath);
-      console.log(`[Webhook PDF] Successfully generated donation certificate PDF: ${pdfPath}`);
-
-      // Dispatch Notifications asynchronously
-      sendDonationEmailReceipt(freshDonation, pdfPath).catch(err => 
-        console.error('[Webhook Email Trigger Error]:', err.message)
-      );
-
-      sendDonationConfirmation(
-        freshDonation.phone, 
-        freshDonation.donorName, 
-        freshDonation.amount, 
-        freshDonation.sevaCategory,
-        freshDonation.receiptUrl || ''
-      ).catch(err => 
-        console.error('[Webhook WhatsApp Trigger Error]:', err.message)
-      );
     } else if (event === 'payment.failed') {
       const paymentEntity = payload.payload.payment.entity;
       const orderId = paymentEntity.order_id;
@@ -325,31 +329,35 @@ router.post('/verify-payment', async (req, res) => {
     freshDonation.id = razorpay_order_id;
 
     // Generate local PDF and trigger dispatch pipelines
-    const tempReceiptsDir = path.join(require('os').tmpdir(), 'receipts');
-    if (!fs.existsSync(tempReceiptsDir)) {
-      fs.mkdirSync(tempReceiptsDir, { recursive: true });
+    try {
+      const tempReceiptsDir = path.join(require('os').tmpdir(), 'receipts');
+      if (!fs.existsSync(tempReceiptsDir)) {
+        fs.mkdirSync(tempReceiptsDir, { recursive: true });
+      }
+      const pdfPath = path.join(tempReceiptsDir, `receipt_${razorpay_order_id}.pdf`);
+      
+      await generateReceiptPdf(freshDonation, pdfPath);
+      console.log(`[Payment Verification PDF] Successfully generated donation certificate PDF: ${pdfPath}`);
+
+      // Dispatch Notifications asynchronously
+      sendDonationEmailReceipt(freshDonation, pdfPath).catch(err => 
+        console.error('[Payment Verification Email Error]:', err.message)
+      );
+
+      sendDonationConfirmation(
+        freshDonation.phone,
+        freshDonation.donorName,
+        freshDonation.amount,
+        freshDonation.sevaCategory,
+        freshDonation.receiptUrl || ''
+      ).catch(err => 
+        console.error('[Payment Verification WhatsApp Error]:', err.message)
+      );
+    } catch (err) {
+      console.error('[Payment Verification Non-Fatal Error]: PDF/Email generation failed:', err.message);
     }
-    const pdfPath = path.join(tempReceiptsDir, `receipt_${razorpay_order_id}.pdf`);
-    
-    await generateReceiptPdf(freshDonation, pdfPath);
-    console.log(`[Payment Verification PDF] Successfully generated donation certificate PDF: ${pdfPath}`);
 
-    // Dispatch Notifications asynchronously
-    sendDonationEmailReceipt(freshDonation, pdfPath).catch(err => 
-      console.error('[Payment Verification Email Error]:', err.message)
-    );
-
-    sendDonationConfirmation(
-      freshDonation.phone,
-      freshDonation.donorName,
-      freshDonation.amount,
-      freshDonation.sevaCategory,
-      freshDonation.receiptUrl || ''
-    ).catch(err => 
-      console.error('[Payment Verification WhatsApp Error]:', err.message)
-    );
-
-    res.json({ success: true, status: 'paid' });
+    res.json({ success: true, status: 'paid', orderId: razorpay_order_id });
 
   } catch (error) {
     console.error('Payment verification error:', error);
@@ -394,33 +402,113 @@ router.post('/verify-simulated', async (req, res) => {
     freshDonation.id = orderId;
 
     // Generate local PDF and trigger dispatch pipelines
+    try {
+      const os = require('os');
+      const tempReceiptsDir = path.join(os.tmpdir(), 'receipts');
+      if (!fs.existsSync(tempReceiptsDir)) {
+        fs.mkdirSync(tempReceiptsDir, { recursive: true });
+      }
+      const pdfPath = path.join(tempReceiptsDir, `receipt_${orderId}.pdf`);
+      await generateReceiptPdf(freshDonation, pdfPath);
+
+      sendDonationEmailReceipt(freshDonation, pdfPath).catch(err => 
+        console.error('[Simulated Notification Email Error]:', err.message)
+      );
+
+      sendDonationConfirmation(
+        freshDonation.phone,
+        freshDonation.donorName,
+        freshDonation.amount,
+        freshDonation.sevaCategory,
+        ''
+      ).catch(err => 
+        console.error('[Simulated Notification WhatsApp Error]:', err.message)
+      );
+    } catch (err) {
+      console.error('[Simulated Verification Non-Fatal Error]: PDF/Email generation failed:', err.message);
+    }
+
+    res.json({ success: true, status: 'paid', orderId });
+
+  } catch (error) {
+    console.error('Simulated verification error:', error);
+    res.status(500).json({ error: 'Failed to verify transaction.' });
+  }
+});
+
+/**
+ * Route: Get public donation details for Thank You page
+ * GET /api/payments/donation/:orderId
+ */
+router.get('/donation/:orderId', async (req, res) => {
+  const { orderId } = req.params;
+  try {
+    const docRef = db.collection('donations').doc(orderId);
+    const doc = await docRef.get();
+
+    if (!doc.exists) {
+      return res.status(404).json({ error: 'Donation not found.' });
+    }
+
+    const data = doc.data();
+    // Return only necessary public fields
+    res.json({
+      orderId: orderId,
+      paymentId: data.razorpayPaymentId || '',
+      donorName: data.donorName,
+      sevaCategory: data.sevaCategory,
+      amount: data.amount,
+      status: data.status,
+      createdAt: data.createdAt,
+      completedAt: data.completedAt
+    });
+  } catch (error) {
+    console.error('Error fetching donation details:', error);
+    res.status(500).json({ error: 'Failed to fetch donation details.' });
+  }
+});
+
+/**
+ * Route: Serve Generated PDF Receipt
+ * GET /api/payments/receipt/:orderId
+ */
+router.get('/receipt/:orderId', async (req, res) => {
+  const { orderId } = req.params;
+  try {
+    const docRef = db.collection('donations').doc(orderId);
+    const doc = await docRef.get();
+
+    if (!doc.exists) {
+      return res.status(404).send('Donation not found.');
+    }
+
+    const donation = doc.data();
+    if (donation.status !== 'paid') {
+      return res.status(400).send('Receipt is only available for successful payments.');
+    }
+    donation.id = orderId;
+
     const os = require('os');
     const tempReceiptsDir = path.join(os.tmpdir(), 'receipts');
     if (!fs.existsSync(tempReceiptsDir)) {
       fs.mkdirSync(tempReceiptsDir, { recursive: true });
     }
     const pdfPath = path.join(tempReceiptsDir, `receipt_${orderId}.pdf`);
-    await generateReceiptPdf(freshDonation, pdfPath);
 
-    sendDonationEmailReceipt(freshDonation, pdfPath).catch(err => 
-      console.error('[Simulated Notification Email Error]:', err.message)
-    );
+    // If PDF doesn't exist in tmp, generate it on the fly
+    if (!fs.existsSync(pdfPath)) {
+      await generateReceiptPdf(donation, pdfPath);
+    }
 
-    sendDonationConfirmation(
-      freshDonation.phone,
-      freshDonation.donorName,
-      freshDonation.amount,
-      freshDonation.sevaCategory,
-      ''
-    ).catch(err => 
-      console.error('[Simulated Notification WhatsApp Error]:', err.message)
-    );
-
-    res.json({ success: true, status: 'paid' });
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="HKD_Receipt_${orderId}.pdf"`);
+    
+    const fileStream = fs.createReadStream(pdfPath);
+    fileStream.pipe(res);
 
   } catch (error) {
-    console.error('Simulated verification error:', error);
-    res.status(500).json({ error: 'Failed to verify transaction.' });
+    console.error('Error serving receipt:', error);
+    res.status(500).send('Failed to generate or retrieve receipt.');
   }
 });
 
