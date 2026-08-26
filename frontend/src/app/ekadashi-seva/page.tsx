@@ -127,7 +127,7 @@ export default function EkadashiSevaPage() {
         handler: async function (response: any) {
           isProcessingPayment.current = true;
           try {
-            await apiService.verifyPayment({
+            const verifyRes = await apiService.verifyPayment({
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
@@ -139,14 +139,16 @@ export default function EkadashiSevaPage() {
                 deliveryAddress: receivePrasadam ? deliveryAddress : null
               }
             });
-            alert("Payment Successful! Thank you for your Ekadashi Seva.");
-            setFormData({ name: "", email: "", phone: "", pan: "" });
-            setDeliveryAddress({ line1: "", line2: "", city: "", state: "", pincode: "" });
-            setCustomAmount("");
-            setQuantities({});
+            if (verifyRes.success) {
+              window.location.href = `/thank-you?order_id=${verifyRes.orderId || response.razorpay_order_id}`;
+            } else {
+              alert("Payment verification returned unsuccessful state.");
+              setLoading(false);
+            }
           } catch (err) {
             console.error(err);
             alert("Payment verification failed.");
+            setLoading(false);
           } finally {
             isProcessingPayment.current = false;
             setLoading(false);
